@@ -11,19 +11,20 @@
 
 int main(void)
 {
+    SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
     Bird bird = {
         .sprite = LoadTexture(ASSETS_PATH"/flappybird.png"),
-        .jumpVel = -300.0f,
+        .jumpVel = -250.0f,
         .gravVel = 200.0f,
         .velocity = (Vector2) {0.0f, 0.0f},
     };
 
     const float factor = 0.2f;
     bird.src = (Rectangle) {0,0, (float) bird.sprite.width, (float) bird.sprite.height};
-    bird.rec = (Rectangle) {(float) GetScreenWidth() / 2, (float) GetScreenHeight() / 2, (float) bird.sprite.width * factor, (float) bird.sprite.height * factor};
+    bird.rec = (Rectangle) {50, (float) GetScreenHeight() / 2, (float) bird.sprite.width * factor, (float) bird.sprite.height * factor};
 
 
 
@@ -32,32 +33,31 @@ int main(void)
 
         const float deltaTime = GetFrameTime();
 
+        // Apply the Velocity Forces based on delta time
+        bird.rec.y += bird.velocity.y * deltaTime;
+        bird.rec.x += bird.velocity.x * deltaTime;
+
         // Constant Gravity based on delta time
+        // Accelerates infinitely for now
         bird.velocity.y += bird.gravVel * deltaTime;
 
         // Use this later
         const int touchingEdges = (bird.rec.y > SCREEN_HEIGHT) || (bird.rec.y < 0);
 
-        // Upward Force
-        if (IsKeyPressed(KEY_SPACE)) bird.velocity.y += bird.jumpVel;
+        // Upward Force that resets previous velocity
+        if (IsKeyPressed(KEY_SPACE)) bird.velocity.y = bird.jumpVel;
 
         // Apply a 10% friction to the velocity based on delta time
         const float decayRate = 0.1f;
-
-        // Apply the Velocity Forces based on delta time
-        bird.velocity.y *= powf(1.0f - decayRate, deltaTime);
         bird.velocity.x *= powf(1.0f - decayRate, deltaTime);
 
-        // Move based on velocity
-        bird.rec.y += bird.velocity.y * deltaTime;
-        bird.rec.x += bird.velocity.x * deltaTime;
-
-
-        printf("%f\n", bird.velocity.y);
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        if (deltaTime != 0) {
+            DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
+        }
 
         DrawTexturePro(bird.sprite, bird.src, bird.rec, (Vector2) {0,0},0, WHITE);
         EndDrawing();
