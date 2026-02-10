@@ -19,6 +19,7 @@ int main(void)
         .pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png"),
         .pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png"),
         .pipeChunk = LoadTexture(ASSETS_PATH"/pipe_chunk.png"),
+        .hitBox = (Rectangle) {0,0, 200, 200},
         .velocity = (Vector2) {0.0f, 0.0f}
     };
 
@@ -70,6 +71,7 @@ int main(void)
         }
 
         DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
+        DrawRectangleRec(pipe.hitBox, Fade(RED, 0.5f));
         DrawTexturePro(bird.sprite, bird.src, bird.hitBox, (Vector2) {0,0},0, WHITE);
         EndDrawing();
     }
