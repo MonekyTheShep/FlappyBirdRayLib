@@ -2,7 +2,7 @@
 #include <raylib.h>
 typedef struct Bird {
     Texture sprite;
-    Rectangle src, rec;
+    Rectangle src, hitBox;
     const float jumpVel, gravVel;
     Vector2 velocity;
 } Bird;
