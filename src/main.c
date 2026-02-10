@@ -47,6 +47,9 @@ int main(void)
 
         // Floor and Ceiling detection
         if (touchingFloor) {
+            // In the real game i will just make the bird gameover.
+            // Prevent bird going under ground
+            bird.position.y = GetScreenHeight() - bird.hitBox.height;
             // if the bird is going downwards then set velocity to 0
             if (bird.velocity.y > 0) bird.velocity.y = 0;
         }
