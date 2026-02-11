@@ -54,7 +54,7 @@ int main(void)
                     drawMainMenu(&gameInfo, &menuState);
                     break;
                 case GAME_MENU:
-                    drawGame();
+                    drawGameMenu();
                 default:
                     break;
             }
