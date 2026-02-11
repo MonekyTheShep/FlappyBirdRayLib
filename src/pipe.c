@@ -14,9 +14,10 @@ void drawPipe(Pipe *pipe)
     // Build top chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++)
     {
+        const float startingPosition = pipe->position.y - pipe->pipeChunkSize.y;
         const float yOffset = (float) i * pipe->pipeChunkSize.y;
 
-        DrawTextureEx(pipe->pipeChunkTop, (Vector2) {pipe->position.x, pipe->position.y - pipe->pipeChunkSize.y - yOffset}, 0.0f, 1.0f,  WHITE);
+        DrawTextureEx(pipe->pipeChunkTop, (Vector2) {pipe->position.x, startingPosition - yOffset}, 0.0f, 1.0f,  WHITE);
     }
 
     const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;;
@@ -25,9 +26,10 @@ void drawPipe(Pipe *pipe)
     // Build bottom chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++)
     {
-        const float yOffset = ((float) i * pipe->pipeChunkSize.y) + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
+        const float startingPosition = pipe->position.y + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
+        const float yOffset = (float) i * pipe->pipeChunkSize.y;
 
-        DrawTextureEx(pipe->pipeChunkBottom, (Vector2) {pipe->position.x, pipe->position.y + yOffset}, 0.0f, 1.0f,  WHITE);
+        DrawTextureEx(pipe->pipeChunkBottom, (Vector2) {pipe->position.x, startingPosition + yOffset}, 0.0f, 1.0f,  WHITE);
     }
 
     // Draw top pipe
