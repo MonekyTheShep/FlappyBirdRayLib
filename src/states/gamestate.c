@@ -9,10 +9,7 @@
 #include "bird.h"
 
 
-Bird bird = {
-    .jumpVel = JUMP_VELOCITY,
-    .gravVel = GRAVITY_VELOCITY
-};
+Bird bird;
 
 int gameOver = 0;
 
@@ -24,7 +21,7 @@ void initializeGame(void)
     initializePipePool(pipePool);
 
     // Bird declaring
-    initializeBird(&bird);
+    bird = initializeBird();
 }
 
 float accumulationTime = 3.5f;
