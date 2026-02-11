@@ -14,6 +14,7 @@ Bird bird = {
     .gravVel = GRAVITY_VELOCITY
 };
 
+int gameOver = 0;
 
 Pipe pipePool[POOL_SIZE];
 
@@ -32,10 +33,7 @@ void initializeGame(void)
 
 float accumulationTime = 3.5f;
 
-void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
-    const float deltaTime = GetFrameTime();
-    accumulationTime += deltaTime;
-
+static void spawnPipe(void) {
     if (accumulationTime >= 3.5f) {
         printf("acquire");
         Pipe *pipe = acquirePipe(pipePool);
@@ -44,11 +42,21 @@ void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
         pipe->position.y = (rand() % 400) - 100;
         accumulationTime = 0.0f;
     }
-
-    handleBird(&bird);
-    handlePipes(pipePool);
-
 }
+
+
+
+void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
+    const float deltaTime = GetFrameTime();
+    accumulationTime += deltaTime;
+
+    if (!gameOver) {
+        spawnPipe();
+        handleBird(&bird);
+        handlePipes(pipePool, &bird, &gameOver);
+    }
+}
+
 
 static void drawHitBoxDebug(void) {
     DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));

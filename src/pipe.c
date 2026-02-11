@@ -87,7 +87,7 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
     pipe->position.x += pipe->velocity.x * deltaTime;
 }
 
-static void collisionHandling(Pipe *pipe) {
+static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
     const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0;
     if (offScreen) {
         printf("remove");
@@ -95,6 +95,14 @@ static void collisionHandling(Pipe *pipe) {
         pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
         pipe->active = 0;
     }
+
+    int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
+    CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
+
+    if (birdHitPipe) {
+        *gameOver = 1;
+    }
+
 }
 
 
@@ -111,7 +119,7 @@ void initializePipe(Pipe *pipe) {
     pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
     pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
-    pipe->pipeGap = pipe->pipeChunkSize.y;
+    pipe->pipeGap = pipe->pipeChunkSize.y + 50;
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
     pipe->velocity = (Vector2) {0.0f, 0.0f};
 }
@@ -140,7 +148,7 @@ void drawPipes(Pipe *pipePool) {
     }
 }
 
-void handlePipes(Pipe *pipePool)
+void handlePipes(Pipe *pipePool, Bird *bird, int *gameOver)
 {
     const float deltaTime = GetFrameTime();
     for (int i = 0; i < POOL_SIZE; i++) {
@@ -149,7 +157,7 @@ void handlePipes(Pipe *pipePool)
             handleTopHitbox(&pipePool[i]);
             handleMiddleHitbox(&pipePool[i]) ;
             handleBottomHitbox(&pipePool[i]);
-            collisionHandling(&pipePool[i]);
+            collisionHandling(&pipePool[i], bird, gameOver);
         }
     }
 

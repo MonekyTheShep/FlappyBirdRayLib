@@ -1,5 +1,8 @@
 #pragma once
 #include <raylib.h>
+
+#include "bird.h"
+
 typedef struct Pipe {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
     Vector2 pipeChunkSize;
@@ -11,7 +14,7 @@ typedef struct Pipe {
 } Pipe;
 
 void drawPipe(Pipe *pipe);
-void handlePipes(Pipe *pipe);
+void handlePipes(Pipe *pipe, Bird *bird, int *gameOver);
 void initializePipePool(Pipe *pipePool);
 void initializePipe(Pipe *pipe);
 Pipe *acquirePipe(Pipe *pipePool);
