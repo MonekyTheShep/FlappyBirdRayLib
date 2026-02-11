@@ -20,7 +20,7 @@ void initializeGame(void)
     pipe.pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
     pipe.pipeChunk = LoadTexture(ASSETS_PATH"/pipe_chunk.png");
     pipe.pipeGap = pipe.pipeChunk.height;
-    pipe.position = (Vector2) {(float) GetScreenWidth() / 2, ((float) GetScreenHeight() / 2) - pipe.pipeChunk.height - 200};
+    pipe.position = (Vector2) {(float) GetScreenWidth() / 2, ((float) GetScreenHeight() / 2) - pipe.pipeChunk.height };
     pipe.velocity = (Vector2) {0.0f, 0.0f};
 
     // Bird declaring
