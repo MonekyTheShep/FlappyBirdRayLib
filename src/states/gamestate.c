@@ -40,7 +40,6 @@ static void spawnPipe(void)
         Pipe *pipe = acquirePipe(pipePool);
         if (pipe != NULL)
         {
-            pipe->active = 1;
             pipe->position.y = (rand() % 300) - 150;
             accumulationTime = 0.0f;
         }
