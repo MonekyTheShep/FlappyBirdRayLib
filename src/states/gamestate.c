@@ -46,6 +46,7 @@ void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState)
             if (deltaTime != 0)
             {
                 DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
+                DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
             }
 
             DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
