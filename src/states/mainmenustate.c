@@ -30,7 +30,7 @@ static void drawTitle(void)
 
     const float textXCenter = ((float)GetScreenWidth() - size.x) / 2;
     const float textYCenter = ((float)GetScreenHeight() - size.y) / 2;
-    const float offsetY = -50;
+    const float offsetY = -75;
 
     DrawTextEx(font, titleText, (Vector2){textXCenter, textYCenter + offsetY}, fontSize, 1, BLACK);
 }
