@@ -1,9 +1,9 @@
 #include "bird.h"
-#include "math.h"
 
 #include "constants.h"
 
 #include <stdio.h>
+#include <math.h>
 
 
 static void applyVelocity(Bird *bird, const float deltaTime)
