@@ -33,10 +33,13 @@ void initializeGame(void)
 
 float accumulationTime = 3.5f;
 
-static void spawnPipe(void) {
-    if (accumulationTime >= 3.5f) {
+static void spawnPipe(void)
+{
+    if (accumulationTime >= 3.5f)
+    {
         Pipe *pipe = acquirePipe(pipePool);
-        if (pipe != NULL) {
+        if (pipe != NULL)
+        {
             pipe->active = 1;
             pipe->position.y = (rand() % 300) - 150;
             accumulationTime = 0.0f;
@@ -44,11 +47,13 @@ static void spawnPipe(void) {
     }
 }
 
-void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
+void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState)
+{
     const float deltaTime = GetFrameTime();
     accumulationTime += deltaTime;
 
-    if (!gameOver) {
+    if (!gameOver)
+    {
         spawnPipe();
         handleBird(&bird);
         handlePipes(pipePool, &bird, &gameOver);
@@ -56,11 +61,13 @@ void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
 }
 
 
-static void drawHitBoxDebug(void) {
+static void drawHitBoxDebug(void)
+{
     DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
 }
 
-void drawGameMenu(void) {
+void drawGameMenu(void)
+{
     const float deltaTime = GetFrameTime();
 
     drawBird(&bird);
