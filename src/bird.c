@@ -1,6 +1,8 @@
 #include "bird.h"
 #include "math.h"
 
+#include "constants.h"
+
 #include <stdio.h>
 
 
@@ -19,7 +21,7 @@ static void applyFriction(Bird *bird, const float deltaTime)
 {
     // Apply a 10% friction to the velocity based on delta time
     // Exponential decay
-    const float decayRate = 0.1f;
+    const float decayRate = FRICTION;
     bird->velocity.x *= powf(1.0f - decayRate, deltaTime);
 }
 

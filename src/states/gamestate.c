@@ -1,12 +1,13 @@
 #include "states/gamestate.h"
 
-#include "math.h"
+#include "constants.h"
+
 #include "pipe.h"
 #include "bird.h"
 
 Bird bird = {
-    .jumpVel = -250.0f,
-    .gravVel = 200.0f
+    .jumpVel = JUMP_VELOCITY,
+    .gravVel = GRAVITY_VELOCITY
 };
 
 Pipe pipe;
