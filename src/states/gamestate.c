@@ -35,16 +35,14 @@ float accumulationTime = 3.5f;
 
 static void spawnPipe(void) {
     if (accumulationTime >= 3.5f) {
-        printf("acquire");
         Pipe *pipe = acquirePipe(pipePool);
-        pipe->active = 1;
-
-        pipe->position.y = (rand() % 400) - 100;
-        accumulationTime = 0.0f;
+        if (pipe != NULL) {
+            pipe->active = 1;
+            pipe->position.y = (rand() % 400) - 100;
+            accumulationTime = 0.0f;
+        }
     }
 }
-
-
 
 void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
     const float deltaTime = GetFrameTime();
