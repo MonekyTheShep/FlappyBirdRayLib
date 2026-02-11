@@ -9,3 +9,4 @@ typedef struct Bird {
 } Bird;
 
 void handleBird(Bird *bird);
+void drawBird(Bird *bird);

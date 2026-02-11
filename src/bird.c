@@ -68,7 +68,6 @@ static void inputHandling(Bird *bird)
     {
         bird->velocity.y = bird->jumpVel;
     }
-
 }
 
 void handleBird(Bird *bird)
@@ -88,4 +87,8 @@ void handleBird(Bird *bird)
     inputHandling(bird);
 
     // printf("%f\n", bird->velocity.y);
+}
+
+void drawBird(Bird *bird) {
+    DrawTexturePro(bird->sprite, bird->src, bird->hitBox, (Vector2) {0,0},0, WHITE);
 }
