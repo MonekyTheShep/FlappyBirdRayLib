@@ -8,6 +8,4 @@ typedef struct Bird {
     Vector2 velocity;
 } Bird;
 
-void collisionHandling(Bird *bird);
-void inputHandling(Bird *bird);
 void handleBird(Bird *bird);
