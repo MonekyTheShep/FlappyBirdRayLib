@@ -59,9 +59,16 @@ void inputHandling(Bird *bird) {
 }
 
 void handleBird(Bird *bird) {
+    // Check if the bird is touching floor or ceiling
     collisionHandling(bird);
+
+    // Apply velocity to position and hitbox
     applyVelocity(bird);
+    
+    // Physics
     applyFriction(bird);
     applyGravity(bird);
+
+    // Handle Jumping
     inputHandling(bird);
 }
