@@ -7,3 +7,7 @@ typedef struct Bird {
     const float jumpVel, gravVel;
     Vector2 velocity;
 } Bird;
+
+void collisionHandling(Bird *bird);
+void inputHandling(Bird *bird);
+void handleBird(Bird *bird);

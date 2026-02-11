@@ -31,44 +31,7 @@ void initializeGame(void) {
 void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
         const float deltaTime = GetFrameTime();
 
-        // Use this later
-        const int touchingFloor = (bird.hitBox.y + bird.hitBox.height >= (float) GetScreenHeight());
-        const int touchingCeiling = (bird.hitBox.y <= 0);
-
-        // Floor and Ceiling detection
-        if (touchingFloor) {
-            // In the real game I will just make the bird gameover.
-            // Prevent bird going underground
-            bird.position.y = (float) GetScreenHeight() - bird.hitBox.height;
-            // if the bird is going downwards then set velocity to 0
-            if (bird.velocity.y > 0) bird.velocity.y = 0;
-        }
-
-        if (touchingCeiling) {
-            // if the bird is going upwards then set velocity to 0
-            if (bird.velocity.y < 0) bird.velocity.y = 0;
-        }
-
-        // Apply the Velocity Forces based on delta time
-        bird.position.y += bird.velocity.y * deltaTime;
-        bird.position.x += bird.velocity.x * deltaTime;
-
-        // Apply the position to hitbox
-        bird.hitBox.y = bird.position.y;
-        bird.hitBox.x = bird.position.x;
-
-        // Apply a 10% friction to the velocity based on delta time
-        const float decayRate = 0.1f;
-        bird.velocity.x *= powf(1.0f - decayRate, deltaTime);
-
-        // Constant Gravity based on delta time
-        // Accelerates infinitely for now
-        bird.velocity.y += bird.gravVel * deltaTime;
-
-        // Upward Force that resets previous velocity
-        if (IsKeyPressed(KEY_SPACE) && !touchingCeiling) {
-            bird.velocity.y = bird.jumpVel;
-        }
+        handleBird(&bird);
 
         // Pipe code
         pipe.hitBox = (Rectangle) {pipe.position.x, pipe.position.y, 200, 200};
