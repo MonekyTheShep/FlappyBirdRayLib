@@ -95,8 +95,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
     {
         printf("remove");
         // move back to end of screen
-        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
-        pipe->active = 0;
+        releasePipe(pipe);
     }
 
     int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
@@ -149,6 +148,7 @@ void releasePipe(Pipe *pipe)
     if (pipe != NULL)
     {
         pipe->active = 0;
+        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
     }
 }
 
