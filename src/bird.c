@@ -73,18 +73,18 @@ static void inputHandling(Bird *bird)
 void handleBird(Bird *bird)
 {
     const float deltaTime = GetFrameTime();
-    // Check if the bird is touching floor or ceiling
-    collisionHandling(bird);
-
     // Handle Jumping
     inputHandling(bird);
-
-    // Apply velocity to position and hitbox
-    applyVelocity(bird, deltaTime);
 
     // Physics
     applyFriction(bird, deltaTime);
     applyGravity(bird, deltaTime);
+
+    // Check if the bird is touching floor or ceiling
+    collisionHandling(bird);
+
+    // Apply velocity to position and hitbox
+    applyVelocity(bird, deltaTime);
     // printf("%f\n", bird->velocity.y);
 }
 
