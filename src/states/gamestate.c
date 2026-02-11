@@ -21,7 +21,7 @@ void initializeGame(void)
     initializePipePool(pipePool);
 
     // Bird declaring
-    bird = initializeBird();
+    initializeBird(&bird);
 }
 
 float accumulationTime = 3.5f;
