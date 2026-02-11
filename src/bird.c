@@ -37,7 +37,7 @@ static int isTouchingFloor(const Bird *bird)
     return (bird->hitBox.y + bird->hitBox.height >= (float) GetScreenHeight());
 }
 
-void collisionHandling(Bird *bird)
+static void collisionHandling(Bird *bird)
 {
     // Floor and Ceiling detection
     if (isTouchingFloor(bird))
@@ -55,7 +55,8 @@ void collisionHandling(Bird *bird)
         if (bird->velocity.y < 0) bird->velocity.y = 0;
     }
 }
-void inputHandling(Bird *bird)
+
+static void inputHandling(Bird *bird)
 {
     // Upward Force that resets previous velocity
     if (IsKeyPressed(KEY_SPACE) && !isTouchingCeiling(bird))
