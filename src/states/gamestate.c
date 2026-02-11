@@ -11,8 +11,8 @@ Bird bird = {
 
 Pipe pipe;
 
-void initializeGame(void) {
-
+void initializeGame(void)
+{
     // Pipe declaring
     pipe.pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
     pipe.pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
@@ -28,7 +28,8 @@ void initializeGame(void) {
     bird.position = (Vector2) {50, (float) GetScreenHeight() / 2};
 }
 
-void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
+void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState)
+{
         const float deltaTime = GetFrameTime();
 
         handleBird(&bird);
@@ -42,7 +43,8 @@ void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
             DrawTextureEx(pipe.pipeBottom, (Vector2) {0,(float) GetScreenHeight() / 2}, 0.0f, 0.5f,  WHITE);
             DrawTextureEx(pipe.pipeChunk, (Vector2) {0,(float) GetScreenHeight() - (float) pipe.pipeBottom.height / 2}, 0.0f, 0.5f,  WHITE);
 
-            if (deltaTime != 0) {
+            if (deltaTime != 0)
+            {
                 DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
             }
 
