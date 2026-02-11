@@ -76,16 +76,15 @@ void handleBird(Bird *bird)
     // Check if the bird is touching floor or ceiling
     collisionHandling(bird);
 
+    // Handle Jumping
+    inputHandling(bird);
+
     // Apply velocity to position and hitbox
     applyVelocity(bird, deltaTime);
 
     // Physics
     applyFriction(bird, deltaTime);
     applyGravity(bird, deltaTime);
-
-    // Handle Jumping
-    inputHandling(bird);
-
     // printf("%f\n", bird->velocity.y);
 }
 
