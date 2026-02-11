@@ -24,11 +24,7 @@ void initializeGame(void)
     initializePipePool(pipePool);
 
     // Bird declaring
-    const float factor = 0.2f;
-    bird.sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
-    bird.src = (Rectangle) {0,0, (float) bird.sprite.width, (float) bird.sprite.height};
-    bird.hitBox = (Rectangle) {bird.position.x, bird.position.y, (float) bird.sprite.width * factor, (float) bird.sprite.height * factor};
-    bird.position = (Vector2) {50, (float) GetScreenHeight() / 2};
+    initializeBird(&bird);
 }
 
 float accumulationTime = 3.5f;

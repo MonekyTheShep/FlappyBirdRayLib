@@ -70,6 +70,14 @@ static void inputHandling(Bird *bird)
     }
 }
 
+void initializeBird(Bird *bird) {
+    const float factor = 0.2f;
+    bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
+    bird->src = (Rectangle) {0,0, (float) bird->sprite.width, (float) bird->sprite.height};
+    bird->hitBox = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
+    bird->position = (Vector2) {50, (float) GetScreenHeight() / 2};
+}
+
 void handleBird(Bird *bird)
 {
     const float deltaTime = GetFrameTime();
