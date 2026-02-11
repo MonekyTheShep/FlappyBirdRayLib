@@ -5,7 +5,7 @@
 
 void drawPipe(Pipe *pipe) {
     const float calculateNumberOfTopChunks = (pipe->position.y) / (float) pipe->pipeChunk.height;
-    printf("Top %f\n", calculateNumberOfTopChunks);
+    printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
     // Build top chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++) {
@@ -15,7 +15,7 @@ void drawPipe(Pipe *pipe) {
     }
 
     const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / (float) pipe->pipeChunk.height;
-    printf("Bottom %f\n", calculateNumberOfBottomChunks);
+    printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
     // Build bottom chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++) {
@@ -27,7 +27,7 @@ void drawPipe(Pipe *pipe) {
     // Draw top pipe
     DrawTextureEx(pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f,  WHITE);
 
-    const float bottomPipeYOffset = pipe->pipeBottom.height + pipe->pipeGap;
+    const float bottomPipeYOffset = pipe->pipeGap + pipe->pipeTop.height;
     // Draw bottom pipe
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
@@ -59,9 +59,11 @@ static void handleMiddleHitbox(Pipe *pipe) {
 
 static void handleBottomHitbox(Pipe *pipe) {
     pipe->bottomHitBox.x = pipe->position.x;
+    // Position the hitbox at bottom pipe
     pipe->bottomHitBox.y =  pipe->position.y + (float) pipe->pipeTop.height + pipe->pipeGap;
 
     pipe->bottomHitBox.width = (float) pipe->pipeBottom.width;
+    // Stretch hitbox to end of screen
     pipe->bottomHitBox.height = (float) GetScreenHeight();
 }
 
