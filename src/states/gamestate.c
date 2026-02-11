@@ -1,5 +1,6 @@
 #include "states/gamestate.h"
 
+#include <stdio.h>
 #include "constants.h"
 
 #include "pipe.h"
@@ -29,30 +30,26 @@ void initializeGame(void)
     bird.position = (Vector2) {50, (float) GetScreenHeight() / 2};
 }
 
-void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState)
-{
-        const float deltaTime = GetFrameTime();
+void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
+    handleBird(&bird);
 
-        handleBird(&bird);
+    // Pipe code
+    pipe.hitBox = (Rectangle) {pipe.position.x, pipe.position.y, 200, 200};
+}
 
-        // Pipe code
-        pipe.hitBox = (Rectangle) {pipe.position.x, pipe.position.y, 200, 200};
+void drawGame(void) {
+    const float deltaTime = GetFrameTime();
+    DrawTextureEx(pipe.pipeBottom, (Vector2) {0,(float) GetScreenHeight() / 2}, 0.0f, 0.5f,  WHITE);
+    DrawTextureEx(pipe.pipeChunk, (Vector2) {0,(float) GetScreenHeight() - (float) pipe.pipeBottom.height / 2}, 0.0f, 0.5f,  WHITE);
 
-        BeginDrawing();
-            ClearBackground(RAYWHITE);
+    if (deltaTime != 0)
+    {
+        DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
+        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
+    }
 
-            DrawTextureEx(pipe.pipeBottom, (Vector2) {0,(float) GetScreenHeight() / 2}, 0.0f, 0.5f,  WHITE);
-            DrawTextureEx(pipe.pipeChunk, (Vector2) {0,(float) GetScreenHeight() - (float) pipe.pipeBottom.height / 2}, 0.0f, 0.5f,  WHITE);
+    DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe.hitBox, Fade(RED, 0.5f));
 
-            if (deltaTime != 0)
-            {
-                DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
-                DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
-            }
-
-            DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
-            DrawRectangleRec(pipe.hitBox, Fade(RED, 0.5f));
-
-            DrawTexturePro(bird.sprite, bird.src, bird.hitBox, (Vector2) {0,0},0, WHITE);
-        EndDrawing();
+    DrawTexturePro(bird.sprite, bird.src, bird.hitBox, (Vector2) {0,0},0, WHITE);
 }

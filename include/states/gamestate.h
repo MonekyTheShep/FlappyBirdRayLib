@@ -4,5 +4,5 @@
 
 void initializeGame(void);
 void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState);
-
+void drawGame(void);
 void CleanUpGame(void);
