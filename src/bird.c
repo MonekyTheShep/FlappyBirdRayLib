@@ -89,6 +89,7 @@ void handleBird(Bird *bird)
     // printf("%f\n", bird->velocity.y);
 }
 
-void drawBird(Bird *bird) {
+void drawBird(Bird *bird)
+{
     DrawTexturePro(bird->sprite, bird->src, bird->hitBox, (Vector2) {0,0},0, WHITE);
 }

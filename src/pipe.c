@@ -2,13 +2,14 @@
 
 #include <math.h>
 #include <stdio.h>
-
-void drawPipe(Pipe *pipe) {
+void drawPipe(Pipe *pipe)
+{
     const float calculateNumberOfTopChunks = (pipe->position.y) / (float) pipe->pipeChunk.height;
     printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
     // Build top chunks
-    for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++) {
+    for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++)
+    {
         const float yOffset = (float) i * (float) pipe->pipeChunk.height;
 
         DrawTextureEx(pipe->pipeChunk, (Vector2) {pipe->position.x, pipe->position.y - yOffset}, 0.0f, 1.0f,  WHITE);
@@ -18,7 +19,8 @@ void drawPipe(Pipe *pipe) {
     printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
     // Build bottom chunks
-    for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++) {
+    for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++)
+    {
         const float yOffset = ((float) i * (float) pipe->pipeChunk.height) + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
 
         DrawTextureEx(pipe->pipeChunk, (Vector2) {pipe->position.x, pipe->position.y + yOffset}, 0.0f, 1.0f,  WHITE);
@@ -27,15 +29,14 @@ void drawPipe(Pipe *pipe) {
     // Draw top pipe
     DrawTextureEx(pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f,  WHITE);
 
-    const float bottomPipeYOffset = pipe->pipeGap + pipe->pipeTop.height;
+    const float bottomPipeYOffset = pipe->pipeGap + (float) pipe->pipeTop.height;
     // Draw bottom pipe
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
 }
 
-static void handleTopHitbox(Pipe *pipe) {
-    const float calculateNumberOfTopChunks = ceilf((pipe->position.y) / (float) pipe->pipeChunk.height);
-
+static void handleTopHitbox(Pipe *pipe)
+{
     // Calculate position of hitbox
     pipe->topHitBox.x = pipe->position.x;
     // Position hitbox at top of pipe chunks
@@ -47,7 +48,8 @@ static void handleTopHitbox(Pipe *pipe) {
     pipe->topHitBox.height = pipe->position.y + (float) pipe->pipeTop.height;
 }
 
-static void handleMiddleHitbox(Pipe *pipe) {
+static void handleMiddleHitbox(Pipe *pipe)
+{
     pipe->middleHitBox.x = pipe->position.x;
     // Position middle hitbox after the pipeTop
     pipe->middleHitBox.y = pipe->position.y + (float) pipe->pipeTop.height;
@@ -57,7 +59,8 @@ static void handleMiddleHitbox(Pipe *pipe) {
     pipe->middleHitBox.height = pipe->pipeGap;
 }
 
-static void handleBottomHitbox(Pipe *pipe) {
+static void handleBottomHitbox(Pipe *pipe)
+{
     pipe->bottomHitBox.x = pipe->position.x;
     // Position the hitbox at bottom pipe
     pipe->bottomHitBox.y =  pipe->position.y + (float) pipe->pipeTop.height + pipe->pipeGap;
@@ -67,8 +70,16 @@ static void handleBottomHitbox(Pipe *pipe) {
     pipe->bottomHitBox.height = (float) GetScreenHeight();
 }
 
-void handlePipe(Pipe *pipe) {
-    // pipe->position.x += -200 * GetFrameTime();
+static void applyVelocity(Pipe *pipe, float deltaTime)
+{
+    pipe->velocity.x = -5000 * deltaTime;
+    pipe->position.x += pipe->velocity.x * deltaTime;
+}
+
+void handlePipe(Pipe *pipe)
+{
+    const float deltaTime = GetFrameTime();
+    applyVelocity(pipe, deltaTime);
     handleTopHitbox(pipe);
     handleMiddleHitbox(pipe);
     handleBottomHitbox(pipe);
