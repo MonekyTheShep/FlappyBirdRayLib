@@ -1,5 +1,5 @@
 #pragma once
-
+#include <raylib.h>
 typedef struct Pipe {
     Texture pipeChunk, pipeBottom, pipeTop;
     Vector2 position;
