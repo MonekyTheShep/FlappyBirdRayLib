@@ -42,9 +42,9 @@ void drawPipe(Pipe *pipe)
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
 
-    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
-    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
-    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
+    // DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
+    // DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
+    // DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
 
 }
 
@@ -169,11 +169,11 @@ void handlePipes(Pipe *pipePool, Bird *bird, int *gameOver)
     {
         if (pipePool[i].active)
         {
-            applyVelocity(&pipePool[i], deltaTime);
             handleTopHitbox(&pipePool[i]);
             handleMiddleHitbox(&pipePool[i]) ;
             handleBottomHitbox(&pipePool[i]);
             collisionHandling(&pipePool[i], bird, gameOver);
+            applyVelocity(&pipePool[i], deltaTime);
         }
     }
 }
