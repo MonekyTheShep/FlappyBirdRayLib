@@ -19,7 +19,8 @@ void initializeGame(void)
     pipe.pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
     pipe.pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
     pipe.pipeChunk = LoadTexture(ASSETS_PATH"/pipe_chunk.png");
-    pipe.position = (Vector2) {(float) GetScreenWidth() / 2, ((float) GetScreenHeight() / 2) - pipe.pipeChunk.height};
+    pipe.pipeGap = pipe.pipeChunk.height;
+    pipe.position = (Vector2) {(float) GetScreenWidth() / 2, ((float) GetScreenHeight() / 2) - pipe.pipeChunk.height - 200};
     pipe.velocity = (Vector2) {0.0f, 0.0f};
 
     // Bird declaring
@@ -38,6 +39,9 @@ void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
 static void drawHitBoxDebug(void) {
     DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
     DrawRectangleRec(pipe.topHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe.middleHitBox, Fade(GREEN, 0.5f));
+
+    DrawRectangleRec(pipe.bottomHitBox, Fade(RED, 0.5f));
 }
 
 void drawGameMenu(void) {
@@ -48,7 +52,7 @@ void drawGameMenu(void) {
         DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
     }
 
-    drawHitBoxDebug();
     drawBird(&bird);
     drawPipe(&pipe);
+    drawHitBoxDebug();
 }
