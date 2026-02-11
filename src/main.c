@@ -22,6 +22,7 @@ int main(void)
     MenuStates menuState = MAIN_MENU;
     GameInfo gameInfo = {.musicPlaying = 0};
 
+    SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
@@ -34,17 +35,30 @@ int main(void)
             break;
         }
 
+        // Update logic for each state
         switch (menuState)
         {
-            case MAIN_MENU:
-                updateMainMenu(&gameInfo, &menuState);
-                break;
             case GAME_MENU:
                 updateGameMenu(&gameInfo, &menuState);
                 break;
             default:
                 break;
         }
+
+        // Draw for each state
+        BeginDrawing();
+            ClearBackground(WHITE);
+            switch (menuState)
+            {
+                case MAIN_MENU:
+                    drawMainMenu(&gameInfo, &menuState);
+                    break;
+                case GAME_MENU:
+                    drawGame();
+                default:
+                    break;
+            }
+        EndDrawing();
     }
 
     CloseWindow();
