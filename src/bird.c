@@ -2,8 +2,7 @@
 #include "math.h"
 
 
-static void applyVelocity(Bird *bird) {
-    const float deltaTime = GetFrameTime();
+static void applyVelocity(Bird *bird, const float deltaTime) {
     // Apply the Velocity Forces based on delta time
     bird->position.y += bird->velocity.y * deltaTime;
     bird->position.x += bird->velocity.x * deltaTime;
@@ -13,15 +12,13 @@ static void applyVelocity(Bird *bird) {
     bird->hitBox.x = bird->position.x;
 }
 
-static void applyFriction(Bird *bird) {
-    const float deltaTime = GetFrameTime();
+static void applyFriction(Bird *bird, const float deltaTime) {
     // Apply a 10% friction to the velocity based on delta time
     const float decayRate = 0.1f;
     bird->velocity.x *= powf(1.0f - decayRate, deltaTime);
 }
 
-static void applyGravity(Bird *bird) {
-    const float deltaTime = GetFrameTime();
+static void applyGravity(Bird *bird, const float deltaTime) {
     // Constant Gravity based on delta time
     // Accelerates infinitely for now
     bird->velocity.y += bird->gravVel * deltaTime;
@@ -59,15 +56,16 @@ void inputHandling(Bird *bird) {
 }
 
 void handleBird(Bird *bird) {
+    const float deltaTime = GetFrameTime();
     // Check if the bird is touching floor or ceiling
     collisionHandling(bird);
 
     // Apply velocity to position and hitbox
-    applyVelocity(bird);
-    
+    applyVelocity(bird, deltaTime);
+
     // Physics
-    applyFriction(bird);
-    applyGravity(bird);
+    applyFriction(bird, deltaTime);
+    applyGravity(bird, deltaTime);
 
     // Handle Jumping
     inputHandling(bird);
