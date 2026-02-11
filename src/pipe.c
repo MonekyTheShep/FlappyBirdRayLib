@@ -20,6 +20,8 @@ void drawPipe(Pipe *pipe)
         DrawTextureEx(pipe->pipeChunkTop, (Vector2) {pipe->position.x, startingPosition - yOffset}, 0.0f, 1.0f,  WHITE);
     }
 
+    // Find difference between position and screen height.
+    // Then remove the top pipe, middle, and bottom pipe to get the chunks.
     const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;;
     printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
