@@ -4,7 +4,7 @@ typedef struct Bird {
     Texture sprite;
     Vector2 position;
     Rectangle src, hitBox;
-    const float jumpVel, gravVel;
+    float jumpVel, gravVel;
     Vector2 velocity;
 } Bird;
 
