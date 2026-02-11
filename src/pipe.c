@@ -1,29 +1,33 @@
 #include "pipe.h"
 
+#include "constants.h"
+
 #include <math.h>
 #include <stdio.h>
+
+
 void drawPipe(Pipe *pipe)
 {
-    const float calculateNumberOfTopChunks = (pipe->position.y) / (float) pipe->pipeChunk.height;
+    const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
     printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
     // Build top chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++)
     {
-        const float yOffset = (float) i * (float) pipe->pipeChunk.height;
+        const float yOffset = (float) i * pipe->pipeChunkSize.y;
 
-        DrawTextureEx(pipe->pipeChunk, (Vector2) {pipe->position.x, pipe->position.y - yOffset}, 0.0f, 1.0f,  WHITE);
+        DrawTextureEx(pipe->pipeChunkTop, (Vector2) {pipe->position.x, pipe->position.y - pipe->pipeChunkSize.y - yOffset}, 0.0f, 1.0f,  WHITE);
     }
 
-    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / (float) pipe->pipeChunk.height;
+    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;;
     printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
     // Build bottom chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++)
     {
-        const float yOffset = ((float) i * (float) pipe->pipeChunk.height) + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
+        const float yOffset = ((float) i * pipe->pipeChunkSize.y) + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
 
-        DrawTextureEx(pipe->pipeChunk, (Vector2) {pipe->position.x, pipe->position.y + yOffset}, 0.0f, 1.0f,  WHITE);
+        DrawTextureEx(pipe->pipeChunkBottom, (Vector2) {pipe->position.x, pipe->position.y + yOffset}, 0.0f, 1.0f,  WHITE);
     }
 
     // Draw top pipe
@@ -32,6 +36,11 @@ void drawPipe(Pipe *pipe)
     const float bottomPipeYOffset = pipe->pipeGap + (float) pipe->pipeTop.height;
     // Draw bottom pipe
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
+
+
+    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
+    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
 
 }
 
@@ -43,7 +52,7 @@ static void handleTopHitbox(Pipe *pipe)
     pipe->topHitBox.y = 0;
 
     // Calculate scale of hitbox
-    pipe->topHitBox.width = (float) pipe->pipeChunk.width;
+    pipe->topHitBox.width = pipe->pipeChunkSize.x;
     // 0 - pipe->position.y + pipe->pipeTop.height. This covers the chunks and the pipe top itself
     pipe->topHitBox.height = pipe->position.y + (float) pipe->pipeTop.height;
 }
@@ -76,11 +85,70 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
     pipe->position.x += pipe->velocity.x * deltaTime;
 }
 
-void handlePipe(Pipe *pipe)
+static void collisionHandling(Pipe *pipe) {
+    const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0;
+    if (offScreen) {
+        printf("remove");
+        // move back to end of screen
+        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
+        pipe->active = 0;
+    }
+}
+
+
+void initializePipePool(Pipe *pipePool) {
+    for (int i = 0; i < POOL_SIZE; i++) {
+        pipePool[i].active = 0;
+        initializePipe(&pipePool[i]);
+    }
+}
+
+void initializePipe(Pipe *pipe) {
+    pipe->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
+    pipe->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
+    pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
+    pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
+    pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
+    pipe->pipeGap = pipe->pipeChunkSize.y;
+    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
+    pipe->velocity = (Vector2) {0.0f, 0.0f};
+}
+
+Pipe *acquirePipe(Pipe *pipePool) {
+    for (int i = 0; i < POOL_SIZE; i++) {
+        if (!pipePool[i].active) {
+            pipePool[i].active = 1;
+            return &pipePool[i];
+        }
+    }
+    return NULL;
+}
+
+void releasePipe(Pipe *pipe) {
+    if (pipe != NULL) {
+        pipe->active = 0;
+    }
+}
+
+void drawPipes(Pipe *pipePool) {
+    for (int i = 0; i < POOL_SIZE; i++) {
+        if (pipePool[i].active) {
+            drawPipe(&pipePool[i]);
+        }
+    }
+}
+
+void handlePipes(Pipe *pipePool)
 {
     const float deltaTime = GetFrameTime();
-    applyVelocity(pipe, deltaTime);
-    handleTopHitbox(pipe);
-    handleMiddleHitbox(pipe);
-    handleBottomHitbox(pipe);
+    for (int i = 0; i < POOL_SIZE; i++) {
+        if (pipePool[i].active) {
+            applyVelocity(&pipePool[i], deltaTime);
+            handleTopHitbox(&pipePool[i]);
+            handleMiddleHitbox(&pipePool[i]) ;
+            handleBottomHitbox(&pipePool[i]);
+            collisionHandling(&pipePool[i]);
+        }
+    }
+
 }

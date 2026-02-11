@@ -1,27 +1,26 @@
 #include "states/gamestate.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+
 #include "constants.h"
 
 #include "pipe.h"
 #include "bird.h"
+
 
 Bird bird = {
     .jumpVel = JUMP_VELOCITY,
     .gravVel = GRAVITY_VELOCITY
 };
 
-Pipe pipe;
+
+Pipe pipePool[POOL_SIZE];
 
 void initializeGame(void)
 {
     // Pipe declaring
-    pipe.pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
-    pipe.pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
-    pipe.pipeChunk = LoadTexture(ASSETS_PATH"/pipe_chunk.png");
-    pipe.pipeGap = pipe.pipeChunk.height;
-    pipe.position = (Vector2) {(float) GetScreenWidth() / 2, ((float) GetScreenHeight() / 2) - pipe.pipeChunk.height};
-    pipe.velocity = (Vector2) {0.0f, 0.0f};
+    initializePipePool(pipePool);
 
     // Bird declaring
     const float factor = 0.2f;
@@ -31,24 +30,35 @@ void initializeGame(void)
     bird.position = (Vector2) {50, (float) GetScreenHeight() / 2};
 }
 
+float accumulationTime = 3.5f;
+
 void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState) {
+    const float deltaTime = GetFrameTime();
+    accumulationTime += deltaTime;
+
+    if (accumulationTime >= 3.5f) {
+        printf("acquire");
+        Pipe *pipe = acquirePipe(pipePool);
+        pipe->active = 1;
+
+        pipe->position.y = (rand() % 400) - 100;
+        accumulationTime = 0.0f;
+    }
+
     handleBird(&bird);
-    handlePipe(&pipe);
+    handlePipes(pipePool);
+
 }
 
 static void drawHitBoxDebug(void) {
     DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
-
-    DrawRectangleRec(pipe.topHitBox, Fade(RED, 0.5f));
-    DrawRectangleRec(pipe.middleHitBox, Fade(GREEN, 0.5f));
-    DrawRectangleRec(pipe.bottomHitBox, Fade(RED, 0.5f));
 }
 
 void drawGameMenu(void) {
     const float deltaTime = GetFrameTime();
 
     drawBird(&bird);
-    drawPipe(&pipe);
+    drawPipes(pipePool);
     drawHitBoxDebug();
 
     if (deltaTime != 0)
