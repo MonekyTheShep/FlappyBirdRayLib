@@ -39,7 +39,7 @@ int main(void)
         switch (menuState)
         {
             case GAME_MENU:
-                updateGameMenu(&gameInfo, &menuState);
+                updateGameMenu();
                 break;
             default:
                 break;
@@ -54,7 +54,7 @@ int main(void)
                     drawMainMenu(&gameInfo, &menuState);
                     break;
                 case GAME_MENU:
-                    drawGameMenu();
+                    drawGameMenu(&gameInfo, &menuState);
                 default:
                     break;
             }
