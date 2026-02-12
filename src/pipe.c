@@ -5,15 +5,18 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "states/gamestate.h"
+
 
 void drawPipe(Pipe *pipe)
 {
     const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
-    printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
+    // printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
     // Build top chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++)
     {
+        // Position above the top pillar
         const float startingPosition = pipe->position.y - pipe->pipeChunkSize.y;
         const float yOffset = (float) i * pipe->pipeChunkSize.y;
 
@@ -23,11 +26,12 @@ void drawPipe(Pipe *pipe)
     // Find difference between position and screen height.
     // Then remove the top pipe, middle, and bottom pipe to get the chunks.
     const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;;
-    printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
+    // printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
     // Build bottom chunks
     for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++)
     {
+        // Position below the bottom pillar
         const float startingPosition = pipe->position.y + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
         const float yOffset = (float) i * pipe->pipeChunkSize.y;
 
@@ -42,9 +46,9 @@ void drawPipe(Pipe *pipe)
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
 
-    // DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
-    // DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
-    // DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
+    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
 
 }
 
@@ -89,6 +93,9 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
     pipe->position.x += pipe->velocity.x * deltaTime;
 }
 
+
+
+
 static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
     const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0;
     if (offScreen)
@@ -98,7 +105,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
         releasePipe(pipe);
     }
 
-    int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
+    const int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
     CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
 
     if (birdHitPipe)
@@ -106,7 +113,18 @@ static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
         *gameOver = 1;
     }
 
+    const int scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
+
+    // Each pipe stores if a score has been incremented.
+    if (scoreCollided && pipe->scored != 1) {
+
+        incrementScore();
+        pipe->scored = 1;
+    }
 }
+
+
+
 
 
 void initializePipePool(Pipe *pipePool)

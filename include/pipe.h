@@ -9,6 +9,7 @@ typedef struct Pipe {
     Rectangle topHitBox, middleHitBox, bottomHitBox;
     float pipeGap;
     int active;
+    int scored;
     Vector2 position;
     Vector2 velocity;
 } Pipe;
