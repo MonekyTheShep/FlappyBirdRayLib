@@ -18,6 +18,8 @@ int score = 0;
 Bird bird;
 Pipe pipePool[POOL_SIZE];
 
+float accumulationTime = 3.5f;
+
 void initializeGame(void)
 {
     // Pipe declaring
@@ -41,11 +43,13 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
         releasePipe(&currentPipePool[i]);
     }
 
+    accumulationTime = 3.5f;
+
     *menuState = MAIN_MENU;
 
 }
 
-float accumulationTime = 3.5f;
+
 
 static void spawnPipe(void)
 {
