@@ -74,6 +74,7 @@ void initializeBird(Bird *bird) {
     const float factor = 0.2f;
     bird->jumpVel = JUMP_VELOCITY;
     bird->gravVel = GRAVITY_VELOCITY;
+    bird->velocity = (Vector2) {0,0};
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
     bird->src = (Rectangle) {0,0, (float) bird->sprite.width, (float) bird->sprite.height};
     bird->hitBox = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
