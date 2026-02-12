@@ -163,6 +163,7 @@ void releasePipe(Pipe *pipe)
     if (pipe != NULL)
     {
         pipe->active = 0;
+        pipe->scored = 0;
         pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
     }
 }
