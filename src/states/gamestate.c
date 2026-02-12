@@ -12,11 +12,10 @@
 #include "bird.h"
 
 
-Bird bird;
-
 int gameOver = 0;
 int score = 0;
 
+Bird bird;
 Pipe pipePool[POOL_SIZE];
 
 void initializeGame(void)
