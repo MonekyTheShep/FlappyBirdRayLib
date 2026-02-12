@@ -73,7 +73,7 @@ void updateGameMenu(void)
     {
         spawnPipe();
         handleBird(&bird);
-        handlePipes(pipePool, &bird, &gameOver);
+        handlePipes(pipePool, &bird);
     }
 }
 

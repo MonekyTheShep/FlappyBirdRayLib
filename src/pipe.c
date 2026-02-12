@@ -8,6 +8,8 @@
 #include "states/gamestate.h"
 
 
+extern int gameOver;
+
 static void drawHitBoxDebug(Pipe *pipe) {
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
     DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
@@ -98,7 +100,7 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
 }
 
 
-static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
+static void collisionHandling(Pipe *pipe, Bird *bird) {
     const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0;
     if (offScreen)
     {
@@ -112,7 +114,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird, int *gameOver) {
 
     if (birdHitPipe)
     {
-        *gameOver = 1;
+        gameOver = 1;
     }
 
     const int scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
@@ -185,7 +187,7 @@ void drawPipes(Pipe *pipePool) {
     }
 }
 
-void handlePipes(Pipe *pipePool, Bird *bird, int *gameOver)
+void handlePipes(Pipe *pipePool, Bird *bird)
 {
     const float deltaTime = GetFrameTime();
     for (int i = 0; i < POOL_SIZE; i++)
@@ -195,7 +197,7 @@ void handlePipes(Pipe *pipePool, Bird *bird, int *gameOver)
             handleTopHitbox(&pipePool[i]);
             handleMiddleHitbox(&pipePool[i]) ;
             handleBottomHitbox(&pipePool[i]);
-            collisionHandling(&pipePool[i], bird, gameOver);
+            collisionHandling(&pipePool[i], bird);
             applyVelocity(&pipePool[i], deltaTime);
         }
     }
