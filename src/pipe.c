@@ -7,7 +7,6 @@
 
 #include "states/gamestate.h"
 
-
 extern int gameOver;
 
 static void drawHitBoxDebug(Pipe *pipe) {
