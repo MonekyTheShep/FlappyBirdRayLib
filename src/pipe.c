@@ -17,7 +17,7 @@ static void drawHitBoxDebug(Pipe *pipe) {
 void drawPipe(Pipe *pipe)
 {
     // Find the number of chunks to fill from top to top pipe
-    const float calculateNumberOfTopChunks = (pipe->position.y / pipe->pipeChunkSize.y);
+    const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
     // printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
     // Build top chunks
