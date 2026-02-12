@@ -21,7 +21,7 @@ void drawPipe(Pipe *pipe)
     // printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
     // Build top chunks
-    for (int i = 0; i <= (int) ceilf(calculateNumberOfTopChunks); i++)
+    for (int i = 0; i < (int) ceilf(calculateNumberOfTopChunks); i++)
     {
         // Position above the top pillar
         const float startingPosition = pipe->position.y - pipe->pipeChunkSize.y;
@@ -32,11 +32,11 @@ void drawPipe(Pipe *pipe)
 
     // Find difference between position and screen height.
     // Then remove the top pipe, middle, and bottom pipe to get the chunks.
-    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;;
+    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
     // printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
     // Build bottom chunks
-    for (int i = 0; i <= (int) ceilf(calculateNumberOfBottomChunks); i++)
+    for (int i = 0; i < (int) ceilf(calculateNumberOfBottomChunks); i++)
     {
         // Position below the bottom pillar
         const float startingPosition = pipe->position.y + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
