@@ -12,6 +12,7 @@
 Bird bird;
 
 int gameOver = 0;
+int score = 0;
 
 Pipe pipePool[POOL_SIZE];
 
@@ -58,6 +59,10 @@ static void drawHitBoxDebug(void)
     DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
 }
 
+void incrementScore(void) {
+    score += 1;
+}
+
 void drawGameMenu(void)
 {
     const float deltaTime = GetFrameTime();
@@ -65,6 +70,8 @@ void drawGameMenu(void)
     drawBird(&bird);
     drawPipes(pipePool);
     drawHitBoxDebug();
+
+    DrawText(TextFormat("Score: %0i", score), 0, 100, 20, GREEN);
 
     if (deltaTime != 0)
     {
