@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+#include "raygui.h"
 
 #include "constants.h"
 
@@ -25,6 +28,22 @@ void initializeGame(void)
     initializeBird(&bird);
 }
 
+static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState) {
+    gameOver = 0;
+    gameInfo->musicPlaying = 0;
+
+    // Move bird back to starting position
+    currentBird->position = (Vector2) {50, (float) GetScreenHeight() / 2};
+
+    // Reset pipes
+    for (int i = 0; i < POOL_SIZE; i++) {
+        releasePipe(&currentPipePool[i]);
+    }
+
+    *menuState = MAIN_MENU;
+
+}
+
 float accumulationTime = 3.5f;
 
 static void spawnPipe(void)
@@ -40,7 +59,7 @@ static void spawnPipe(void)
     }
 }
 
-void updateGameMenu(GameInfo *gameInfo, MenuStates *menuState)
+void updateGameMenu(void)
 {
     const float deltaTime = GetFrameTime();
     accumulationTime += deltaTime;
@@ -63,7 +82,21 @@ void incrementScore(void) {
     score += 1;
 }
 
-void drawGameMenu(void)
+static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
+{
+    const float buttonWidth = 100;
+    const float buttonHeight = 50;
+    const float gameOverButtonX = ((float) GetScreenWidth() - buttonWidth) / 2;
+    const float gameOverButtonY = ((float) GetScreenHeight() - buttonHeight) / 2;
+    const Rectangle gameOverButton = {gameOverButtonX,gameOverButtonY,buttonWidth,buttonHeight};
+
+    if (GuiButton(gameOverButton, "Reset"))
+    {
+        resetGame(pipePool, &bird, gameInfo, menuState);
+    }
+}
+
+void drawGameMenu(GameInfo *gameInfo, MenuStates *menuState)
 {
     const float deltaTime = GetFrameTime();
 
@@ -77,5 +110,9 @@ void drawGameMenu(void)
     {
         DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
         DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
+    }
+
+    if (gameOver) {
+        drawGameOverMenu(gameInfo, menuState);
     }
 }
