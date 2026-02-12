@@ -6,6 +6,7 @@
 #include <math.h>
 
 
+
 static void applyVelocity(Bird *bird, const float deltaTime)
 {
     // Apply the Velocity Forces based on delta time
@@ -99,7 +100,13 @@ void handleBird(Bird *bird)
     // printf("%f\n", bird->velocity.y);
 }
 
+static void drawHitBoxDebug(Bird *bird)
+{
+    DrawRectangleRec(bird->hitBox, Fade(RED, 0.5f));
+}
+
 void drawBird(Bird *bird)
 {
+    // drawHitBoxDebug(bird);
     DrawTexturePro(bird->sprite, bird->src, bird->hitBox, (Vector2) {0,0},0, WHITE);
 }

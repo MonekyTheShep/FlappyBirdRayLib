@@ -72,12 +72,6 @@ void updateGameMenu(void)
     }
 }
 
-
-static void drawHitBoxDebug(void)
-{
-    DrawRectangleRec(bird.hitBox, Fade(RED, 0.5f));
-}
-
 void incrementScore(void) {
     score += 1;
 }
@@ -102,7 +96,6 @@ void drawGameMenu(GameInfo *gameInfo, MenuStates *menuState)
 
     drawBird(&bird);
     drawPipes(pipePool);
-    drawHitBoxDebug();
 
     DrawText(TextFormat("Score: %0i", score), 0, 100, 20, GREEN);
 

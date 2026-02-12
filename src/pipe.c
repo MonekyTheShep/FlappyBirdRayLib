@@ -8,6 +8,12 @@
 #include "states/gamestate.h"
 
 
+static void drawHitBoxDebug(Pipe *pipe) {
+    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
+    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
+}
+
 void drawPipe(Pipe *pipe)
 {
     const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
@@ -46,10 +52,7 @@ void drawPipe(Pipe *pipe)
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
 
-    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
-    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
-    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
-
+    // drawHitBoxDebug(pipe);
 }
 
 static void handleTopHitbox(Pipe *pipe)
