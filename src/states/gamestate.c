@@ -29,6 +29,7 @@ void initializeGame(void)
 
 static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState) {
     gameOver = 0;
+    score = 0;
     gameInfo->musicPlaying = 0;
 
     // Move bird back to starting position and reset velocity
