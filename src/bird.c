@@ -14,8 +14,15 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     bird->position.x += bird->velocity.x * deltaTime;
 
     // Apply the position to hitbox
-    bird->hitBox.y = bird->position.y;
+    bird->dest.y = bird->position.y;
+    bird->dest.x = bird->position.x;
+}
+
+static void handleHitbox(Bird *bird) {
     bird->hitBox.x = bird->position.x;
+    bird->hitBox.y = bird->position.y;
+    bird->hitBox.width = bird->dest.width;
+    bird->hitBox.height = bird->dest.height;
 }
 
 static void applyFriction(Bird *bird, const float deltaTime)
@@ -78,7 +85,7 @@ void initializeBird(Bird *bird) {
     bird->velocity = (Vector2) {0,0};
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
     bird->src = (Rectangle) {0,0, (float) bird->sprite.width, (float) bird->sprite.height};
-    bird->hitBox = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
+    bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
     bird->position = (Vector2) {50, (float) GetScreenHeight() / 2};
 }
 
@@ -92,11 +99,15 @@ void handleBird(Bird *bird)
     applyFriction(bird, deltaTime);
     applyGravity(bird, deltaTime);
 
+    // Apply velocity to position and hitbox
+    applyVelocity(bird, deltaTime);
+
+    handleHitbox(bird);
+
     // Check if the bird is touching floor or ceiling
     collisionHandling(bird);
 
-    // Apply velocity to position and hitbox
-    applyVelocity(bird, deltaTime);
+
     // printf("%f\n", bird->velocity.y);
 }
 
@@ -107,6 +118,6 @@ static void drawHitBoxDebug(Bird *bird)
 
 void drawBird(Bird *bird)
 {
-    // drawHitBoxDebug(bird);
-    DrawTexturePro(bird->sprite, bird->src, bird->hitBox, (Vector2) {0,0},0, WHITE);
+    drawHitBoxDebug(bird);
+    DrawTexturePro(bird->sprite, bird->src, bird->dest, (Vector2) {0,0},0, WHITE);
 }

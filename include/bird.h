@@ -3,7 +3,7 @@
 typedef struct Bird {
     Texture sprite;
     Vector2 position;
-    Rectangle src, hitBox;
+    Rectangle src, dest, hitBox;
     float jumpVel, gravVel;
     Vector2 velocity;
 } Bird;

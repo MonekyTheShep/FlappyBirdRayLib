@@ -54,7 +54,7 @@ void drawPipe(Pipe *pipe)
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
 
-    // drawHitBoxDebug(pipe);
+    drawHitBoxDebug(pipe);
 }
 
 static void handleTopHitbox(Pipe *pipe)
@@ -108,7 +108,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
         releasePipe(pipe);
     }
 
-    const int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
+    const int birdHitPipe = CheckCollisionRecs(bird->dest, pipe->topHitBox) ||
     CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
 
     if (birdHitPipe)
@@ -116,7 +116,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
         gameOver = 1;
     }
 
-    const int scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
+    const int scoreCollided = CheckCollisionRecs(bird->dest, pipe->middleHitBox);
 
     // Each pipe stores if a score has been incremented.
     if (scoreCollided && pipe->scored != 1)
@@ -193,11 +193,11 @@ void handlePipes(Pipe *pipePool, Bird *bird)
     {
         if (pipePool[i].active)
         {
+            applyVelocity(&pipePool[i], deltaTime);
             handleTopHitbox(&pipePool[i]);
             handleMiddleHitbox(&pipePool[i]) ;
             handleBottomHitbox(&pipePool[i]);
             collisionHandling(&pipePool[i], bird);
-            applyVelocity(&pipePool[i], deltaTime);
         }
     }
 }
