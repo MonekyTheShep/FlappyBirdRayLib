@@ -21,8 +21,6 @@ static void applyVelocity(Bird *bird, const float deltaTime)
 static void handleHitbox(Bird *bird) {
     bird->hitBox.x = bird->position.x;
     bird->hitBox.y = bird->position.y;
-    bird->hitBox.width = bird->dest.width;
-    bird->hitBox.height = bird->dest.height;
 }
 
 static void applyFriction(Bird *bird, const float deltaTime)
@@ -86,6 +84,9 @@ void initializeBird(Bird *bird) {
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
     bird->src = (Rectangle) {0,0, (float) bird->sprite.width, (float) bird->sprite.height};
     bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
+    // Should I handle hitbox size here?
+    bird->hitBox.width = bird->dest.width;
+    bird->hitBox.height = bird->dest.height;
     bird->position = (Vector2) {50, (float) GetScreenHeight() / 2};
 }
 
