@@ -19,4 +19,4 @@ void initializePipe(Pipe *pipe);
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
 void drawPipes(Pipe *pipe);
-void handlePipes(Pipe *pipe, Bird *bird);
+void handlePipes(float deltaTime, Pipe *pipe, Bird *bird);

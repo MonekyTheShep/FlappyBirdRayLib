@@ -186,16 +186,15 @@ void drawPipes(Pipe *pipePool) {
     }
 }
 
-void handlePipes(Pipe *pipePool, Bird *bird)
+void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
 {
-    const float deltaTime = GetFrameTime();
     for (int i = 0; i < POOL_SIZE; i++)
     {
         if (pipePool[i].active)
         {
             applyVelocity(&pipePool[i], deltaTime);
             handleTopHitbox(&pipePool[i]);
-            handleMiddleHitbox(&pipePool[i]) ;
+            handleMiddleHitbox(&pipePool[i]);
             handleBottomHitbox(&pipePool[i]);
             collisionHandling(&pipePool[i], bird);
         }

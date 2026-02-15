@@ -7,6 +7,6 @@ typedef struct Bird {
     float jumpVel;
 } Bird;
 
-void handleBird(Bird *bird);
+void handleBird(float deltaTime, Bird *bird);
 void drawBird(Bird *bird);
 void initializeBird(Bird *bird);

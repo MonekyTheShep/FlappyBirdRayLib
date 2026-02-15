@@ -72,8 +72,8 @@ void updateGameMenu(void)
     if (!gameOver)
     {
         spawnPipe();
-        handleBird(&bird);
-        handlePipes(pipePool, &bird);
+        handleBird(deltaTime, &bird);
+        handlePipes(deltaTime, pipePool, &bird);
     }
 }
 

@@ -89,9 +89,8 @@ void initializeBird(Bird *bird) {
     bird->position = (Vector2) {50, (float) GetScreenHeight() / 2};
 }
 
-void handleBird(Bird *bird)
+void handleBird(const float deltaTime, Bird *bird)
 {
-    const float deltaTime = GetFrameTime();
     // Handle Jumping
     inputHandling(bird);
 
