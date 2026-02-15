@@ -2,10 +2,9 @@
 #include <raylib.h>
 typedef struct Bird {
     Texture sprite;
-    Vector2 position;
+    Vector2 position, velocity;
     Rectangle src, dest, hitBox;
-    float jumpVel, gravVel;
-    Vector2 velocity;
+    float jumpVel;
 } Bird;
 
 void handleBird(Bird *bird);

@@ -35,7 +35,7 @@ static void applyGravity(Bird *bird, const float deltaTime)
 {
     // Constant Gravity based on delta time
     // Accelerates infinitely for now
-    bird->velocity.y += bird->gravVel * deltaTime;
+    bird->velocity.y += GRAVITY_VELOCITY * deltaTime;
 }
 
 static int isTouchingCeiling(const Bird *bird)
@@ -79,7 +79,6 @@ static void inputHandling(Bird *bird)
 void initializeBird(Bird *bird) {
     const float factor = 0.2f;
     bird->jumpVel = JUMP_VELOCITY;
-    bird->gravVel = GRAVITY_VELOCITY;
     bird->velocity = (Vector2) {0,0};
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
     bird->src = (Rectangle) {0,0, (float) bird->sprite.width, (float) bird->sprite.height};
@@ -100,15 +99,13 @@ void handleBird(Bird *bird)
     applyFriction(bird, deltaTime);
     applyGravity(bird, deltaTime);
 
-    // Apply velocity to position and hitbox
+    // Apply velocity to position and destination
     applyVelocity(bird, deltaTime);
 
     handleHitbox(bird);
 
     // Check if the bird is touching floor or ceiling
     collisionHandling(bird);
-
-
     // printf("%f\n", bird->velocity.y);
 }
 

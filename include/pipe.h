@@ -10,8 +10,7 @@ typedef struct Pipe {
     float pipeGap;
     int active;
     int scored;
-    Vector2 position;
-    Vector2 velocity;
+    Vector2 position, velocity;
 } Pipe;
 
 void drawPipe(Pipe *pipe);
