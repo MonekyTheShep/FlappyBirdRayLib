@@ -3,7 +3,7 @@
 #include "utility/menuutil.h"
 
 void initializeGame(void);
-void updateGameMenu(void);
+void updateGameMenu(float deltaTime);
 void incrementScore(void);
-void drawGameMenu(GameInfo *gameInfo, MenuStates *menuState);
+void drawGameMenu(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
 void CleanUpGame(void);

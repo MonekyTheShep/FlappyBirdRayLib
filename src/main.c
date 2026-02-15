@@ -35,11 +35,13 @@ int main(void)
             break;
         }
 
+        const float deltaTime = GetFrameTime();
+
         // Update logic for each state
         switch (menuState)
         {
             case GAME_MENU:
-                updateGameMenu();
+                updateGameMenu(deltaTime);
                 break;
             default:
                 break;
@@ -54,7 +56,7 @@ int main(void)
                     drawMainMenu(&gameInfo, &menuState);
                     break;
                 case GAME_MENU:
-                    drawGameMenu(&gameInfo, &menuState);
+                    drawGameMenu(deltaTime, &gameInfo, &menuState);
                 default:
                     break;
             }

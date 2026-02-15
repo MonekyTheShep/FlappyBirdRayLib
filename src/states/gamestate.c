@@ -64,9 +64,8 @@ static void spawnPipe(void)
     }
 }
 
-void updateGameMenu(void)
+void updateGameMenu(const float deltaTime)
 {
-    const float deltaTime = GetFrameTime();
     accumulationTime += deltaTime;
 
     if (!gameOver)
@@ -95,10 +94,8 @@ static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
     }
 }
 
-void drawGameMenu(GameInfo *gameInfo, MenuStates *menuState)
+void drawGameMenu(const float deltaTime, GameInfo *gameInfo, MenuStates *menuState)
 {
-    const float deltaTime = GetFrameTime();
-
     drawBird(&bird);
     drawPipes(pipePool);
 
