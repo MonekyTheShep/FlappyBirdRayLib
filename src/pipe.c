@@ -108,7 +108,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
         releasePipe(pipe);
     }
 
-    const int birdHitPipe = CheckCollisionRecs(bird->dest, pipe->topHitBox) ||
+    const int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
     CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
 
     if (birdHitPipe)
@@ -116,7 +116,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
         gameOver = 1;
     }
 
-    const int scoreCollided = CheckCollisionRecs(bird->dest, pipe->middleHitBox);
+    const int scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
 
     // Each pipe stores if a score has been incremented.
     if (scoreCollided && pipe->scored != 1)
