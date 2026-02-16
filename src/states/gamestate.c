@@ -49,8 +49,6 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
 
 }
 
-
-
 static void spawnPipe(void)
 {
     if (accumulationTime >= 3.5f)

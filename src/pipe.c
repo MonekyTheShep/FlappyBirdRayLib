@@ -147,7 +147,7 @@ void initializePipe(Pipe *pipe)
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
     pipe->pipeGap = pipe->pipeChunkSize.y + 50;
     pipe->scored = 0;
-    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
+    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
     pipe->velocity = (Vector2) {0.0f, 0.0f};
 }
 
