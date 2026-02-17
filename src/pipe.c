@@ -17,44 +17,40 @@ static void drawHitBoxDebug(Pipe *pipe) {
 
 void drawPipe(Pipe *pipe)
 {
-    // Find the number of chunks to fill from top to top pipe
     const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
-    // printf("Top %f\n", ceilf(calculateNumberOfTopChunks));
 
-    // Build top chunks
-    for (int i = 0; i < (int) ceilf(calculateNumberOfTopChunks); i++)
-    {
-        // Position above the top pillar
-        const float startingPosition = pipe->position.y - pipe->pipeChunkSize.y;
-        const float yOffset = (float) i * pipe->pipeChunkSize.y;
-
-        DrawTextureEx(pipe->pipeChunkTop, (Vector2) {pipe->position.x, startingPosition - yOffset}, 0.0f, 1.0f,  WHITE);
+    // printf("%f\n", calculateNumberOfTopChunks);
+    if (calculateNumberOfTopChunks > 0) {
+        pipe->dstPipeChunkTop.x = pipe->position.x;
+        pipe->dstPipeChunkTop.y = 0;
+        pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop.width;
+        pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop.height * calculateNumberOfTopChunks;
+        DrawTexturePro(pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0,0}, 0, WHITE);
     }
 
-    // Find difference between position and screen height.
-    // Then remove the top pipe, middle, and bottom pipe to get the chunks.
     const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
-    // printf("Bottom %f\n", ceilf(calculateNumberOfBottomChunks));
 
-    // Build bottom chunks
-    for (int i = 0; i < (int) ceilf(calculateNumberOfBottomChunks); i++)
-    {
-        // Position below the bottom pillar
-        const float startingPosition = pipe->position.y + (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
-        const float yOffset = (float) i * pipe->pipeChunkSize.y;
+    printf("%f\n", calculateNumberOfBottomChunks);
 
-        DrawTextureEx(pipe->pipeChunkBottom, (Vector2) {pipe->position.x, startingPosition + yOffset}, 0.0f, 1.0f,  WHITE);
+    if (calculateNumberOfBottomChunks > 0) {
+        pipe->dstPipeChunkBottom.x = pipe->position.x;
+        const float pipeBottomOffsetY = (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
+        pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomOffsetY;
+
+        pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom.width;
+        pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop.height * calculateNumberOfBottomChunks;
+
+        DrawTexturePro(pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0,0}, 0, WHITE);
     }
 
     // Draw top pipe
-    DrawTextureEx(pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f,  WHITE);
+    DrawTextureEx(pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f, WHITE);
 
     const float bottomPipeYOffset = pipe->pipeGap + (float) pipe->pipeTop.height;
     // Draw bottom pipe
     DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
 
-
-    drawHitBoxDebug(pipe);
+    // drawHitBoxDebug(pipe);
 }
 
 static void handleTopHitbox(Pipe *pipe)
@@ -142,9 +138,15 @@ void initializePipe(Pipe *pipe)
 {
     pipe->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
     pipe->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
+
     pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
     pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
+
+    pipe->srcPipeChunkBottom = (Rectangle) {0, 0, pipe->pipeChunkBottom.width, pipe->pipeChunkBottom.height};
+    pipe->srcPipeChunkTop = (Rectangle) {0, 0, pipe->pipeChunkTop.width, pipe->pipeChunkTop.height};
+
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
+
     pipe->pipeGap = pipe->pipeChunkSize.y + 50;
     pipe->scored = 0;
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};

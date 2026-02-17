@@ -6,7 +6,12 @@
 typedef struct Pipe {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
     Vector2 pipeChunkSize;
+
+    Rectangle srcPipeChunkBottom, srcPipeChunkTop;
+    Rectangle dstPipeChunkBottom, dstPipeChunkTop;
+
     Rectangle topHitBox, middleHitBox, bottomHitBox;
+
     float pipeGap;
     int active;
     int scored;
