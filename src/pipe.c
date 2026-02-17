@@ -174,7 +174,7 @@ void releasePipe(Pipe *pipe)
     {
         pipe->active = 0;
         pipe->scored = 0;
-        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2) - pipe->pipeChunkSize.y};
+        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2)};
     }
 }
 
