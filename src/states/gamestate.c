@@ -35,10 +35,10 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
     gameInfo->musicPlaying = 0;
 
     // Move bird back to starting position and reset velocity
-    currentBird->position = (Vector2) {100, (float) GetScreenHeight() / 2};
-    currentBird->velocity = (Vector2) {0,0};
-    currentBird->rotationVel = 0;
-    currentBird->rotation = 0;
+    currentBird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
+    currentBird->velocity = (Vector2) {0.0f,0.0f};
+    currentBird->rotationVel = 0.0f;
+    currentBird->rotation = 0.0f;
 
     // Reset pipes
     for (int i = 0; i < POOL_SIZE; i++) {
@@ -58,7 +58,7 @@ static void spawnPipe(void)
         Pipe *pipe = acquirePipe(pipePool);
         if (pipe != NULL)
         {
-            pipe->position.y = (rand() % 300) - 150;
+            pipe->position.y = (float) (rand() % 300) - 150;
             accumulationTime = 0.0f;
         }
     }
@@ -82,10 +82,10 @@ void incrementScore(void) {
 
 static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
 {
-    const float buttonWidth = 100;
-    const float buttonHeight = 50;
-    const float gameOverButtonX = ((float) GetScreenWidth() - buttonWidth) / 2;
-    const float gameOverButtonY = ((float) GetScreenHeight() - buttonHeight) / 2;
+    const float buttonWidth = 100.0f;
+    const float buttonHeight = 50.0f;
+    const float gameOverButtonX = ((float) GetScreenWidth() - buttonWidth) / 2.0f;
+    const float gameOverButtonY = ((float) GetScreenHeight() - buttonHeight) / 2.0f;
     const Rectangle gameOverButton = {gameOverButtonX,gameOverButtonY,buttonWidth,buttonHeight};
 
     if (GuiButton(gameOverButton, "Reset"))

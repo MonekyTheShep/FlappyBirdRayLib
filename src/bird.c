@@ -23,8 +23,8 @@ static void applyVelocity(Bird *bird, const float deltaTime)
 
 static void handleHitbox(Bird *bird) {
     // Position and Center Hitbox
-    bird->hitBox.x = bird->position.x - bird->dest.width / 2;
-    bird->hitBox.y = bird->position.y - bird->dest.height / 2;
+    bird->hitBox.x = bird->position.x - bird->dest.width / 2.0f;
+    bird->hitBox.y = bird->position.y - bird->dest.height / 2.0f;
 }
 
 static void applyFriction(Bird *bird, const float deltaTime)
@@ -49,7 +49,7 @@ static void applyGravity(Bird *bird, const float deltaTime)
 
 static int isTouchingCeiling(const Bird *bird)
 {
-    return (bird->hitBox.y <= 0);
+    return (bird->hitBox.y <= 0.0f);
 }
 
 static int isTouchingFloor(const Bird *bird)
@@ -66,13 +66,13 @@ static void collisionHandling(Bird *bird)
         // Prevent bird going underground
         bird->position.y = (float) GetScreenHeight() - bird->hitBox.height + bird->dest.height / 2;
         // if the bird is going downwards then set velocity to 0
-        if (bird->velocity.y > 0) bird->velocity.y = 0;
+        if (bird->velocity.y > 0.0f) bird->velocity.y = 0.0f;
     }
 
     if (isTouchingCeiling(bird))
     {
         // if the bird is going upwards then set velocity to 0
-        if (bird->velocity.y < 0) bird->velocity.y = 0;
+        if (bird->velocity.y < 0.0f) bird->velocity.y = 0.0f;
     }
 }
 
@@ -88,14 +88,14 @@ static void inputHandling(Bird *bird)
 
 void initializeBird(Bird *bird) {
     const float factor = 0.2f;
-    bird->velocity = (Vector2) {0,0};
+    bird->velocity = (Vector2) {0.0f,0.0f};
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
-    bird->src = (Rectangle) {0,0, (float) bird->sprite.width, (float) bird->sprite.height};
+    bird->src = (Rectangle) {0.0f,0.0f, (float) bird->sprite.width, (float) bird->sprite.height};
     bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
     // Should I handle hitbox size here?
     bird->hitBox.width = bird->dest.width;
     bird->hitBox.height = bird->dest.height;
-    bird->position = (Vector2) {100, (float) GetScreenHeight() / 2};
+    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2};
 }
 
 void handleBird(const float deltaTime, Bird *bird)
@@ -125,5 +125,5 @@ static void drawHitBoxDebug(Bird *bird)
 void drawBird(Bird *bird)
 {
     drawHitBoxDebug(bird);
-    DrawTexturePro(bird->sprite, bird->src, bird->dest, (Vector2) {(float) bird->dest.width / 2,bird->dest.height / 2}, bird->rotation, WHITE);
+    DrawTexturePro(bird->sprite, bird->src, bird->dest, (Vector2) {bird->dest.width / 2.0f,bird->dest.height / 2.0f}, bird->rotation, WHITE);
 }

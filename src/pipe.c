@@ -20,9 +20,9 @@ void drawPipe(Pipe *pipe)
     // Find the number of chunks from top of screen to top pipe
     const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
 
-    if (calculateNumberOfTopChunks > 0) {
+    if (calculateNumberOfTopChunks > 0.0f) {
         pipe->dstPipeChunkTop.x = pipe->position.x;
-        pipe->dstPipeChunkTop.y = 0;
+        pipe->dstPipeChunkTop.y = 0.0f;
         pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop.width;
         pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop.height * calculateNumberOfTopChunks;
         DrawTexturePro(pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0,0}, 0, WHITE);
@@ -36,7 +36,7 @@ void drawPipe(Pipe *pipe)
     - pipe->pipeGap
     - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
 
-    if (calculateNumberOfBottomChunks > 0) {
+    if (calculateNumberOfBottomChunks > 0.0f) {
         pipe->dstPipeChunkBottom.x = pipe->position.x;
         const float pipeBottomOffsetY = (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
         pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomOffsetY;
@@ -62,7 +62,7 @@ static void handleTopHitbox(Pipe *pipe)
     // Calculate position of hitbox
     pipe->topHitBox.x = pipe->position.x;
     // Position hitbox at top of pipe chunks
-    pipe->topHitBox.y = 0;
+    pipe->topHitBox.y = 0.0f;
 
     // Calculate scale of hitbox
     pipe->topHitBox.width = pipe->pipeChunkSize.x;
@@ -146,12 +146,12 @@ void initializePipe(Pipe *pipe)
     pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
     pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
 
-    pipe->srcPipeChunkBottom = (Rectangle) {0, 0, (float) pipe->pipeChunkBottom.width, (float) pipe->pipeChunkBottom.height};
-    pipe->srcPipeChunkTop = (Rectangle) {0, 0, (float) pipe->pipeChunkTop.width, (float) pipe->pipeChunkTop.height};
+    pipe->srcPipeChunkBottom = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkBottom.width, (float) pipe->pipeChunkBottom.height};
+    pipe->srcPipeChunkTop = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkTop.width, (float) pipe->pipeChunkTop.height};
 
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
 
-    pipe->pipeGap = pipe->pipeChunkSize.y + 50;
+    pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
     pipe->scored = 0;
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
     pipe->velocity = (Vector2) {0.0f, 0.0f};
