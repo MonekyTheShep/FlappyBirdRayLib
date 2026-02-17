@@ -44,7 +44,7 @@ void drawPipe(Pipe *pipe)
         pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom.width;
         pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop.height * calculateNumberOfBottomChunks;
 
-        DrawTexturePro(pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0,0}, 0, WHITE);
+        DrawTexturePro(pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
     }
 
     // Draw top pipe
