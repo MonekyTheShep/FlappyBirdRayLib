@@ -30,7 +30,11 @@ void drawPipe(Pipe *pipe)
 
     // Find difference between position and screen height.
     // Then remove the top pipe, middle, and bottom pipe to get the chunks.
-    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight() - pipe->position.y - (float) pipe->pipeTop.height - pipe->pipeGap - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
+    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight()
+    - pipe->position.y
+    - (float) pipe->pipeTop.height
+    - pipe->pipeGap
+    - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
 
     if (calculateNumberOfBottomChunks > 0) {
         pipe->dstPipeChunkBottom.x = pipe->position.x;
@@ -142,8 +146,8 @@ void initializePipe(Pipe *pipe)
     pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
     pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
 
-    pipe->srcPipeChunkBottom = (Rectangle) {0, 0, pipe->pipeChunkBottom.width, pipe->pipeChunkBottom.height};
-    pipe->srcPipeChunkTop = (Rectangle) {0, 0, pipe->pipeChunkTop.width, pipe->pipeChunkTop.height};
+    pipe->srcPipeChunkBottom = (Rectangle) {0, 0, (float) pipe->pipeChunkBottom.width, (float) pipe->pipeChunkBottom.height};
+    pipe->srcPipeChunkTop = (Rectangle) {0, 0, (float) pipe->pipeChunkTop.width, (float) pipe->pipeChunkTop.height};
 
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
 
