@@ -2,6 +2,7 @@
 
 #define GRAVITY_VELOCITY (200.0f)
 #define JUMP_VELOCITY (-175.0f)
+#define ROTATION_VELOCITY (-100.0F)
 #define FRICTION (0.1f)
 #define PIPE_SPEED (-5000.0f)
 #define POOL_SIZE 5

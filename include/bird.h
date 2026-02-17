@@ -4,7 +4,8 @@ typedef struct Bird {
     Texture sprite;
     Vector2 position, velocity;
     Rectangle src, dest, hitBox;
-    float jumpVel;
+    float rotationVel;
+    float rotation;
 } Bird;
 
 void handleBird(float deltaTime, Bird *bird);

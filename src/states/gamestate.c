@@ -37,6 +37,7 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
     // Move bird back to starting position and reset velocity
     currentBird->position = (Vector2) {50, (float) GetScreenHeight() / 2};
     currentBird->velocity = (Vector2) {0,0};
+    currentBird->rotationVel = 0;
 
     // Reset pipes
     for (int i = 0; i < POOL_SIZE; i++) {
