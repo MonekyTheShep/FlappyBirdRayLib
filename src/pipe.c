@@ -25,7 +25,7 @@ void drawPipe(Pipe *pipe)
         pipe->dstPipeChunkTop.y = 0.0f;
         pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop.width;
         pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop.height * calculateNumberOfTopChunks;
-        DrawTexturePro(pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0,0}, 0, WHITE);
+        DrawTexturePro(pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
     }
 
     // Find difference between position and screen height.
@@ -100,7 +100,7 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
 
 
 static void collisionHandling(Pipe *pipe, Bird *bird) {
-    const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0;
+    const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
     if (offScreen)
     {
         printf("remove");
