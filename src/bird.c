@@ -22,6 +22,7 @@ static void applyVelocity(Bird *bird, const float deltaTime)
 }
 
 static void handleHitbox(Bird *bird) {
+    // Position and Center Hitbox
     bird->hitBox.x = bird->position.x - bird->hitBox.width / 2;
     bird->hitBox.y = bird->position.y - bird->hitBox.height / 2;
 }
