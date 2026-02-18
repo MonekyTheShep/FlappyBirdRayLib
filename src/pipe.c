@@ -103,7 +103,7 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
 
 
 static void collisionHandling(Pipe *pipe, Bird *bird) {
-    const int offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
+    const bool offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
     if (offScreen)
     {
         printf("remove");
@@ -111,7 +111,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
         releasePipe(pipe);
     }
 
-    const int birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
+    const bool birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
     CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
 
     if (birdHitPipe)
@@ -119,7 +119,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
         gameOver = true;
     }
 
-    const int scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
+    const bool scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
 
     // Each pipe stores if a score has been incremented.
     if (scoreCollided && pipe->scored != 1)
