@@ -122,11 +122,11 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
     const bool scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
 
     // Each pipe stores if a score has been incremented.
-    if (scoreCollided && pipe->scored != 1)
+    if (scoreCollided && !pipe->scored)
     {
 
         incrementScore();
-        pipe->scored = 1;
+        pipe->scored = true;
     }
 }
 
@@ -166,7 +166,7 @@ void initializePipe(Pipe *pipe)
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom.width, (float) pipe->pipeBottom.height};
 
     pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
-    pipe->scored = 0;
+    pipe->scored = false;
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
     pipe->velocity = (Vector2) {0.0f, 0.0f};
 }
@@ -192,7 +192,7 @@ void releasePipe(Pipe *pipe)
     if (pipe != NULL)
     {
         pipe->active = false;
-        pipe->scored = 0;
+        pipe->scored = false;
         pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2.0f)};
     }
 }

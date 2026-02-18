@@ -16,7 +16,7 @@ typedef struct Pipe {
     float pipeGap;
 
     bool active;
-    int scored;
+    bool scored;
     Vector2 position, velocity;
 } Pipe;
 
