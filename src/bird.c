@@ -13,7 +13,7 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     bird->position.y += bird->velocity.y * deltaTime;
     bird->position.x += bird->velocity.x * deltaTime;
 
-    // Apply the position to hitbox
+    // Apply the position to dest
     bird->dest.y = bird->position.y;
     bird->dest.x = bird->position.x;
 
