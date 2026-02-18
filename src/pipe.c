@@ -143,10 +143,12 @@ void initializePipePool(Pipe *pipePool)
 
 void CleanUpPipes(Pipe *pipePool) {
     for (int i = 0; i < POOL_SIZE; i++) {
-        UnloadTexture(pipePool[i].pipeChunkBottom);
-        UnloadTexture(pipePool[i].pipeChunkTop);
-        UnloadTexture(pipePool[i].pipeBottom);
-        UnloadTexture(pipePool[i].pipeTop);
+        if (&pipePool[i] != NULL) {
+            UnloadTexture(pipePool[i].pipeChunkBottom);
+            UnloadTexture(pipePool[i].pipeChunkTop);
+            UnloadTexture(pipePool[i].pipeBottom);
+            UnloadTexture(pipePool[i].pipeTop);
+        }
     }
 }
 
