@@ -2,6 +2,7 @@
 #include <raylib.h>
 
 #include "bird.h"
+#include <stdbool.h>
 
 typedef struct Pipe {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
@@ -13,7 +14,8 @@ typedef struct Pipe {
     Rectangle topHitBox, middleHitBox, bottomHitBox;
 
     float pipeGap;
-    int active;
+
+    bool active;
     int scored;
     Vector2 position, velocity;
 } Pipe;

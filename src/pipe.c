@@ -7,7 +7,7 @@
 
 #include "states/gamestate.h"
 
-extern int gameOver;
+extern bool gameOver;
 
 static void drawHitBoxDebug(Pipe *pipe) {
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
@@ -113,7 +113,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
 
     if (birdHitPipe)
     {
-        gameOver = 1;
+        gameOver = true;
     }
 
     const int scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
@@ -164,7 +164,7 @@ Pipe *acquirePipe(Pipe *pipePool)
         if (&pipePool[i] != NULL) {
             if (!pipePool[i].active)
             {
-                pipePool[i].active = 1;
+                pipePool[i].active = true;
                 return &pipePool[i];
             }
         }
@@ -176,7 +176,7 @@ void releasePipe(Pipe *pipe)
 {
     if (pipe != NULL)
     {
-        pipe->active = 0;
+        pipe->active = false;
         pipe->scored = 0;
         pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2.0f)};
     }

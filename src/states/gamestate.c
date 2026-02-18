@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #include "raygui.h"
 
@@ -12,7 +13,7 @@
 #include "bird.h"
 
 
-int gameOver = 0;
+bool gameOver = false;
 int score = 0;
 
 Bird bird;
@@ -30,7 +31,7 @@ void initializeGame(void)
 }
 
 static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState) {
-    gameOver = 0;
+    gameOver = false;
     score = 0;
     gameInfo->musicPlaying = 0;
 
