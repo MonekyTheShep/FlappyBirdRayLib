@@ -30,7 +30,8 @@ void initializeGame(void)
     initializeBird(&bird);
 }
 
-static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState) {
+static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState)
+{
     gameOver = false;
     score = 0;
     gameInfo->musicPlaying = 0;
