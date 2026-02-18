@@ -1,4 +1,4 @@
-#include "states/gamestate.h"
+#include "states/gamemenustate.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -5,7 +5,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "states/gamestate.h"
+#include "states/gamemenustate.h"
 
 extern bool gameOver;
 
