@@ -59,8 +59,8 @@ static void spawnPipe(void)
         if (pipe != NULL)
         {
             pipe->position.y = (float) (rand() % 300) - 150;
-            accumulationTime = 0.0f;
         }
+        accumulationTime = 0.0f;
     }
 }
 
