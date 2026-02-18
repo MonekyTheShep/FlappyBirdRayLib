@@ -154,11 +154,11 @@ void CleanUpPipes(Pipe *pipePool) {
 
 void initializePipe(Pipe *pipe)
 {
-    pipe->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
-    pipe->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
+    pipe->pipeBottom = LoadTexture(ASSETS_PATH"pipe_bottom.png");
+    pipe->pipeTop = LoadTexture(ASSETS_PATH"pipe_top.png");
 
-    pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
-    pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
+    pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"pipe_chunk_top.png");
+    pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"pipe_chunk_bottom.png");
 
     pipe->srcPipeChunkBottom = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkBottom.width, (float) pipe->pipeChunkBottom.height};
     pipe->srcPipeChunkTop = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkTop.width, (float) pipe->pipeChunkTop.height};
