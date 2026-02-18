@@ -38,8 +38,8 @@ void drawPipe(Pipe *pipe)
 
     if (numberOfBottomChunks > 0.0f) {
         pipe->dstPipeChunkBottom.x = pipe->position.x;
-        const float pipeBottomOffsetY = (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
-        pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomOffsetY;
+        const float pipeBottomChunkOffsetY = (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
+        pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffsetY;
 
         pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom.width;
         pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop.height * numberOfBottomChunks;
@@ -51,8 +51,8 @@ void drawPipe(Pipe *pipe)
     DrawTextureEx(pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f, WHITE);
 
     // Draw bottom pipe
-    const float bottomPipeYOffset = pipe->pipeGap + (float) pipe->pipeTop.height;
-    DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + bottomPipeYOffset}, 0.0f, 1.0f,  WHITE);
+    const float pipeBottomYOffset = pipe->pipeGap + (float) pipe->pipeTop.height;
+    DrawTextureEx(pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
 
     // drawHitBoxDebug(pipe);
 }
