@@ -18,31 +18,31 @@ static void drawHitBoxDebug(Pipe *pipe) {
 void drawPipe(Pipe *pipe)
 {
     // Find the number of chunks from top of screen to top pipe
-    const float calculateNumberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
+    const float numberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
 
-    if (calculateNumberOfTopChunks > 0.0f) {
+    if (numberOfTopChunks > 0.0f) {
         pipe->dstPipeChunkTop.x = pipe->position.x;
         pipe->dstPipeChunkTop.y = 0.0f;
         pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop.width;
-        pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop.height * calculateNumberOfTopChunks;
+        pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop.height * numberOfTopChunks;
         DrawTexturePro(pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
     }
 
     // Find difference between position and screen height.
     // Then remove the top pipe, middle, and bottom pipe to get the chunks.
-    const float calculateNumberOfBottomChunks = ((float) GetScreenHeight()
+    const float numberOfBottomChunks = ((float) GetScreenHeight()
     - pipe->position.y
     - (float) pipe->pipeTop.height
     - pipe->pipeGap
     - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
 
-    if (calculateNumberOfBottomChunks > 0.0f) {
+    if (numberOfBottomChunks > 0.0f) {
         pipe->dstPipeChunkBottom.x = pipe->position.x;
         const float pipeBottomOffsetY = (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
         pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomOffsetY;
 
         pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom.width;
-        pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop.height * calculateNumberOfBottomChunks;
+        pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop.height * numberOfBottomChunks;
 
         DrawTexturePro(pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
     }
