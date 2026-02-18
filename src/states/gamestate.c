@@ -116,3 +116,8 @@ void drawGameMenu(const float deltaTime, GameInfo *gameInfo, MenuStates *menuSta
         drawGameOverMenu(gameInfo, menuState);
     }
 }
+
+void CleanUpGameState(void) {
+    CleanUpBird(&bird);
+    CleanUpPipes(pipePool);
+}

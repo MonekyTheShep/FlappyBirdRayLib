@@ -127,3 +127,7 @@ void drawBird(Bird *bird)
     drawHitBoxDebug(bird);
     DrawTexturePro(bird->sprite, bird->src, bird->dest, (Vector2) {bird->dest.width / 2.0f,bird->dest.height / 2.0f}, bird->rotation, WHITE);
 }
+
+void CleanUpBird(Bird *bird) {
+    UnloadTexture(bird->sprite);
+}

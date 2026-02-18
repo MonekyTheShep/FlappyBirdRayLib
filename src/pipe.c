@@ -141,6 +141,15 @@ void initializePipePool(Pipe *pipePool)
     }
 }
 
+void CleanUpPipes(Pipe *pipePool) {
+    for (int i = 0; i < POOL_SIZE; i++) {
+        UnloadTexture(pipePool[i].pipeChunkBottom);
+        UnloadTexture(pipePool[i].pipeChunkTop);
+        UnloadTexture(pipePool[i].pipeTop);
+        UnloadTexture(pipePool[i].pipeBottom);
+    }
+}
+
 void initializePipe(Pipe *pipe)
 {
     pipe->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");

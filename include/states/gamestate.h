@@ -6,4 +6,4 @@ void initializeGame(void);
 void updateGameMenu(float deltaTime);
 void incrementScore(void);
 void drawGameMenu(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
-void CleanUpGame(void);
+void CleanUpGameState(void);

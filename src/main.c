@@ -64,7 +64,8 @@ int main(void)
         EndDrawing();
     }
 
-    CloseWindow();
 
+    CleanUpGameState();
+    CloseWindow();
     return 0;
 }

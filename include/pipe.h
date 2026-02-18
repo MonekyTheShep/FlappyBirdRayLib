@@ -23,6 +23,7 @@ typedef struct Pipe {
 void drawPipe(Pipe *pipe);
 void initializePipePool(Pipe *pipePool);
 void initializePipe(Pipe *pipe);
+void CleanUpPipes(Pipe *pipePool);
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
 void drawPipes(Pipe *pipe);
