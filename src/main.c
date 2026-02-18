@@ -57,6 +57,7 @@ int main(void)
                     break;
                 case GAME_MENU:
                     drawGameMenu(deltaTime, &gameInfo, &menuState);
+                    break;
                 default:
                     break;
             }
