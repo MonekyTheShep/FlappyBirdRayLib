@@ -89,7 +89,7 @@ static void inputHandling(Bird *bird)
 void initializeBird(Bird *bird) {
     const float factor = 0.2f;
     bird->velocity = (Vector2) {0.0f,0.0f};
-    bird->sprite = LoadTexture(ASSETS_PATH"flappy_bird.png");
+    bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
     bird->src = (Rectangle) {0.0f,0.0f, (float) bird->sprite.width, (float) bird->sprite.height};
     bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
     // Should I handle hitbox size here?
