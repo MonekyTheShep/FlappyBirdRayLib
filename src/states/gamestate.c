@@ -42,7 +42,8 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
     currentBird->rotation = 0.0f;
 
     // Reset pipes
-    for (int i = 0; i < POOL_SIZE; i++) {
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
         releasePipe(&currentPipePool[i]);
     }
 
@@ -77,7 +78,8 @@ void updateGameMenu(const float deltaTime)
     }
 }
 
-void incrementScore(void) {
+void incrementScore(void)
+{
     score += 1;
 }
 
@@ -108,7 +110,8 @@ void drawGameMenu(const float deltaTime, GameInfo *gameInfo, MenuStates *menuSta
         DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
     }
 
-    if (gameOver) {
+    if (gameOver)
+    {
         drawGameOverMenu(gameInfo, menuState);
     }
 }

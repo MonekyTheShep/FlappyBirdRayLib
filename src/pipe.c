@@ -9,7 +9,8 @@
 
 extern bool gameOver;
 
-static void drawHitBoxDebug(Pipe *pipe) {
+static void drawHitBoxDebug(Pipe *pipe)
+{
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
     DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
     DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
@@ -20,7 +21,8 @@ void drawPipe(Pipe *pipe)
     // Find the number of chunks from top of screen to top pipe
     const float numberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
 
-    if (numberOfTopChunks > 0.0f) {
+    if (numberOfTopChunks > 0.0f)
+    {
         pipe->dstPipeChunkTop.x = pipe->position.x;
         pipe->dstPipeChunkTop.y = 0.0f;
         pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop.width;
@@ -36,7 +38,8 @@ void drawPipe(Pipe *pipe)
     - pipe->pipeGap
     - (float) pipe->pipeBottom.height) / pipe->pipeChunkSize.y;
 
-    if (numberOfBottomChunks > 0.0f) {
+    if (numberOfBottomChunks > 0.0f)
+    {
         pipe->dstPipeChunkBottom.x = pipe->position.x;
         const float pipeBottomChunkOffsetY = (float) pipe->pipeTop.height + pipe->pipeGap + (float) pipe->pipeBottom.height;
         pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffsetY;
@@ -161,7 +164,8 @@ Pipe *acquirePipe(Pipe *pipePool)
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {
-        if (&pipePool[i] != NULL) {
+        if (&pipePool[i] != NULL)
+        {
             if (!pipePool[i].active)
             {
                 pipePool[i].active = true;
@@ -182,7 +186,8 @@ void releasePipe(Pipe *pipe)
     }
 }
 
-void drawPipes(Pipe *pipePool) {
+void drawPipes(Pipe *pipePool)
+{
     for (int i = 0; i < POOL_SIZE; i++)
     {
         if (pipePool[i].active)
