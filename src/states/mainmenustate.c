@@ -21,7 +21,7 @@ static void buttonMenuCallback(int buttonIndex, GameInfo *gameInfo, MenuStates *
 static void drawTitle(void)
 {
     // Draw the title
-    const char titleText[13] = "Flappy Bird";
+    const char titleText[12] = "Flappy Bird";
 
     const Font font = GetFontDefault();
     const float fontSize = 50.0f;
