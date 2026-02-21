@@ -35,7 +35,6 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
 {
     gameOver = false;
     score = 0;
-    gameInfo->musicPlaying = 0;
 
     // Move bird back to starting position and reset velocity
     currentBird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
@@ -51,8 +50,7 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
 
     accumulationTime = 3.5f;
 
-    *menuState = MAIN_MENU;
-
+    changeMenu(gameInfo, menuState, MAIN_MENU);
 }
 
 static void spawnPipe(void)
