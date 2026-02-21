@@ -4,6 +4,10 @@
 #include "bird.h"
 #include <stdbool.h>
 
+typedef struct PipeTexture {
+    Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
+} PipeTexture;
+
 typedef struct Pipe {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
     Vector2 pipeChunkSize;
@@ -21,9 +25,8 @@ typedef struct Pipe {
 } Pipe;
 
 void drawPipe(Pipe *pipe);
-void initializePipePool(Pipe *pipePool);
-void initializePipe(Pipe *pipe);
-void CleanUpPipes(Pipe *pipePool);
+void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
+void CleanUpPipes(PipeTexture *pipeTexture);
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
 void drawPipes(Pipe *pipe);

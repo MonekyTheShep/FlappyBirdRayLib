@@ -130,35 +130,13 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
     }
 }
 
-
-
-void initializePipePool(Pipe *pipePool)
+static void initializePipe(Pipe *pipe, const PipeTexture *pipeTexture)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
-    {
-        pipePool[i].active = 0;
-        initializePipe(&pipePool[i]);
-    }
-}
+    pipe->pipeBottom = pipeTexture->pipeBottom;
+    pipe->pipeTop = pipeTexture->pipeTop;
 
-void CleanUpPipes(Pipe *pipePool) {
-    for (int i = 0; i < POOL_SIZE; i++) {
-        if (&pipePool[i] != NULL) {
-            UnloadTexture(pipePool[i].pipeChunkBottom);
-            UnloadTexture(pipePool[i].pipeChunkTop);
-            UnloadTexture(pipePool[i].pipeBottom);
-            UnloadTexture(pipePool[i].pipeTop);
-        }
-    }
-}
-
-void initializePipe(Pipe *pipe)
-{
-    pipe->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
-    pipe->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
-
-    pipe->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
-    pipe->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
+    pipe->pipeChunkTop = pipeTexture->pipeChunkTop;
+    pipe->pipeChunkBottom = pipeTexture->pipeChunkBottom;
 
     pipe->srcPipeChunkBottom = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkBottom.width, (float) pipe->pipeChunkBottom.height};
     pipe->srcPipeChunkTop = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkTop.width, (float) pipe->pipeChunkTop.height};
@@ -169,6 +147,27 @@ void initializePipe(Pipe *pipe)
     pipe->scored = false;
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
     pipe->velocity = (Vector2) {0.0f, 0.0f};
+}
+
+void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
+{
+    pipeTexture->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
+    pipeTexture->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
+    pipeTexture->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
+    pipeTexture->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
+
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        pipePool[i].active = 0;
+        initializePipe(&pipePool[i], pipeTexture);
+    }
+}
+
+void CleanUpPipes(PipeTexture *pipeTexture) {
+    UnloadTexture(pipeTexture->pipeBottom);
+    UnloadTexture(pipeTexture->pipeTop);
+    UnloadTexture(pipeTexture->pipeChunkTop);
+    UnloadTexture(pipeTexture->pipeChunkBottom);
 }
 
 Pipe *acquirePipe(Pipe *pipePool)

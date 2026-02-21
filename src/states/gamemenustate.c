@@ -18,13 +18,14 @@ int score = 0;
 
 Bird bird;
 Pipe pipePool[POOL_SIZE];
+PipeTexture pipeTexture;
 
 float accumulationTime = 3.5f;
 
 void initializeGame(void)
 {
     // Pipe declaring
-    initializePipePool(pipePool);
+    initializePipePool(pipePool, &pipeTexture);
 
     // Bird declaring
     initializeBird(&bird);
@@ -119,5 +120,5 @@ void drawGameMenu(const float deltaTime, GameInfo *gameInfo, MenuStates *menuSta
 
 void CleanUpGameState(void) {
     CleanUpBird(&bird);
-    CleanUpPipes(pipePool);
+    CleanUpPipes(&pipeTexture);
 }
