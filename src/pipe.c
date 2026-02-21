@@ -108,7 +108,6 @@ static void collisionHandling(Pipe *pipe, Bird *bird) {
     const bool offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
     if (offScreen)
     {
-        printf("remove");
         // move back to end of screen
         releasePipe(pipe);
     }
