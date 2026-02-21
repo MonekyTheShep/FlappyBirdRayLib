@@ -9,7 +9,7 @@ typedef struct PipeTexture {
 } PipeTexture;
 
 typedef struct Pipe {
-    Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
+    Texture *pipeChunkBottom, *pipeChunkTop, *pipeBottom, *pipeTop;
     Vector2 pipeChunkSize;
 
     Rectangle srcPipeChunkBottom, srcPipeChunkTop;
