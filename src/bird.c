@@ -21,7 +21,8 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     // bird->rotation += bird->rotationVel * deltaTime;
 }
 
-static void handleHitbox(Bird *bird) {
+static void handleHitbox(Bird *bird)
+{
     // Position and Center Hitbox
     bird->hitBox.x = bird->position.x - bird->dest.width / 2.0f;
     bird->hitBox.y = bird->position.y - bird->dest.height / 2.0f;
@@ -86,7 +87,8 @@ static void inputHandling(Bird *bird)
     }
 }
 
-void initializeBird(Bird *bird) {
+void initializeBird(Bird *bird)
+{
     const float factor = 0.2f;
     bird->velocity = (Vector2) {0.0f,0.0f};
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
