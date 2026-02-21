@@ -176,10 +176,10 @@ Pipe *acquirePipe(Pipe *pipePool)
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {
-            if (!pipePool[i].active) {
-                pipePool[i].active = true;
-                return &pipePool[i];
-            }
+        if (!pipePool[i].active) {
+            pipePool[i].active = true;
+            return &pipePool[i];
+        }
     }
     return NULL;
 }
