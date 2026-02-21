@@ -57,7 +57,9 @@ void drawPipe(Pipe *pipe)
     const float pipeBottomYOffset = pipe->pipeGap + (float) pipe->pipeTop->height;
     DrawTextureEx(*pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
 
-    // drawHitBoxDebug(pipe);
+    #ifdef debug
+    drawHitBoxDebug(pipe);
+    #endif
 }
 
 static void handleTopHitbox(Pipe *pipe)
@@ -174,14 +176,10 @@ Pipe *acquirePipe(Pipe *pipePool)
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {
-        if (&pipePool[i] != NULL)
-        {
-            if (!pipePool[i].active)
-            {
+            if (!pipePool[i].active) {
                 pipePool[i].active = true;
                 return &pipePool[i];
             }
-        }
     }
     return NULL;
 }
