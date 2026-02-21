@@ -99,7 +99,7 @@ static void handleBottomHitbox(Pipe *pipe)
 
 static void applyVelocity(Pipe *pipe, float deltaTime)
 {
-    pipe->velocity.x = PIPE_SPEED * deltaTime;
+    pipe->velocity.x = PIPE_SPEED;
     pipe->position.x += pipe->velocity.x * deltaTime;
 }
 
