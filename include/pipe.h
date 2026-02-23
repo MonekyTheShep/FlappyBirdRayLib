@@ -9,6 +9,9 @@ typedef struct PipeTexture {
 } PipeTexture;
 
 typedef struct Pipe {
+    float pipeGap;
+    bool active;
+    bool scored;
     Texture *pipeChunkBottom, *pipeChunkTop, *pipeBottom, *pipeTop;
     Vector2 pipeChunkSize;
 
@@ -17,10 +20,6 @@ typedef struct Pipe {
 
     Rectangle topHitBox, middleHitBox, bottomHitBox;
 
-    float pipeGap;
-
-    bool active;
-    bool scored;
     Vector2 position, velocity;
 } Pipe;
 
