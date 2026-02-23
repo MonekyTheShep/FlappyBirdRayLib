@@ -1,11 +1,12 @@
 #pragma once
 #include <raylib.h>
 typedef struct Bird {
-    float rotationVel;
-    float rotation;
     Texture sprite;
     Vector2 position, velocity;
     Rectangle src, dest, hitBox;
+
+    float rotationVel;
+    float rotation;
 } Bird;
 
 void handleBird(float deltaTime, Bird *bird);

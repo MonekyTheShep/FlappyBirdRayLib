@@ -9,18 +9,17 @@ typedef struct PipeTexture {
 } PipeTexture;
 
 typedef struct Pipe {
-    float pipeGap;
-    bool active;
-    bool scored;
     Texture *pipeChunkBottom, *pipeChunkTop, *pipeBottom, *pipeTop;
-    Vector2 pipeChunkSize;
 
     Rectangle srcPipeChunkBottom, srcPipeChunkTop;
     Rectangle dstPipeChunkBottom, dstPipeChunkTop;
-
     Rectangle topHitBox, middleHitBox, bottomHitBox;
-
     Vector2 position, velocity;
+    Vector2 pipeChunkSize;
+    float pipeGap;
+
+    bool active;
+    bool scored;
 } Pipe;
 
 void drawPipe(Pipe *pipe);
