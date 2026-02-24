@@ -2,8 +2,8 @@
 #include <raylib.h>
 typedef struct Bird {
     Texture sprite;
-    Vector2 position, velocity;
     Rectangle src, dest, hitBox;
+    Vector2 position, velocity;
 
     float rotationVel;
     float rotation;
