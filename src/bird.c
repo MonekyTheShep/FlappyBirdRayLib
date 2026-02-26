@@ -83,7 +83,7 @@ static void inputHandling(Bird *bird)
     if (IsKeyPressed(KEY_SPACE) && !isTouchingCeiling(bird))
     {
         bird->velocity.y = JUMP_VELOCITY;
-        bird->rotationVel += ROTATION_VELOCITY;
+        // bird->rotationVel += ROTATION_VELOCITY;
     }
 }
 
