@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <raymath.h>
 
 
 
@@ -18,7 +19,11 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     bird->dest.x = bird->position.x;
 
     // Apply rotation
-    // bird->rotation += bird->rotationVel * deltaTime;
+    float targetRotation = bird->velocity.y * 0.1;
+    bird->rotation += bird->rotationVel * deltaTime;
+    bird->rotation = Lerp(bird->rotation, targetRotation, GetFrameTime() * 10.0f);
+    bird->rotation = Clamp(bird->rotation, -35.0f, 30.0f);
+
 }
 
 static void handleHitbox(Bird *bird)
@@ -41,11 +46,6 @@ static void applyGravity(Bird *bird, const float deltaTime)
     // Constant Gravity based on delta time
     // Accelerates infinitely for now
     bird->velocity.y += GRAVITY_VELOCITY * deltaTime;
-
-    // Rotation should go back down
-    // if (bird->rotation >= 0.0f) {
-    //     bird->rotationVel -= ROTATION_VELOCITY * -1 * deltaTime;
-    // }
 }
 
 static int isTouchingCeiling(const Bird *bird)
@@ -83,7 +83,6 @@ static void inputHandling(Bird *bird)
     if (IsKeyPressed(KEY_SPACE) && !isTouchingCeiling(bird))
     {
         bird->velocity.y = JUMP_VELOCITY;
-        // bird->rotationVel += ROTATION_VELOCITY;
     }
 }
 
