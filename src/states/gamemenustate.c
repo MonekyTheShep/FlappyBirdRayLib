@@ -20,7 +20,7 @@ Bird bird;
 Pipe pipePool[POOL_SIZE];
 PipeTexture pipeTexture;
 
-float accumulationTime = 3.5f;
+float accumulationTime = PIPE_SPAWN_RATE;
 
 void initializeGame(void)
 {
@@ -48,19 +48,19 @@ static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameIn
         releasePipe(&currentPipePool[i]);
     }
 
-    accumulationTime = 3.5f;
+    accumulationTime = PIPE_SPAWN_RATE;
 
     changeMenu(gameInfo, menuState, MAIN_MENU);
 }
 
 static void spawnPipe(void)
 {
-    if (accumulationTime >= 3.5f)
+    if (accumulationTime >= PIPE_SPAWN_RATE)
     {
         Pipe *pipe = acquirePipe(pipePool);
         if (pipe != NULL)
         {
-            pipe->position.y = (float) (rand() % 300) - 150;
+            pipe->position.y = (float) GetRandomValue(-100, 200);
         }
         accumulationTime = 0.0f;
     }

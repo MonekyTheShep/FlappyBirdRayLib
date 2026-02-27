@@ -4,5 +4,6 @@
 #define JUMP_VELOCITY (-350.0f)
 #define ROTATION_VELOCITY (-100.0f)
 #define FRICTION (0.1f)
-#define PIPE_SPEED (-100.0f)
+#define PIPE_SPEED (-150.0f)
 #define POOL_SIZE 5
+#define PIPE_SPAWN_RATE 2.0f
