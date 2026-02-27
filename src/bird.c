@@ -19,8 +19,7 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     bird->dest.x = bird->position.x;
 
     // Apply rotation
-    float targetRotation = bird->velocity.y * 0.1;
-    bird->rotation += bird->rotationVel * deltaTime;
+    float targetRotation = bird->velocity.y * 0.3;
     bird->rotation = Lerp(bird->rotation, targetRotation, GetFrameTime() * 10.0f);
     bird->rotation = Clamp(bird->rotation, -35.0f, 30.0f);
 
