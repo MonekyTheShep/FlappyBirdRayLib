@@ -5,10 +5,9 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#include "raygui.h"
+#include <raygui.h>
 
 #include "constants.h"
-
 #include "pipe.h"
 #include "bird.h"
 
