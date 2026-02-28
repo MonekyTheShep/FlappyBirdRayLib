@@ -8,8 +8,8 @@
 #include "utility/gameutil.h"
 #include "utility/soundutil.h"
 
-#include "states/gamemenustate.h"
-#include "states/mainmenustate.h"
+#include "states/gamestate.h"
+#include "states/mainstate.h"
 
 #define SCREEN_WIDTH (800)
 #define SCREEN_HEIGHT (600)
@@ -26,7 +26,7 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
-    InitializeGame();
+    InitializeGameState();
 
     while (!WindowShouldClose())
     {
@@ -41,7 +41,7 @@ int main(void)
         switch (menuState)
         {
             case GAME_MENU:
-                updateGameMenu(deltaTime);
+                updateGameState(deltaTime);
                 break;
             default:
                 break;
@@ -53,10 +53,10 @@ int main(void)
             switch (menuState)
             {
                 case MAIN_MENU:
-                    drawMainMenu(&gameInfo, &menuState);
+                    drawMenuState(&gameInfo, &menuState);
                     break;
                 case GAME_MENU:
-                    drawGameMenu(deltaTime, &gameInfo, &menuState);
+                    drawGameState(deltaTime, &gameInfo, &menuState);
                     break;
                 default:
                     break;

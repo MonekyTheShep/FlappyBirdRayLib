@@ -1,4 +1,4 @@
-#include "states/gamemenustate.h"
+#include "states/gamestate.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,7 +22,7 @@ PipeTexture pipeTexture;
 
 float accumulationTime = PIPE_SPAWN_RATE;
 
-void InitializeGame(void)
+void InitializeGameState(void)
 {
     // Pipe declaring
     initializePipePool(pipePool, &pipeTexture);
@@ -66,7 +66,7 @@ static void spawnPipe(void)
     }
 }
 
-void updateGameMenu(const float deltaTime)
+void updateGameState(const float deltaTime)
 {
     accumulationTime += deltaTime;
 
@@ -97,7 +97,7 @@ static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
     }
 }
 
-void drawGameMenu(const float deltaTime, GameInfo *gameInfo, MenuStates *menuState)
+void drawGameState(const float deltaTime, GameInfo *gameInfo, MenuStates *menuState)
 {
     drawBird(&bird);
     drawPipes(pipePool);

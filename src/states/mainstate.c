@@ -1,4 +1,4 @@
-#include "states/mainmenustate.h"
+#include "states/mainstate.h"
 
 #include <raylib.h>
 #include <raygui.h>
@@ -64,7 +64,7 @@ static void drawMenu(const char *buttonLabels[], const int numButtons, GameInfo 
     }
 }
 
-void drawMainMenu(GameInfo *gameInfo, MenuStates *menuState)
+void drawMenuState(GameInfo *gameInfo, MenuStates *menuState)
 {
     // Draw the title
     drawTitle();
