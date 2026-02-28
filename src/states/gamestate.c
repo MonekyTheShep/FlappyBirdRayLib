@@ -22,6 +22,7 @@ PipeTexture pipeTexture;
 
 float accumulationTime = PIPE_SPAWN_RATE;
 
+// Initialise Functions
 void InitializeGameState(void)
 {
     // Pipe declaring
@@ -31,6 +32,12 @@ void InitializeGameState(void)
     initializeBird(&bird);
 }
 
+void UnloadGameState(void) {
+    CleanUpBird(&bird);
+    CleanUpPipes(&pipeTexture);
+}
+
+// Logic Functions
 static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState)
 {
     gameOver = false;
@@ -66,6 +73,11 @@ static void spawnPipe(void)
     }
 }
 
+void incrementScore(void)
+{
+    score += 1;
+}
+
 void updateGameState(const float deltaTime)
 {
     accumulationTime += deltaTime;
@@ -78,11 +90,8 @@ void updateGameState(const float deltaTime)
     }
 }
 
-void incrementScore(void)
-{
-    score += 1;
-}
 
+// Draw Functions
 static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
 {
     const float buttonWidth = 100.0f;
@@ -114,9 +123,4 @@ void drawGameState(const float deltaTime, GameInfo *gameInfo, MenuStates *menuSt
     {
         drawGameOverMenu(gameInfo, menuState);
     }
-}
-
-void UnloadGameState(void) {
-    CleanUpBird(&bird);
-    CleanUpPipes(&pipeTexture);
 }

@@ -6,7 +6,7 @@
 #include <math.h>
 #include <raymath.h>
 
-
+// Initialise Functions
 void initializeBird(Bird *bird)
 {
     const float factor = 0.2f;
@@ -102,6 +102,7 @@ static void inputHandling(Bird *bird)
     }
 }
 
+// Handling Functions
 void handleBird(const float deltaTime, Bird *bird)
 {
     // Handle Jumping
@@ -122,7 +123,6 @@ void handleBird(const float deltaTime, Bird *bird)
 }
 
 // Draw Functions
-
 static void drawHitBoxDebug(Bird *bird)
 {
     DrawRectangleRec(bird->hitBox, Fade(RED, 0.5f));

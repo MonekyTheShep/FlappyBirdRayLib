@@ -22,11 +22,11 @@ typedef struct Pipe {
     bool scored;
 } Pipe;
 
-// Pipe Initialising
+// Initialise Functions
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
 void CleanUpPipes(PipeTexture *pipeTexture);
 
-// Pipe Handling
+// Handling Functions
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
 void handlePipes(float deltaTime, Pipe *pipe, Bird *bird);

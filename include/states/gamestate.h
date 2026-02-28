@@ -2,8 +2,14 @@
 #include "raylib.h"
 #include "utility/menuutil.h"
 
+// Initialise Functions
 void InitializeGameState(void);
-void updateGameState(float deltaTime);
-void incrementScore(void);
-void drawGameState(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
 void UnloadGameState(void);
+
+// Logic Functions
+void incrementScore(void);
+void updateGameState(float deltaTime);
+
+// Draw Functions
+void drawGameState(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
+

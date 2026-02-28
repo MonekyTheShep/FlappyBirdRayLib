@@ -9,7 +9,7 @@
 
 extern bool gameOver;
 
-// Pipe Initialising
+// Initialise Functions
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
     pipe->pipeBottom = &pipeTexture->pipeBottom;
@@ -52,7 +52,6 @@ void CleanUpPipes(PipeTexture *pipeTexture) {
 }
 
 // Logic Functions
-
 static void handleTopHitbox(Pipe *pipe)
 {
     // Calculate position of hitbox
@@ -124,7 +123,6 @@ static void collisionHandling(Pipe *pipe, Bird *bird)
 }
 
 // Pipe Handling
-
 Pipe *acquirePipe(Pipe *pipePool)
 {
     for (int i = 0; i < POOL_SIZE; i++)
@@ -164,7 +162,6 @@ void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
 
 
 // Draw Functions
-
 static void drawHitBoxDebug(Pipe *pipe)
 {
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));

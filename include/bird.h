@@ -9,11 +9,11 @@ typedef struct Bird {
     float rotation;
 } Bird;
 
-// Bird initialising
+// Initialise Functions
 void initializeBird(Bird *bird);
 void CleanUpBird(Bird *bird);
 
-// Bird Handling
+// Handle Functions
 void handleBird(float deltaTime, Bird *bird);
 
 // Draw Functions
