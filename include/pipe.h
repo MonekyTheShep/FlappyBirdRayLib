@@ -22,14 +22,16 @@ typedef struct Pipe {
     bool scored;
 } Pipe;
 
+// Pipe Initialising
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
 void CleanUpPipes(PipeTexture *pipeTexture);
+
+// Pipe Handling
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
-
-
 void handlePipes(float deltaTime, Pipe *pipe, Bird *bird);
 
+// Draw Functions
 void drawPipe(Pipe *pipe);
 void drawPipes(Pipe *pipe);
 
