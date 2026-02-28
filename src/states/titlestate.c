@@ -6,6 +6,7 @@
 #include "utility/menuutil.h"
 #include "utility/gameutil.h"
 
+// Logic Functions
 static void buttonMenuCallback(int buttonIndex, GameInfo *gameInfo, MenuStates *menuState) {
     switch (buttonIndex) {
         case 0:
@@ -18,6 +19,8 @@ static void buttonMenuCallback(int buttonIndex, GameInfo *gameInfo, MenuStates *
     }
 }
 
+
+// Draw Functions
 static void drawTitle(void)
 {
     // Draw the title
