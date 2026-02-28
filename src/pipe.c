@@ -9,7 +9,50 @@
 
 extern bool gameOver;
 
+// Pipe Initialising
+static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
+{
+    pipe->pipeBottom = &pipeTexture->pipeBottom;
+    pipe->pipeTop = &pipeTexture->pipeTop;
+
+    pipe->pipeChunkTop = &pipeTexture->pipeChunkTop;
+    pipe->pipeChunkBottom = &pipeTexture->pipeChunkBottom;
+
+    pipe->srcPipeChunkBottom = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkBottom->width, (float) pipe->pipeChunkBottom->height};
+    pipe->srcPipeChunkTop = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkTop->width, (float) pipe->pipeChunkTop->height};
+
+    pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom->width, (float) pipe->pipeBottom->height};
+
+    pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
+    pipe->scored = false;
+    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
+    pipe->velocity = (Vector2) {0.0f, 0.0f};
+}
+
+
+void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
+{
+    pipeTexture->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
+    pipeTexture->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
+    pipeTexture->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
+    pipeTexture->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
+
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        pipePool[i].active = 0;
+        initializePipe(&pipePool[i], pipeTexture);
+    }
+}
+
+void CleanUpPipes(PipeTexture *pipeTexture) {
+    UnloadTexture(pipeTexture->pipeBottom);
+    UnloadTexture(pipeTexture->pipeTop);
+    UnloadTexture(pipeTexture->pipeChunkTop);
+    UnloadTexture(pipeTexture->pipeChunkBottom);
+}
+
 // Logic Functions
+
 static void handleTopHitbox(Pipe *pipe)
 {
     // Calculate position of hitbox
@@ -80,47 +123,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird)
     }
 }
 
-// Pipe Initialiasing and Handling
-
-static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
-{
-    pipe->pipeBottom = &pipeTexture->pipeBottom;
-    pipe->pipeTop = &pipeTexture->pipeTop;
-
-    pipe->pipeChunkTop = &pipeTexture->pipeChunkTop;
-    pipe->pipeChunkBottom = &pipeTexture->pipeChunkBottom;
-
-    pipe->srcPipeChunkBottom = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkBottom->width, (float) pipe->pipeChunkBottom->height};
-    pipe->srcPipeChunkTop = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkTop->width, (float) pipe->pipeChunkTop->height};
-
-    pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom->width, (float) pipe->pipeBottom->height};
-
-    pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
-    pipe->scored = false;
-    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
-    pipe->velocity = (Vector2) {0.0f, 0.0f};
-}
-
-void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
-{
-    pipeTexture->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
-    pipeTexture->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
-    pipeTexture->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
-    pipeTexture->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
-
-    for (int i = 0; i < POOL_SIZE; i++)
-    {
-        pipePool[i].active = 0;
-        initializePipe(&pipePool[i], pipeTexture);
-    }
-}
-
-void CleanUpPipes(PipeTexture *pipeTexture) {
-    UnloadTexture(pipeTexture->pipeBottom);
-    UnloadTexture(pipeTexture->pipeTop);
-    UnloadTexture(pipeTexture->pipeChunkTop);
-    UnloadTexture(pipeTexture->pipeChunkBottom);
-}
+// Pipe Handling
 
 Pipe *acquirePipe(Pipe *pipePool)
 {
@@ -161,6 +164,7 @@ void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
 
 
 // Draw Functions
+
 static void drawHitBoxDebug(Pipe *pipe)
 {
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
