@@ -22,7 +22,7 @@ PipeTexture pipeTexture;
 
 float accumulationTime = PIPE_SPAWN_RATE;
 
-void initializeGame(void)
+void InitializeGame(void)
 {
     // Pipe declaring
     initializePipePool(pipePool, &pipeTexture);
@@ -116,7 +116,7 @@ void drawGameMenu(const float deltaTime, GameInfo *gameInfo, MenuStates *menuSta
     }
 }
 
-void CleanUpGameState(void) {
+void UnloadGameState(void) {
     CleanUpBird(&bird);
     CleanUpPipes(&pipeTexture);
 }

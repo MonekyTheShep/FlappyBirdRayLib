@@ -2,8 +2,8 @@
 #include "raylib.h"
 #include "utility/menuutil.h"
 
-void initializeGame(void);
+void InitializeGame(void);
 void updateGameMenu(float deltaTime);
 void incrementScore(void);
 void drawGameMenu(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
-void CleanUpGameState(void);
+void UnloadGameState(void);

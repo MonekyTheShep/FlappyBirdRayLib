@@ -26,7 +26,7 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
-    initializeGame();
+    InitializeGame();
 
     while (!WindowShouldClose())
     {
@@ -65,7 +65,7 @@ int main(void)
     }
 
 
-    CleanUpGameState();
+    UnloadGameState();
     CloseWindow();
     return 0;
 }
