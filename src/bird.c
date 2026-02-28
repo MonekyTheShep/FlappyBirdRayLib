@@ -17,7 +17,7 @@ void initializeBird(Bird *bird)
     // Should I handle hitbox size here?
     bird->hitBox.width = bird->dest.width;
     bird->hitBox.height = bird->dest.height;
-    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2};
+    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
 }
 
 void CleanUpBird(Bird *bird) {
@@ -36,7 +36,7 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     bird->dest.x = bird->position.x;
 
     // Apply rotation
-    float targetRotation = bird->velocity.y * 0.3;
+    const float targetRotation = bird->velocity.y * 0.3f;
     bird->rotation = Lerp(bird->rotation, targetRotation, GetFrameTime() * 10.0f);
     bird->rotation = Clamp(bird->rotation, -35.0f, 30.0f);
 
@@ -81,7 +81,7 @@ static void collisionHandling(Bird *bird)
     {
         // In the real game I will just make the bird gameover.
         // Prevent bird going underground
-        bird->position.y = (float) GetScreenHeight() - bird->hitBox.height + bird->dest.height / 2;
+        bird->position.y = (float) GetScreenHeight() - bird->hitBox.height + bird->dest.height / 2.0f;
         // if the bird is going downwards then set velocity to 0
         if (bird->velocity.y > 0.0f) bird->velocity.y = 0.0f;
     }
