@@ -9,7 +9,7 @@
 #include "utility/soundutil.h"
 
 #include "states/gamestate.h"
-#include "states/mainstate.h"
+#include "states/titlestate.h"
 
 #define SCREEN_WIDTH (800)
 #define SCREEN_HEIGHT (600)
@@ -53,7 +53,7 @@ int main(void)
             switch (menuState)
             {
                 case MAIN_MENU:
-                    drawMenuState(&gameInfo, &menuState);
+                    drawTitleState(&gameInfo, &menuState);
                     break;
                 case GAME_MENU:
                     drawGameState(deltaTime, &gameInfo, &menuState);
