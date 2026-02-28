@@ -16,12 +16,12 @@
 
 #define WINDOW_TITLE "Flappy Bird"
 
+// default menu
+MenuStates menuState = MAIN_MENU;
+GameInfo gameInfo = {.musicPlaying = 0};
+
 int main(void)
 {
-    // default menu
-    MenuStates menuState = MAIN_MENU;
-    GameInfo gameInfo = {.musicPlaying = 0};
-
     SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
