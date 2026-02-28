@@ -9,59 +9,7 @@
 
 extern bool gameOver;
 
-static void drawHitBoxDebug(Pipe *pipe)
-{
-    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
-    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
-    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
-}
-
-void drawPipe(Pipe *pipe)
-{
-    // Find the number of chunks from top of screen to top pipe
-    const float numberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
-
-    if (numberOfTopChunks > 0.0f)
-    {
-        pipe->dstPipeChunkTop.x = pipe->position.x;
-        pipe->dstPipeChunkTop.y = 0.0f;
-        pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop->width;
-        pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop->height * numberOfTopChunks;
-        DrawTexturePro(*pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
-    }
-
-    // Find difference between position and screen height.
-    // Then remove the top pipe, middle, and bottom pipe to get the chunks.
-    const float numberOfBottomChunks = ((float) GetScreenHeight()
-    - pipe->position.y
-    - (float) pipe->pipeTop->height
-    - pipe->pipeGap
-    - (float) pipe->pipeBottom->height) / pipe->pipeChunkSize.y;
-
-    if (numberOfBottomChunks > 0.0f)
-    {
-        pipe->dstPipeChunkBottom.x = pipe->position.x;
-        const float pipeBottomChunkOffsetY = (float) pipe->pipeTop->height + pipe->pipeGap + (float) pipe->pipeBottom->height;
-        pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffsetY;
-
-        pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom->width;
-        pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop->height * numberOfBottomChunks;
-
-        DrawTexturePro(*pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
-    }
-
-    // Draw top pipe
-    DrawTextureEx(*pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f, WHITE);
-
-    // Draw bottom pipe
-    const float pipeBottomYOffset = pipe->pipeGap + (float) pipe->pipeTop->height;
-    DrawTextureEx(*pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
-
-    #ifdef debug
-    drawHitBoxDebug(pipe);
-    #endif
-}
-
+// Logic Functions
 static void handleTopHitbox(Pipe *pipe)
 {
     // Calculate position of hitbox
@@ -132,6 +80,8 @@ static void collisionHandling(Pipe *pipe, Bird *bird)
     }
 }
 
+// Pipe Initialiasing and Handling
+
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
     pipe->pipeBottom = &pipeTexture->pipeBottom;
@@ -194,17 +144,6 @@ void releasePipe(Pipe *pipe)
     }
 }
 
-void drawPipes(Pipe *pipePool)
-{
-    for (int i = 0; i < POOL_SIZE; i++)
-    {
-        if (pipePool[i].active)
-        {
-            drawPipe(&pipePool[i]);
-        }
-    }
-}
-
 void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
 {
     for (int i = 0; i < POOL_SIZE; i++)
@@ -216,6 +155,72 @@ void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
             handleMiddleHitbox(&pipePool[i]);
             handleBottomHitbox(&pipePool[i]);
             collisionHandling(&pipePool[i], bird);
+        }
+    }
+}
+
+
+// Draw Functions
+static void drawHitBoxDebug(Pipe *pipe)
+{
+    DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
+    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
+}
+
+void drawPipe(Pipe *pipe)
+{
+    // Find the number of chunks from top of screen to top pipe
+    const float numberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
+
+    if (numberOfTopChunks > 0.0f)
+    {
+        pipe->dstPipeChunkTop.x = pipe->position.x;
+        pipe->dstPipeChunkTop.y = 0.0f;
+        pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop->width;
+        pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop->height * numberOfTopChunks;
+        DrawTexturePro(*pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
+    }
+
+    // Find difference between position and screen height.
+    // Then remove the top pipe, middle, and bottom pipe to get the chunks.
+    const float numberOfBottomChunks = ((float) GetScreenHeight()
+    - pipe->position.y
+    - (float) pipe->pipeTop->height
+    - pipe->pipeGap
+    - (float) pipe->pipeBottom->height) / pipe->pipeChunkSize.y;
+
+    if (numberOfBottomChunks > 0.0f)
+    {
+        pipe->dstPipeChunkBottom.x = pipe->position.x;
+        const float pipeBottomChunkOffsetY = (float) pipe->pipeTop->height + pipe->pipeGap + (float) pipe->pipeBottom->height;
+        pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffsetY;
+
+        pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom->width;
+        pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop->height * numberOfBottomChunks;
+
+        DrawTexturePro(*pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
+    }
+
+    // Draw top pipe
+    DrawTextureEx(*pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f, WHITE);
+
+    // Draw bottom pipe
+    const float pipeBottomYOffset = pipe->pipeGap + (float) pipe->pipeTop->height;
+    DrawTextureEx(*pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
+
+    #ifdef debug
+    drawHitBoxDebug(pipe);
+    #endif
+}
+
+void drawPipes(Pipe *pipePool)
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (pipePool[i].active)
+        {
+            drawPipe(&pipePool[i]);
         }
     }
 }

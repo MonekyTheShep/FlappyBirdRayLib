@@ -9,7 +9,10 @@ typedef struct Bird {
     float rotation;
 } Bird;
 
-void handleBird(float deltaTime, Bird *bird);
-void drawBird(Bird *bird);
 void initializeBird(Bird *bird);
 void CleanUpBird(Bird *bird);
+
+void handleBird(float deltaTime, Bird *bird);
+
+void drawBird(Bird *bird);
+

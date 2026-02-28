@@ -7,7 +7,24 @@
 #include <raymath.h>
 
 
+void initializeBird(Bird *bird)
+{
+    const float factor = 0.2f;
+    bird->velocity = (Vector2) {0.0f,0.0f};
+    bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
+    bird->src = (Rectangle) {0.0f,0.0f, (float) bird->sprite.width, (float) bird->sprite.height};
+    bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
+    // Should I handle hitbox size here?
+    bird->hitBox.width = bird->dest.width;
+    bird->hitBox.height = bird->dest.height;
+    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2};
+}
 
+void CleanUpBird(Bird *bird) {
+    UnloadTexture(bird->sprite);
+}
+
+// Logic Functions
 static void applyVelocity(Bird *bird, const float deltaTime)
 {
     // Apply the Velocity Forces based on delta time
@@ -85,19 +102,6 @@ static void inputHandling(Bird *bird)
     }
 }
 
-void initializeBird(Bird *bird)
-{
-    const float factor = 0.2f;
-    bird->velocity = (Vector2) {0.0f,0.0f};
-    bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
-    bird->src = (Rectangle) {0.0f,0.0f, (float) bird->sprite.width, (float) bird->sprite.height};
-    bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
-    // Should I handle hitbox size here?
-    bird->hitBox.width = bird->dest.width;
-    bird->hitBox.height = bird->dest.height;
-    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2};
-}
-
 void handleBird(const float deltaTime, Bird *bird)
 {
     // Handle Jumping
@@ -117,6 +121,8 @@ void handleBird(const float deltaTime, Bird *bird)
     // printf("%f\n", bird->velocity.y);
 }
 
+// Draw Functions
+
 static void drawHitBoxDebug(Bird *bird)
 {
     DrawRectangleRec(bird->hitBox, Fade(RED, 0.5f));
@@ -128,8 +134,4 @@ void drawBird(Bird *bird)
     drawHitBoxDebug(bird);
     #endif
     DrawTexturePro(bird->sprite, bird->src, bird->dest, (Vector2) {bird->dest.width / 2.0f,bird->dest.height / 2.0f}, bird->rotation, WHITE);
-}
-
-void CleanUpBird(Bird *bird) {
-    UnloadTexture(bird->sprite);
 }
