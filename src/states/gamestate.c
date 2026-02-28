@@ -31,7 +31,8 @@ void InitializeGameState(void)
     initializeBird(&bird);
 }
 
-void UnloadGameState(void) {
+void UnloadGameState(void)
+{
     CleanUpBird(&bird);
     CleanUpPipes(&pipeTexture);
 }
