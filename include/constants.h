@@ -7,5 +7,5 @@
 
 // Pipe
 #define PIPE_SPEED (-150.0f)
-#define POOL_SIZE 5
-#define PIPE_SPAWN_RATE 2.0f
+#define POOL_SIZE (5)
+#define PIPE_SPAWN_RATE (2.0f)
