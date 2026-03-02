@@ -1,8 +1,10 @@
 #pragma once
+
+#include <stdbool.h>
+
 #include <raylib.h>
 
 #include "bird.h"
-#include <stdbool.h>
 
 typedef struct PipeTexture {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
@@ -34,5 +36,3 @@ void handlePipes(float deltaTime, Pipe *pipe, Bird *bird);
 // Draw Functions
 void drawPipe(Pipe *pipe);
 void drawPipes(Pipe *pipe);
-
-
