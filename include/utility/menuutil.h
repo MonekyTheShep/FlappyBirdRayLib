@@ -1,5 +1,4 @@
 #pragma once
-#include "utility/gameutil.h"
 
 typedef enum States
 {
@@ -7,5 +6,3 @@ typedef enum States
     GAME_STATE,
     EXIT
 } States;
-
-void changeMenu(GameInfo *info, States *currentState, States changeState);

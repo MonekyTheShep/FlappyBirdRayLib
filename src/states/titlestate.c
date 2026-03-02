@@ -9,6 +9,7 @@
 #include "states.h"
 
 static int finishState = false;
+static int exitAllState = false;
 
 // Initialise Functions
 void initializeTitleState(void)
@@ -26,15 +27,18 @@ bool finishTitleState(void)
     return finishState;
 }
 
+bool exitState(void) {
+    return exitAllState;
+}
 
 // Logic Functions
-static void buttonMenuCallback(int buttonIndex, GameInfo *gameInfo, States *menuState) {
+static void buttonMenuCallback(int buttonIndex) {
     switch (buttonIndex) {
         case 0:
             finishState = true;
             break;
         case 1:
-            changeMenu(gameInfo, menuState, EXIT);
+            exitAllState = true;
             break;
         default: break;
     }
@@ -65,7 +69,7 @@ static void drawTitle(void)
 }
 
 
-static void drawMenu(const char *buttonLabels[], const int numButtons, GameInfo *info, States *menuState, void (*buttonCallback)(int, GameInfo*, States*))
+static void drawMenu(const char *buttonLabels[], const int numButtons, void (*buttonCallback)(int))
 {
     // Button information
     const float buttonWidth = 100.0f;
@@ -88,12 +92,12 @@ static void drawMenu(const char *buttonLabels[], const int numButtons, GameInfo 
         const Rectangle button = { currentButtonX, currentButtonY , buttonWidth , buttonHeight };
         if (GuiButton(button, buttonLabels[i]))
         {
-            buttonCallback(i, info, menuState);
+            buttonCallback(i);
         }
     }
 }
 
-void drawTitleState(GameInfo *gameInfo, States *menuState)
+void drawTitleState(void)
 {
     // Draw the title
     drawTitle();
@@ -102,5 +106,5 @@ void drawTitleState(GameInfo *gameInfo, States *menuState)
     const char *buttonLabels[] = {"Start", "Exit"};
     const char numOfButtons = sizeof(buttonLabels) / sizeof(buttonLabels[0]);
 
-    drawMenu(buttonLabels, numOfButtons, gameInfo, menuState, buttonMenuCallback);
+    drawMenu(buttonLabels, numOfButtons, buttonMenuCallback);
 }

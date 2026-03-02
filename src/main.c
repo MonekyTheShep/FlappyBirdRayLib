@@ -71,6 +71,7 @@ int main(void)
             case TITLE_STATE:
                 updateTitleState();
                 if (finishTitleState()) changeScreen(GAME_STATE);
+                if (exitState()) menuState = EXIT;
                 break;
             case GAME_STATE:
                 updateGameState(deltaTime);
@@ -86,10 +87,10 @@ int main(void)
             switch (menuState)
             {
                 case TITLE_STATE:
-                    drawTitleState(&gameInfo, &menuState);
+                    drawTitleState();
                     break;
                 case GAME_STATE:
-                    drawGameState(deltaTime, &gameInfo, &menuState);
+                    drawGameState(deltaTime);
                     break;
                 default:
                     break;

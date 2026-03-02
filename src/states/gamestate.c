@@ -88,7 +88,7 @@ void updateGameState(const float deltaTime)
 
 
 // Draw Functions
-static void drawGameOverMenu(GameInfo *gameInfo, States *menuState)
+static void drawGameOverMenu(void)
 {
     const float buttonWidth = 100.0f;
     const float buttonHeight = 50.0f;
@@ -102,7 +102,7 @@ static void drawGameOverMenu(GameInfo *gameInfo, States *menuState)
     }
 }
 
-void drawGameState(const float deltaTime, GameInfo *gameInfo, States *menuState)
+void drawGameState(const float deltaTime)
 {
     drawBird(&gameState.bird);
     drawPipes(gameState.pipePool);
@@ -117,6 +117,6 @@ void drawGameState(const float deltaTime, GameInfo *gameInfo, States *menuState)
 
     if (gameState.gameOver)
     {
-        drawGameOverMenu(gameInfo, menuState);
+        drawGameOverMenu();
     }
 }
