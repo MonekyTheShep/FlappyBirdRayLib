@@ -1,6 +1,12 @@
 #pragma once
 #include "utility/gameutil.h"
-#include "utility/menuutil.h"
+
+typedef enum States
+{
+    TITLE_STATE,
+    GAME_STATE,
+    EXIT
+} States;
 
 // Game State
 // Initialise Functions
