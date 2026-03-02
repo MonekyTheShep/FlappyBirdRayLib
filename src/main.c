@@ -59,7 +59,7 @@ int main(void)
 }
 
 //----------------------------------------------------------------------------------
-// Main Function Implementation
+// Function Implementation
 //----------------------------------------------------------------------------------
 static void changeState(States changeState)
 {
