@@ -3,7 +3,6 @@
 #include <raylib.h>
 #include <raygui.h>
 
-#include "utility/menuutil.h"
 #include "utility/gameutil.h"
 
 #include "states.h"
