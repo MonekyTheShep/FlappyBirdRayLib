@@ -31,7 +31,7 @@ static GameState gameState =
 static float accumulationTime = PIPE_SPAWN_RATE;
 
 //----------------------------------------------------------------------------------
-// Intialise Functions
+// Initialise Functions
 //----------------------------------------------------------------------------------
 void initializeGameState(void)
 {
