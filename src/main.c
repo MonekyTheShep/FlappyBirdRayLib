@@ -36,6 +36,19 @@ int main(void)
         updateDrawFrame();
     }
 
+    // Unload Current State before closing window.
+    switch (menuState)
+    {
+        case TITLE_STATE:
+            unloadTitleState();
+            break;
+        case GAME_STATE:
+            unloadGameState();
+            break;
+        default:
+            break;
+    }
+
     CloseWindow();
     return 0;
 }
