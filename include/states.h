@@ -1,5 +1,5 @@
 #pragma once
-#include "utility/gameutil.h"
+#include <stdbool.h>
 
 typedef enum States
 {
@@ -7,6 +7,17 @@ typedef enum States
     GAME_STATE,
     EXIT
 } States;
+
+// Title State
+// Initialise functions
+void initializeTitleState(void);
+void unloadTitleState(void);
+bool finishTitleState(void);
+bool exitState(void);
+//Logic Functions
+void updateTitleState(void);
+// Draw Functions
+void drawTitleState(void);
 
 // Game State
 // Initialise Functions
@@ -20,14 +31,5 @@ void updateGameState(float deltaTime);
 void drawGameState(float deltaTime);
 
 
-// Title State
-// Initialise functions
-void initializeTitleState(void);
-void unloadTitleState(void);
-bool finishTitleState(void);
-bool exitState(void);
-//Logic Functions
-void updateTitleState(void);
-// Draw Functions
-void drawTitleState(void);
+
 

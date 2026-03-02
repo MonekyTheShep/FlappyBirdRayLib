@@ -74,7 +74,8 @@ void incrementScore(void)
     gameState.score++;
 }
 
-void gameOver(void) {
+void gameOver(void)
+{
     gameState.gameOver = true;
 }
 

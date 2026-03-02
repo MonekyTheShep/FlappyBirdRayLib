@@ -1,5 +1,9 @@
 #pragma once
 
+// Music/Sounds
+#define NUM_OF_MUSIC 2
+#define NUM_OF_SOUND 2
+
 // World
 #define GRAVITY_VELOCITY (980.0f)
 #define JUMP_VELOCITY (-350.0f)
