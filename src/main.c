@@ -59,9 +59,8 @@ int main(void)
 }
 
 //----------------------------------------------------------------------------------
-// Main Function Declaration
+// Main Function Implementation
 //----------------------------------------------------------------------------------
-
 static void changeState(States changeState)
 {
     switch (menuState)
