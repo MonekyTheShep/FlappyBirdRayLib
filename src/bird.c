@@ -6,7 +6,9 @@
 #include <math.h>
 #include <raymath.h>
 
+//----------------------------------------------------------------------------------
 // Initialise Functions
+//----------------------------------------------------------------------------------
 void initializeBird(Bird *bird)
 {
     const float factor = 0.2f;
@@ -31,7 +33,9 @@ void CleanUpBird(Bird *bird)
     UnloadTexture(bird->sprite);
 }
 
+//----------------------------------------------------------------------------------
 // Logic Functions
+//----------------------------------------------------------------------------------
 static void applyVelocity(Bird *bird, const float deltaTime)
 {
     // Apply the Velocity Forces based on delta time
@@ -109,7 +113,9 @@ static void inputHandling(Bird *bird)
     }
 }
 
-// Handling Functions
+//----------------------------------------------------------------------------------
+// Handle Functions
+//----------------------------------------------------------------------------------
 void handleBird(const float deltaTime, Bird *bird)
 {
     // Handle Jumping
@@ -129,7 +135,9 @@ void handleBird(const float deltaTime, Bird *bird)
     // printf("%f\n", bird->velocity.y);
 }
 
+//----------------------------------------------------------------------------------
 // Draw Functions
+//----------------------------------------------------------------------------------
 static void drawHitBoxDebug(Bird *bird)
 {
     DrawRectangleRec(bird->hitBox, Fade(RED, 0.5f));

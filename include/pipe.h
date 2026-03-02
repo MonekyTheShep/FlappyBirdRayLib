@@ -6,6 +6,9 @@
 
 #include "bird.h"
 
+//----------------------------------------------------------------------------------
+// Typedefs
+//----------------------------------------------------------------------------------
 typedef struct PipeTexture {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
 } PipeTexture;
@@ -24,15 +27,21 @@ typedef struct Pipe {
     bool scored;
 } Pipe;
 
+//----------------------------------------------------------------------------------
 // Initialise Functions
+//----------------------------------------------------------------------------------
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
 void CleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool);
 
-// Handling Functions
+//----------------------------------------------------------------------------------
+// Handle Functions
+//----------------------------------------------------------------------------------
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
 void handlePipes(float deltaTime, Pipe *pipe, Bird *bird);
 
+//----------------------------------------------------------------------------------
 // Draw Functions
+//----------------------------------------------------------------------------------
 void drawPipe(Pipe *pipe);
 void drawPipes(Pipe *pipe);

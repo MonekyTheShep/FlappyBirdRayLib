@@ -13,7 +13,10 @@
 
 #include "states.h"
 
-GameState gameState =
+//----------------------------------------------------------------------------------
+// Local Variables
+//----------------------------------------------------------------------------------
+static GameState gameState =
 {
     .pipePool = {0},
     .bird = {0},
@@ -27,7 +30,9 @@ static int finishState = false;
 
 static float accumulationTime = PIPE_SPAWN_RATE;
 
-// Initialise Functions
+//----------------------------------------------------------------------------------
+// Intialise Functions
+//----------------------------------------------------------------------------------
 void initializeGameState(void)
 {
     finishState = false;
@@ -55,7 +60,9 @@ bool finishGameState(void)
     return finishState;
 }
 
+//----------------------------------------------------------------------------------
 // Logic Functions
+//----------------------------------------------------------------------------------
 static void spawnPipe(void)
 {
     if (accumulationTime >= PIPE_SPAWN_RATE)
@@ -92,7 +99,9 @@ void updateGameState(const float deltaTime)
 }
 
 
+//----------------------------------------------------------------------------------
 // Draw Functions
+//----------------------------------------------------------------------------------
 static void drawGameOverMenu(void)
 {
     const float buttonWidth = 100.0f;

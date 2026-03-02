@@ -6,7 +6,9 @@
 
 #include <stdio.h>
 
+//----------------------------------------------------------------------------------
 // Initialise Functions
+//----------------------------------------------------------------------------------
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
@@ -57,7 +59,9 @@ void CleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool)
     }
 }
 
+//----------------------------------------------------------------------------------
 // Logic Functions
+//----------------------------------------------------------------------------------
 static void handleTopHitbox(Pipe *pipe)
 {
     // Calculate position of hitbox
@@ -128,7 +132,9 @@ static void collisionHandling(Pipe *pipe, Bird *bird)
     }
 }
 
-// Pipe Handling
+//----------------------------------------------------------------------------------
+// Handle Functions
+//----------------------------------------------------------------------------------
 Pipe *acquirePipe(Pipe *pipePool)
 {
     for (int i = 0; i < POOL_SIZE; i++)
@@ -167,7 +173,9 @@ void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
 }
 
 
+//----------------------------------------------------------------------------------
 // Draw Functions
+//----------------------------------------------------------------------------------
 static void drawHitBoxDebug(Pipe *pipe)
 {
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));

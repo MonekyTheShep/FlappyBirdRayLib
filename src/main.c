@@ -13,11 +13,16 @@
 
 #define WINDOW_TITLE ("Flappy Bird")
 
-// default menu
+//----------------------------------------------------------------------------------
+// Main Module Variables
+//----------------------------------------------------------------------------------
 States menuState = TITLE_STATE;
 GameInfo gameInfo = {.musicPlaying = 0};
 Music *currentMusic;
 
+//----------------------------------------------------------------------------------
+// Function Prototypes
+//----------------------------------------------------------------------------------
 static void changeState(States changeState);
 static void updateDrawFrame(void);
 
@@ -52,6 +57,10 @@ int main(void)
     CloseWindow();
     return 0;
 }
+
+//----------------------------------------------------------------------------------
+// Main Function Declaration
+//----------------------------------------------------------------------------------
 
 static void changeState(States changeState)
 {

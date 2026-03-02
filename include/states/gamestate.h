@@ -3,6 +3,9 @@
 #include "pipe.h"
 #include "constants.h"
 
+//----------------------------------------------------------------------------------
+// Typedefs
+//----------------------------------------------------------------------------------
 typedef struct GameState {
     Pipe pipePool[POOL_SIZE];
     Bird bird;
@@ -13,7 +16,9 @@ typedef struct GameState {
 } GameState;
 
 
+//----------------------------------------------------------------------------------
 // Logic Functions
+//----------------------------------------------------------------------------------
 void incrementScore(void);
 void gameOver(void);
 
