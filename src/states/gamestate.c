@@ -25,7 +25,7 @@ GameState gameState =
 
 static int finishState = false;
 
-float accumulationTime = PIPE_SPAWN_RATE;
+static float accumulationTime = PIPE_SPAWN_RATE;
 
 // Initialise Functions
 void initializeGameState(void)
