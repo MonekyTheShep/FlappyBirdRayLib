@@ -16,6 +16,29 @@
 // default menu
 States menuState = TITLE_STATE;
 GameInfo gameInfo = {.musicPlaying = 0};
+Music *currentMusic;
+
+static void changeState(States changeState);
+static void updateDrawFrame(void);
+
+int main(void)
+{
+    SetConfigFlags(FLAG_VSYNC_HINT);
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
+    SetTargetFPS(60);
+
+    while (!WindowShouldClose())
+    {
+        if (menuState == EXIT)
+        {
+            break;
+        }
+        updateDrawFrame();
+    }
+
+    CloseWindow();
+    return 0;
+}
 
 static void changeState(States changeState)
 {
@@ -48,54 +71,38 @@ static void changeState(States changeState)
 }
 
 
-int main(void)
-{
-    SetConfigFlags(FLAG_VSYNC_HINT);
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
-    SetTargetFPS(60);
+static void updateDrawFrame(void) {
+    const float deltaTime = GetFrameTime();
 
-    while (!WindowShouldClose())
+    // Update logic for each state
+    switch (menuState)
     {
-        if (menuState == EXIT)
-        {
+        case TITLE_STATE:
+            updateTitleState();
+            if (finishTitleState()) changeState(GAME_STATE);
+            if (exitState()) changeState(EXIT);
             break;
-        }
-
-        const float deltaTime = GetFrameTime();
-
-        // Update logic for each state
-        switch (menuState)
-        {
-            case TITLE_STATE:
-                updateTitleState();
-                if (finishTitleState()) changeState(GAME_STATE);
-                if (exitState()) changeState(EXIT);
-                break;
-            case GAME_STATE:
-                updateGameState(deltaTime);
-                if (finishGameState()) changeState(TITLE_STATE);
-                break;
-            default:
-                break;
-        }
-
-        // Draw for each state
-        BeginDrawing();
-            ClearBackground(WHITE);
-            switch (menuState)
-            {
-                case TITLE_STATE:
-                    drawTitleState();
-                    break;
-                case GAME_STATE:
-                    drawGameState(deltaTime);
-                    break;
-                default:
-                    break;
-            }
-        EndDrawing();
+        case GAME_STATE:
+            updateGameState(deltaTime);
+            if (finishGameState()) changeState(TITLE_STATE);
+            break;
+        default:
+            break;
     }
 
-    CloseWindow();
-    return 0;
+    // Draw for each state
+    BeginDrawing();
+    ClearBackground(WHITE);
+    switch (menuState)
+    {
+        case TITLE_STATE:
+            drawTitleState();
+            break;
+        case GAME_STATE:
+            drawGameState(deltaTime);
+            break;
+        default:
+            break;
+    }
+    EndDrawing();
 }
