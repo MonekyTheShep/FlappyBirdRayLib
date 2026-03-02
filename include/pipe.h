@@ -31,7 +31,7 @@ typedef struct Pipe {
 // Initialise Functions
 //----------------------------------------------------------------------------------
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
-void CleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool);
+void cleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool);
 
 //----------------------------------------------------------------------------------
 // Handle Functions

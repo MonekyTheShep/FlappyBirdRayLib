@@ -28,7 +28,7 @@ void initializeBird(Bird *bird)
 
 }
 
-void CleanUpBird(Bird *bird)
+void cleanUpBird(Bird *bird)
 {
     UnloadTexture(bird->sprite);
 }

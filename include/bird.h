@@ -17,7 +17,7 @@ typedef struct Bird {
 // Initialise Functions
 //----------------------------------------------------------------------------------
 void initializeBird(Bird *bird);
-void CleanUpBird(Bird *bird);
+void cleanUpBird(Bird *bird);
 
 //----------------------------------------------------------------------------------
 // Handle Functions
