@@ -5,6 +5,7 @@
 #include <raylib.h>
 
 #include "bird.h"
+#include "states/gamestate.h"
 
 typedef struct PipeTexture {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
@@ -26,7 +27,7 @@ typedef struct Pipe {
 
 // Initialise Functions
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
-void CleanUpPipes(PipeTexture *pipeTexture);
+void CleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool);
 
 // Handling Functions
 Pipe *acquirePipe(Pipe *pipePool);

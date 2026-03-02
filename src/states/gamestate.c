@@ -47,7 +47,7 @@ void initializeGameState(void)
 void unloadGameState(void)
 {
     CleanUpBird(&gameState.bird);
-    CleanUpPipes(&gameState.pipeTexture);
+    CleanUpPipes(&gameState.pipeTexture, gameState.pipePool);
 }
 
 bool finishGameState(void)

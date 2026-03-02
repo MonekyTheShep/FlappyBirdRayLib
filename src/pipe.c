@@ -44,18 +44,18 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
     }
 }
 
-void CleanUpPipes(PipeTexture *pipeTexture)
+void CleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool)
 {
     UnloadTexture(pipeTexture->pipeBottom);
     UnloadTexture(pipeTexture->pipeTop);
     UnloadTexture(pipeTexture->pipeChunkTop);
     UnloadTexture(pipeTexture->pipeChunkBottom);
 
-    // // Reset pipes
-    // for (int i = 0; i < POOL_SIZE; i++)
-    // {
-    //     releasePipe(&gameState->pipePool[i]);
-    // }
+    // Reset pipes
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        releasePipe(&pipePool[i]);
+    }
 }
 
 // Logic Functions
