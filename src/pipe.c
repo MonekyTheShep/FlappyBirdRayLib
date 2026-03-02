@@ -24,9 +24,11 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom->width, (float) pipe->pipeBottom->height};
 
     pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
-    pipe->scored = false;
+
     pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
     pipe->velocity = (Vector2) {0.0f, 0.0f};
+
+    pipe->scored = false;
 }
 
 

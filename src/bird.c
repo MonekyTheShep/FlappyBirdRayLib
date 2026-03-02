@@ -22,6 +22,7 @@ void initializeBird(Bird *bird)
 
 void CleanUpBird(Bird *bird) {
     UnloadTexture(bird->sprite);
+    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
 }
 
 // Logic Functions
