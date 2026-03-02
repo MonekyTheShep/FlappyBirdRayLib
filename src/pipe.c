@@ -7,8 +7,6 @@
 
 #include "states/gamestate.h"
 
-extern GameState gameState;
-
 // Initialise Functions
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
@@ -46,7 +44,7 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
     }
 }
 
-void CleanUpPipes(PipeTexture *pipeTexture)
+void CleanUpPipes(PipeTexture *pipeTexture, GameState *gameState)
 {
     UnloadTexture(pipeTexture->pipeBottom);
     UnloadTexture(pipeTexture->pipeTop);
@@ -56,7 +54,7 @@ void CleanUpPipes(PipeTexture *pipeTexture)
     // Reset pipes
     for (int i = 0; i < POOL_SIZE; i++)
     {
-        releasePipe(&gameState.pipePool[i]);
+        releasePipe(&gameState->pipePool[i]);
     }
 }
 
@@ -117,7 +115,7 @@ static void collisionHandling(Pipe *pipe, Bird *bird)
 
     if (birdHitPipe)
     {
-        gameState.gameOver = true;
+       gameOver();
     }
 
     const bool scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);

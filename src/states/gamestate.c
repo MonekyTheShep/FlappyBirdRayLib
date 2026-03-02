@@ -74,6 +74,10 @@ void incrementScore(void)
     gameState.score++;
 }
 
+void gameOver(void) {
+    gameState.gameOver = true;
+}
+
 void updateGameState(const float deltaTime)
 {
     accumulationTime += deltaTime;
