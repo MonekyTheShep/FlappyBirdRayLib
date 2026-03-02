@@ -26,13 +26,16 @@ bool finishTitleState(void)
     return finishState;
 }
 
-bool exitState(void) {
+bool exitState(void)
+{
     return exitAllState;
 }
 
 // Logic Functions
-static void buttonMenuCallback(int buttonIndex) {
-    switch (buttonIndex) {
+static void buttonMenuCallback(int buttonIndex)
+{
+    switch (buttonIndex)
+    {
         case 0:
             finishState = true;
             break;
