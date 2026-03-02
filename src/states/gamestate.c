@@ -16,6 +16,8 @@
 //----------------------------------------------------------------------------------
 // Local Variables
 //----------------------------------------------------------------------------------
+static int finishState = false;
+
 static GameState gameState =
 {
     .pipePool = {0},
@@ -25,8 +27,6 @@ static GameState gameState =
     .gameOver = false,
     .score = 0
 };
-
-static int finishState = false;
 
 static float accumulationTime = PIPE_SPAWN_RATE;
 
