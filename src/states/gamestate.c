@@ -13,14 +13,14 @@
 
 #include "states.h"
 
-
 GameState gameState =
 {
     .pipePool = {0},
     .bird = {0},
+    .pipeTexture = {0},
+
     .gameOver = false,
-    .score = 0,
-    .pipeTexture = {0}
+    .score = 0
 };
 
 static int finishState = false;
@@ -55,6 +55,7 @@ bool finishGameState(void)
     return finishState;
 }
 
+// Logic Functions
 static void spawnPipe(void)
 {
     if (accumulationTime >= PIPE_SPAWN_RATE)
@@ -87,7 +88,7 @@ void updateGameState(const float deltaTime)
 
 
 // Draw Functions
-static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
+static void drawGameOverMenu(GameInfo *gameInfo, States *menuState)
 {
     const float buttonWidth = 100.0f;
     const float buttonHeight = 50.0f;
@@ -101,7 +102,7 @@ static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
     }
 }
 
-void drawGameState(const float deltaTime, GameInfo *gameInfo, MenuStates *menuState)
+void drawGameState(const float deltaTime, GameInfo *gameInfo, States *menuState)
 {
     drawBird(&gameState.bird);
     drawPipes(gameState.pipePool);

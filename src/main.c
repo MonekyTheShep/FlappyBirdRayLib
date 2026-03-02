@@ -16,10 +16,10 @@
 #define WINDOW_TITLE ("Flappy Bird")
 
 // default menu
-MenuStates menuState = TITLE_STATE;
+States menuState = TITLE_STATE;
 GameInfo gameInfo = {.musicPlaying = 0};
 
-static void changeScreen(MenuStates changeState)
+static void changeScreen(States changeState)
 {
     switch (menuState)
     {
@@ -97,8 +97,6 @@ int main(void)
         EndDrawing();
     }
 
-
-    unloadGameState();
     CloseWindow();
     return 0;
 }

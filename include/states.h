@@ -11,7 +11,7 @@ bool finishGameState(void);
 // Logic function
 void updateGameState(float deltaTime);
 // Draw Functions
-void drawGameState(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
+void drawGameState(float deltaTime, GameInfo *gameInfo, States *menuState);
 
 
 // Title State
@@ -22,5 +22,5 @@ bool finishTitleState(void);
 //Logic Functions
 void updateTitleState(void);
 // Draw Functions
-void drawTitleState(GameInfo *gameInfo, MenuStates *menuState);
+void drawTitleState(GameInfo *gameInfo, States *menuState);
 
