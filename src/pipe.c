@@ -2,10 +2,9 @@
 
 #include "constants.h"
 
-#include <math.h>
-#include <stdio.h>
-
 #include "states/gamestate.h"
+
+#include <stdio.h>
 
 // Initialise Functions
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)

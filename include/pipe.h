@@ -5,7 +5,6 @@
 #include <raylib.h>
 
 #include "bird.h"
-#include "states/gamestate.h"
 
 typedef struct PipeTexture {
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
