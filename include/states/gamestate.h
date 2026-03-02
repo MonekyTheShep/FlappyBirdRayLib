@@ -1,15 +1,18 @@
 #pragma once
-#include "raylib.h"
-#include "utility/menuutil.h"
+#include "bird.h"
+#include "pipe.h"
+#include "constants.h"
 
-// Initialise Functions
-void InitializeGameState(void);
-void UnloadGameState(void);
+typedef struct GameState {
+    Pipe pipePool[POOL_SIZE];
+    Bird bird;
+    PipeTexture pipeTexture;
+
+    bool gameOver;
+    int score;
+} GameState;
+
 
 // Logic Functions
 void incrementScore(void);
-void updateGameState(float deltaTime);
-
-// Draw Functions
-void drawGameState(float deltaTime, GameInfo *gameInfo, MenuStates *menuState);
 

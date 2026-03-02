@@ -6,11 +6,32 @@
 #include "utility/menuutil.h"
 #include "utility/gameutil.h"
 
+#include "states.h"
+
+static int finishState = false;
+
+// Initialise Functions
+void initializeTitleState(void)
+{
+    finishState = false;
+}
+
+void unloadTitleState(void)
+{
+
+}
+
+bool finishTitleState(void)
+{
+    return finishState;
+}
+
+
 // Logic Functions
 static void buttonMenuCallback(int buttonIndex, GameInfo *gameInfo, MenuStates *menuState) {
     switch (buttonIndex) {
         case 0:
-            changeMenu(gameInfo, menuState, GAME_MENU);
+            finishState = true;
             break;
         case 1:
             changeMenu(gameInfo, menuState, EXIT);
@@ -19,6 +40,11 @@ static void buttonMenuCallback(int buttonIndex, GameInfo *gameInfo, MenuStates *
     }
 }
 
+
+void updateTitleState(void)
+{
+
+}
 
 // Draw Functions
 static void drawTitle(void)

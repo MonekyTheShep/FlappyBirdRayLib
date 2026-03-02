@@ -11,60 +11,55 @@
 #include "pipe.h"
 #include "bird.h"
 
+#include "states.h"
 
-bool gameOver = false;
-int score = 0;
 
-Bird bird;
-Pipe pipePool[POOL_SIZE];
-PipeTexture pipeTexture;
+GameState gameState =
+{
+    .pipePool = {0},
+    .bird = {0},
+    .gameOver = false,
+    .score = 0,
+    .pipeTexture = {0}
+};
+
+static int finishState = false;
 
 float accumulationTime = PIPE_SPAWN_RATE;
 
 // Initialise Functions
-void InitializeGameState(void)
+void initializeGameState(void)
 {
-    // Pipe declaring
-    initializePipePool(pipePool, &pipeTexture);
+    finishState = false;
 
-    // Bird declaring
-    initializeBird(&bird);
-}
-
-void UnloadGameState(void)
-{
-    CleanUpBird(&bird);
-    CleanUpPipes(&pipeTexture);
-}
-
-// Logic Functions
-static void resetGame(Pipe *currentPipePool, Bird *currentBird, GameInfo *gameInfo, MenuStates *menuState)
-{
-    gameOver = false;
-    score = 0;
-
-    // Move bird back to starting position and reset velocity
-    currentBird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
-    currentBird->velocity = (Vector2) {0.0f,0.0f};
-    currentBird->rotationVel = 0.0f;
-    currentBird->rotation = 0.0f;
-
-    // Reset pipes
-    for (int i = 0; i < POOL_SIZE; i++)
-    {
-        releasePipe(&currentPipePool[i]);
-    }
+    gameState.gameOver = false;
+    gameState.score = 0;
 
     accumulationTime = PIPE_SPAWN_RATE;
 
-    changeMenu(gameInfo, menuState, MAIN_MENU);
+    // Pipe declaring
+    initializePipePool(gameState.pipePool, &gameState.pipeTexture);
+
+    // Bird declaring
+    initializeBird(&gameState.bird);
+}
+
+void unloadGameState(void)
+{
+    CleanUpBird(&gameState.bird);
+    CleanUpPipes(&gameState.pipeTexture);
+}
+
+bool finishGameState(void)
+{
+    return finishState;
 }
 
 static void spawnPipe(void)
 {
     if (accumulationTime >= PIPE_SPAWN_RATE)
     {
-        Pipe *pipe = acquirePipe(pipePool);
+        Pipe *pipe = acquirePipe(gameState.pipePool);
         if (pipe != NULL)
         {
             pipe->position.y = (float) GetRandomValue(-100, 200);
@@ -75,18 +70,18 @@ static void spawnPipe(void)
 
 void incrementScore(void)
 {
-    score += 1;
+    gameState.score++;
 }
 
 void updateGameState(const float deltaTime)
 {
     accumulationTime += deltaTime;
 
-    if (!gameOver)
+    if (!gameState.gameOver)
     {
         spawnPipe();
-        handleBird(deltaTime, &bird);
-        handlePipes(deltaTime, pipePool, &bird);
+        handleBird(deltaTime, &gameState.bird);
+        handlePipes(deltaTime, gameState.pipePool, &gameState.bird);
     }
 }
 
@@ -102,24 +97,24 @@ static void drawGameOverMenu(GameInfo *gameInfo, MenuStates *menuState)
 
     if (GuiButton(gameOverButton, "Reset"))
     {
-        resetGame(pipePool, &bird, gameInfo, menuState);
+        finishState = true;
     }
 }
 
 void drawGameState(const float deltaTime, GameInfo *gameInfo, MenuStates *menuState)
 {
-    drawBird(&bird);
-    drawPipes(pipePool);
+    drawBird(&gameState.bird);
+    drawPipes(gameState.pipePool);
 
-    DrawText(TextFormat("Score: %0i", score), 0, 100, 20, GREEN);
+    DrawText(TextFormat("Score: %0i", gameState.score), 0, 100, 20, GREEN);
 
     if (deltaTime != 0)
     {
         DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
-        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
+        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
     }
 
-    if (gameOver)
+    if (gameState.gameOver)
     {
         drawGameOverMenu(gameInfo, menuState);
     }

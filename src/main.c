@@ -8,8 +8,7 @@
 #include "utility/gameutil.h"
 #include "utility/soundutil.h"
 
-#include "states/gamestate.h"
-#include "states/titlestate.h"
+#include "states.h"
 
 #define SCREEN_WIDTH (800)
 #define SCREEN_HEIGHT (600)
@@ -17,16 +16,45 @@
 #define WINDOW_TITLE ("Flappy Bird")
 
 // default menu
-MenuStates menuState = MAIN_MENU;
+MenuStates menuState = TITLE_STATE;
 GameInfo gameInfo = {.musicPlaying = 0};
+
+static void changeScreen(MenuStates changeState)
+{
+    switch (menuState)
+    {
+        case TITLE_STATE:
+            unloadTitleState();
+            break;
+        case GAME_STATE:
+            unloadGameState();
+            break;
+        default:
+            break;
+    }
+
+    switch (changeState)
+    {
+        case TITLE_STATE:
+            initializeTitleState();
+            break;
+        case GAME_STATE:
+            initializeGameState();
+            break;
+        default:
+            break;
+    }
+
+    gameInfo.musicPlaying = 0;
+    menuState = changeState;
+}
+
 
 int main(void)
 {
     SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
-
-    InitializeGameState();
 
     while (!WindowShouldClose())
     {
@@ -40,8 +68,13 @@ int main(void)
         // Update logic for each state
         switch (menuState)
         {
-            case GAME_MENU:
+            case TITLE_STATE:
+                updateTitleState();
+                if (finishTitleState()) changeScreen(GAME_STATE);
+                break;
+            case GAME_STATE:
                 updateGameState(deltaTime);
+                if (finishGameState()) changeScreen(TITLE_STATE);
                 break;
             default:
                 break;
@@ -52,10 +85,10 @@ int main(void)
             ClearBackground(WHITE);
             switch (menuState)
             {
-                case MAIN_MENU:
+                case TITLE_STATE:
                     drawTitleState(&gameInfo, &menuState);
                     break;
-                case GAME_MENU:
+                case GAME_STATE:
                     drawGameState(deltaTime, &gameInfo, &menuState);
                     break;
                 default:
@@ -65,7 +98,7 @@ int main(void)
     }
 
 
-    UnloadGameState();
+    unloadGameState();
     CloseWindow();
     return 0;
 }
