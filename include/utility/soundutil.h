@@ -3,6 +3,6 @@
 #include "raylib.h"
 
 
-void CleanUpSound(const Sound *sounds, int numOfSounds);
+void cleanUpSound(const Sound *sounds, int numOfSounds);
 
-void CleanUpMusic(const Music *musics, int numOfMusic);
+void cleanUpMusic(const Music *musics, int numOfMusic);
