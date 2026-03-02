@@ -84,7 +84,8 @@ static void changeState(States changeState)
 }
 
 
-static void updateDrawFrame(void) {
+static void updateDrawFrame(void)
+{
     const float deltaTime = GetFrameTime();
 
     // Update logic for each state
