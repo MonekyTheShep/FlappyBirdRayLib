@@ -6,6 +6,8 @@
 #include <math.h>
 #include <raymath.h>
 
+#define debug
+
 // Initialise Functions
 void initializeBird(Bird *bird)
 {
@@ -19,6 +21,8 @@ void initializeBird(Bird *bird)
     bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
 
     // Should I handle hitbox size here?
+    bird->hitBox.x = bird->position.x;
+    bird->hitBox.y = bird->position.y;
     bird->hitBox.width = bird->dest.width;
     bird->hitBox.height = bird->dest.height;
 
