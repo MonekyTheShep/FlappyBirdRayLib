@@ -1,8 +1,7 @@
 #pragma once
 #include <stdbool.h>
 
-typedef enum States
-{
+typedef enum States {
     TITLE_STATE,
     GAME_STATE,
     EXIT
