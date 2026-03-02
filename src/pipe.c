@@ -39,7 +39,7 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
 
     for (int i = 0; i < POOL_SIZE; i++)
     {
-        pipePool[i].active = 0;
+        pipePool[i].active = false;
         initializePipe(&pipePool[i], pipeTexture);
     }
 }
@@ -147,7 +147,7 @@ void releasePipe(Pipe *pipe)
     {
         pipe->active = false;
         pipe->scored = false;
-        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight() / 2.0f)};
+        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
     }
 }
 
