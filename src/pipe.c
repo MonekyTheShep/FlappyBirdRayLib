@@ -12,6 +12,11 @@ extern GameState gameState;
 // Initialise Functions
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
+    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
+    pipe->velocity = (Vector2) {0.0f, 0.0f};
+
+    pipe->scored = false;
+
     pipe->pipeBottom = &pipeTexture->pipeBottom;
     pipe->pipeTop = &pipeTexture->pipeTop;
 
@@ -24,11 +29,6 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
     pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom->width, (float) pipe->pipeBottom->height};
 
     pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
-
-    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
-    pipe->velocity = (Vector2) {0.0f, 0.0f};
-
-    pipe->scored = false;
 }
 
 
@@ -46,7 +46,8 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
     }
 }
 
-void CleanUpPipes(PipeTexture *pipeTexture) {
+void CleanUpPipes(PipeTexture *pipeTexture)
+{
     UnloadTexture(pipeTexture->pipeBottom);
     UnloadTexture(pipeTexture->pipeTop);
     UnloadTexture(pipeTexture->pipeChunkTop);

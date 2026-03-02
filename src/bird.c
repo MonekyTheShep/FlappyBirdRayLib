@@ -10,19 +10,22 @@
 void initializeBird(Bird *bird)
 {
     const float factor = 0.2f;
+    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
     bird->velocity = (Vector2) {0.0f,0.0f};
+
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
     bird->src = (Rectangle) {0.0f,0.0f, (float) bird->sprite.width, (float) bird->sprite.height};
     bird->dest = (Rectangle) {bird->position.x, bird->position.y, (float) bird->sprite.width * factor, (float) bird->sprite.height * factor};
+
     // Should I handle hitbox size here?
     bird->hitBox.width = bird->dest.width;
     bird->hitBox.height = bird->dest.height;
-    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
+
 }
 
-void CleanUpBird(Bird *bird) {
+void CleanUpBird(Bird *bird)
+{
     UnloadTexture(bird->sprite);
-    bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
 }
 
 // Logic Functions
