@@ -6,8 +6,6 @@
 #include <math.h>
 #include <raymath.h>
 
-#define debug
-
 // Initialise Functions
 void initializeBird(Bird *bird)
 {
