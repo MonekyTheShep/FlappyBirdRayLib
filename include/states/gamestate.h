@@ -21,4 +21,3 @@ typedef struct GameState {
 //----------------------------------------------------------------------------------
 void incrementScore(void);
 void gameOver(void);
-

@@ -9,7 +9,6 @@ typedef struct Bird {
     Rectangle src, dest, hitBox;
     Vector2 position, velocity;
 
-    float rotationVel;
     float rotation;
 } Bird;
 
@@ -28,4 +27,3 @@ void handleBird(float deltaTime, Bird *bird);
 // Draw Functions
 //----------------------------------------------------------------------------------
 void drawBird(Bird *bird);
-
