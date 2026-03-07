@@ -4,7 +4,8 @@
 //----------------------------------------------------------------------------------
 // Typedefs
 //----------------------------------------------------------------------------------
-typedef struct Bird {
+typedef struct Bird
+{
     Texture sprite;
     Rectangle src, dest, hitBox;
     Vector2 position, velocity;

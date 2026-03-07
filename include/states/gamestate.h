@@ -6,7 +6,8 @@
 //----------------------------------------------------------------------------------
 // Typedefs
 //----------------------------------------------------------------------------------
-typedef struct GameState {
+typedef struct GameState
+{
     Pipe pipePool[POOL_SIZE];
     Bird bird;
     PipeTexture pipeTexture;

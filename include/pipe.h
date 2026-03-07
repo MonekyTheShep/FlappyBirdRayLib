@@ -9,11 +9,13 @@
 //----------------------------------------------------------------------------------
 // Typedefs
 //----------------------------------------------------------------------------------
-typedef struct PipeTexture {
+typedef struct PipeTexture
+{
     Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
 } PipeTexture;
 
-typedef struct Pipe {
+typedef struct Pipe
+{
     Texture *pipeChunkBottom, *pipeChunkTop, *pipeBottom, *pipeTop;
 
     Rectangle srcPipeChunkBottom, srcPipeChunkTop;
