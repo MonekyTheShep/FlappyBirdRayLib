@@ -13,7 +13,7 @@ void initializeBird(Bird *bird)
 {
     bird->position = (Vector2) {100.0f, (float) GetScreenHeight() / 2.0f};
     bird->velocity = (Vector2) {0.0f,0.0f};
-    bird->rotation = 0;
+    bird->rotation = 0.0f;
 
     const float factor = 0.2f;
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
