@@ -31,6 +31,8 @@ int main(void)
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SetTargetFPS(60);
 
+    initializeTitleState();
+
     while (!WindowShouldClose())
     {
         if (menuState == EXIT)
