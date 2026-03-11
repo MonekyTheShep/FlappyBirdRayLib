@@ -108,7 +108,13 @@ static void drawGameOverMenu(void)
     const float buttonHeight = 50.0f;
     const float gameOverButtonX = ((float) GetScreenWidth() - buttonWidth) / 2.0f;
     const float gameOverButtonY = ((float) GetScreenHeight() - buttonHeight) / 2.0f;
-    const Rectangle gameOverButton = {gameOverButtonX,gameOverButtonY,buttonWidth,buttonHeight};
+
+    const Rectangle gameOverButton = {
+            .x = gameOverButtonX,
+            .y = gameOverButtonY,
+            .width = buttonWidth,
+            .height = buttonHeight
+    };
 
     if (GuiButton(gameOverButton, "Reset"))
     {
@@ -126,7 +132,7 @@ void drawGameState(const float deltaTime)
     if (deltaTime != 0)
     {
         DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
-        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))),  0, 50, 20, GREEN);
+        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))), 0, 50, 20, GREEN);
     }
 
     if (gameState.gameOver)

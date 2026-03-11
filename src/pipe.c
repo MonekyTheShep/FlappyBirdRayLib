@@ -11,8 +11,15 @@
 //----------------------------------------------------------------------------------
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
-    pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
-    pipe->velocity = (Vector2) {0.0f, 0.0f};
+    pipe->position = (Vector2) {
+        .x = (float) GetScreenWidth(),
+        .y = ((float) GetScreenHeight())
+    };
+
+    pipe->velocity = (Vector2) {
+        .x = 0.0f,
+        .y = 0.0f
+    };
 
     pipe->scored = false;
 
@@ -22,10 +29,24 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
     pipe->pipeChunkTop = &pipeTexture->pipeChunkTop;
     pipe->pipeChunkBottom = &pipeTexture->pipeChunkBottom;
 
-    pipe->srcPipeChunkBottom = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkBottom->width, (float) pipe->pipeChunkBottom->height};
-    pipe->srcPipeChunkTop = (Rectangle) {0.0f, 0.0f, (float) pipe->pipeChunkTop->width, (float) pipe->pipeChunkTop->height};
+    pipe->srcPipeChunkBottom = (Rectangle) {
+        .x = 0.0f,
+        .y = 0.0f,
+        .width = (float) pipe->pipeChunkBottom->width,
+        .height = (float) pipe->pipeChunkBottom->height
+    };
 
-    pipe->pipeChunkSize = (Vector2) {(float) pipe->pipeBottom->width, (float) pipe->pipeBottom->height};
+    pipe->srcPipeChunkTop = (Rectangle) {
+        .x = 0.0f,
+        .y = 0.0f,
+        .width = (float) pipe->pipeChunkTop->width,
+        .height = (float) pipe->pipeChunkTop->height
+    };
+
+    pipe->pipeChunkSize = (Vector2) {
+        .x = (float) pipe->pipeBottom->width,
+        .y = (float) pipe->pipeBottom->height
+    };
 
     pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
 }
@@ -153,7 +174,10 @@ void releasePipe(Pipe *pipe)
     {
         pipe->active = false;
         pipe->scored = false;
-        pipe->position = (Vector2) {(float) GetScreenWidth(), ((float) GetScreenHeight())};
+        pipe->position = (Vector2) {
+            .x = (float) GetScreenWidth(),
+            .y = ((float) GetScreenHeight())
+        };
     }
 }
 
@@ -218,11 +242,11 @@ void drawPipe(Pipe *pipe)
     }
 
     // Draw top pipe
-    DrawTextureEx(*pipe->pipeTop, (Vector2) {pipe->position.x, pipe->position.y}, 0.0f, 1.0f, WHITE);
+    DrawTextureEx(*pipe->pipeTop, (Vector2) {.x = pipe->position.x, .y = pipe->position.y}, 0.0f, 1.0f, WHITE);
 
     // Draw bottom pipe
     const float pipeBottomYOffset = pipe->pipeGap + (float) pipe->pipeTop->height;
-    DrawTextureEx(*pipe->pipeBottom, (Vector2) {pipe->position.x, pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
+    DrawTextureEx(*pipe->pipeBottom, (Vector2) {.x = pipe->position.x, .y = pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
 
     #ifdef debug
     drawHitBoxDebug(pipe);
