@@ -62,8 +62,9 @@ bool finishGameState(void)
 //----------------------------------------------------------------------------------
 // Logic Functions
 //----------------------------------------------------------------------------------
-static void spawnPipe(void)
+static void spawnPipe(const float deltaTime)
 {
+    pipeAccumulatedTime += deltaTime;
     if (pipeAccumulatedTime >= PIPE_SPAWN_RATE)
     {
         Pipe *pipe = acquirePipe(gameState.pipePool);
@@ -89,8 +90,7 @@ void updateGameState(const float deltaTime)
 {
     if (!gameState.gameOver)
     {
-        pipeAccumulatedTime += deltaTime;
-        spawnPipe();
+        spawnPipe(deltaTime);
         handleBird(deltaTime, &gameState.bird);
         handlePipes(deltaTime, gameState.pipePool);
         for (int i = 0; i < POOL_SIZE; i++) {
