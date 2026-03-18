@@ -6,8 +6,6 @@
 #include <raygui.h>
 
 #include "constants.h"
-#include "pipe.h"
-#include "bird.h"
 #include "collisionhandling.h"
 
 #include "events.h"

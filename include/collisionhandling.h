@@ -1,5 +1,4 @@
 #pragma once
-
 #include "bird.h"
 #include "pipe.h"
 
