@@ -86,7 +86,8 @@ void gameOver(void)
     gameState.gameOver = true;
 }
 
-static void handleCollisions(void) {
+static void handleCollisions(void)
+{
     for (int i = 0; i < NUM_OF_PIPES; i++)
     {
         if (gameState.pipePool[i].active)
