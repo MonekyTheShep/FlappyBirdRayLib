@@ -1,8 +1,6 @@
 #include "collisionhandling.h"
 
-#include "states/gamestate.h"
-
-
+#include "events.h"
 
 void collisionHandling(Pipe *pipe, Bird *bird)
 {

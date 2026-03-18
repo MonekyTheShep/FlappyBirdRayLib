@@ -15,10 +15,3 @@ typedef struct GameState
     bool gameOver;
     int score;
 } GameState;
-
-
-//----------------------------------------------------------------------------------
-// Logic Functions
-//----------------------------------------------------------------------------------
-void incrementScore(void);
-void gameOver(void);

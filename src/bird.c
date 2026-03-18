@@ -1,7 +1,8 @@
 #include "bird.h"
 
 #include "constants.h"
-#include "states/gamestate.h"
+
+#include "events.h"
 
 #include <stdio.h>
 #include <math.h>

@@ -10,6 +10,8 @@
 #include "bird.h"
 #include "collisionhandling.h"
 
+#include "events.h"
+
 #include "states.h"
 
 //----------------------------------------------------------------------------------
