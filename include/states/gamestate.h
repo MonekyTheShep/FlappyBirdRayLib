@@ -8,7 +8,7 @@
 //----------------------------------------------------------------------------------
 typedef struct GameState
 {
-    Pipe pipePool[POOL_SIZE];
+    Pipe pipePool[NUM_OF_PIPES];
     Bird bird;
     PipeTexture pipeTexture;
 

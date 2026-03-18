@@ -59,7 +59,7 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
     pipeTexture->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
     pipeTexture->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
 
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < NUM_OF_PIPES; i++)
     {
         pipePool[i].active = false;
         initializePipe(&pipePool[i], pipeTexture);
@@ -74,7 +74,7 @@ void cleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool)
     UnloadTexture(pipeTexture->pipeChunkBottom);
 
     // Reset pipes
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < NUM_OF_PIPES; i++)
     {
         releasePipe(&pipePool[i]);
     }
@@ -130,7 +130,7 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
 //----------------------------------------------------------------------------------
 Pipe *acquirePipe(Pipe *pipePool)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < NUM_OF_PIPES; i++)
     {
         if (!pipePool[i].active) {
             pipePool[i].active = true;
@@ -155,7 +155,7 @@ void releasePipe(Pipe *pipe)
 
 void handlePipes(const float deltaTime, Pipe *pipePool)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < NUM_OF_PIPES; i++)
     {
         if (pipePool[i].active)
         {
@@ -226,7 +226,7 @@ void drawPipe(Pipe *pipe)
 
 void drawPipes(Pipe *pipePool)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < NUM_OF_PIPES; i++)
     {
         if (pipePool[i].active)
         {

@@ -17,5 +17,5 @@
 // Pipe Constants
 //----------------------------------------------------------------------------------
 #define PIPE_SPEED (-150.0f)
-#define POOL_SIZE (5)
+#define NUM_OF_PIPES (5)
 #define PIPE_SPAWN_RATE (2.0f)
