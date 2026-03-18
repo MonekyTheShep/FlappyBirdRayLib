@@ -1,7 +1,6 @@
 #include "pipe.h"
 
 #include "constants.h"
-#include "bird.h"
 
 #include "states/gamestate.h"
 
