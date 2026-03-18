@@ -86,6 +86,14 @@ void gameOver(void)
     gameState.gameOver = true;
 }
 
+static void handleCollisions(void) {
+    for (int i = 0; i < POOL_SIZE; i++) {
+        if (gameState.pipePool[i].active) {
+            collisionHandling(&gameState.pipePool[i], &gameState.bird);
+        }
+    }
+}
+
 void updateGameState(const float deltaTime)
 {
     if (!gameState.gameOver)
@@ -93,9 +101,8 @@ void updateGameState(const float deltaTime)
         spawnPipe(deltaTime);
         handleBird(deltaTime, &gameState.bird);
         handlePipes(deltaTime, gameState.pipePool);
-        for (int i = 0; i < POOL_SIZE; i++) {
-            collisionHandling(&gameState.pipePool[i], &gameState.bird);
-        }
+        handleCollisions();
+        printf("%d\n", gameState.gameOver);
     }
 }
 
