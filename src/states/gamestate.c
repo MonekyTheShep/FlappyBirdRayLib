@@ -27,7 +27,7 @@ static GameState gameState =
     .score = 0
 };
 
-static float accumulationTime = PIPE_SPAWN_RATE;
+static float pipeAccumulatedTime = PIPE_SPAWN_RATE;
 
 //----------------------------------------------------------------------------------
 // Initialise Functions
@@ -39,7 +39,7 @@ void initializeGameState(void)
     gameState.gameOver = false;
     gameState.score = 0;
 
-    accumulationTime = PIPE_SPAWN_RATE;
+    pipeAccumulatedTime = PIPE_SPAWN_RATE;
 
     // Pipe declaring
     initializePipePool(gameState.pipePool, &gameState.pipeTexture);
@@ -64,14 +64,14 @@ bool finishGameState(void)
 //----------------------------------------------------------------------------------
 static void spawnPipe(void)
 {
-    if (accumulationTime >= PIPE_SPAWN_RATE)
+    if (pipeAccumulatedTime >= PIPE_SPAWN_RATE)
     {
         Pipe *pipe = acquirePipe(gameState.pipePool);
         if (pipe != NULL)
         {
             pipe->position.y = (float) GetRandomValue(-100, 200);
         }
-        accumulationTime = 0.0f;
+        pipeAccumulatedTime = 0.0f;
     }
 }
 
@@ -87,10 +87,9 @@ void gameOver(void)
 
 void updateGameState(const float deltaTime)
 {
-    accumulationTime += deltaTime;
-
     if (!gameState.gameOver)
     {
+        pipeAccumulatedTime += deltaTime;
         spawnPipe();
         handleBird(deltaTime, &gameState.bird);
         handlePipes(deltaTime, gameState.pipePool);
