@@ -102,7 +102,6 @@ void updateGameState(const float deltaTime)
         handleBird(deltaTime, &gameState.bird);
         handlePipes(deltaTime, gameState.pipePool);
         handleCollisions();
-        printf("%d\n", gameState.gameOver);
     }
 }
 
