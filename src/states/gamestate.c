@@ -1,16 +1,16 @@
 #include "states/gamestate.h"
+#include "states.h"
 
 #include <stdio.h>
 #include <stdbool.h>
 
 #include <raygui.h>
 
-#include "constants.h"
 #include "collisionhandling.h"
 
 #include "events.h"
 
-#include "states.h"
+#include "constants.h"
 
 //----------------------------------------------------------------------------------
 // Module Local Variables

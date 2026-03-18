@@ -1,11 +1,8 @@
 #include "states/titlestate.h"
+#include "states.h"
 
 #include <raylib.h>
 #include <raygui.h>
-
-#include "utility/gameutil.h"
-
-#include "states.h"
 
 
 //----------------------------------------------------------------------------------
