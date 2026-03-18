@@ -4,7 +4,7 @@
 
 
 
- void collisionHandling(Pipe *pipe, Bird *bird)
+void collisionHandling(Pipe *pipe, Bird *bird)
 {
     const bool offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
     if (offScreen)
