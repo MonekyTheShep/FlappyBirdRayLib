@@ -87,8 +87,10 @@ void gameOver(void)
 }
 
 static void handleCollisions(void) {
-    for (int i = 0; i < NUM_OF_PIPES; i++) {
-        if (gameState.pipePool[i].active) {
+    for (int i = 0; i < NUM_OF_PIPES; i++)
+    {
+        if (gameState.pipePool[i].active)
+        {
             collisionHandling(&gameState.pipePool[i], &gameState.bird);
         }
     }
