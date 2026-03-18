@@ -1,5 +1,7 @@
 #include "collisionhandling.h"
 
+#include <stdbool.h>
+
 #include "events.h"
 
 void collisionHandling(Pipe *pipe, Bird *bird)

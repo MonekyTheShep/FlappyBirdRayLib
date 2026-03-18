@@ -1,10 +1,12 @@
 #include "pipe.h"
 
+#include <stdio.h>
+
 #include "constants.h"
 
 #include "states/gamestate.h"
 
-#include <stdio.h>
+
 
 //----------------------------------------------------------------------------------
 // Initialise Functions

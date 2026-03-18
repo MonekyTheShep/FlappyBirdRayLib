@@ -1,12 +1,16 @@
 #include "bird.h"
 
+#include <stdbool.h>
+#include <math.h>
+#include <raymath.h>
+
 #include "constants.h"
 
 #include "events.h"
 
-#include <stdio.h>
-#include <math.h>
-#include <raymath.h>
+
+
+
 
 //----------------------------------------------------------------------------------
 // Initialise Functions
@@ -98,12 +102,12 @@ static void applyGravity(Bird *bird, const float deltaTime)
     bird->velocity.y += GRAVITY_VELOCITY * deltaTime;
 }
 
-static int isTouchingCeiling(const Bird *bird)
+static bool isTouchingCeiling(const Bird *bird)
 {
     return (bird->hitBox.y <= 0.0f);
 }
 
-static int isTouchingFloor(const Bird *bird)
+static bool isTouchingFloor(const Bird *bird)
 {
     return (bird->hitBox.y + bird->hitBox.height >= (float) GetScreenHeight());
 }
