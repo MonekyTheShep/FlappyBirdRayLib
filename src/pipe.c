@@ -1,6 +1,7 @@
 #include "pipe.h"
 
 #include "constants.h"
+#include "bird.h"
 
 #include "states/gamestate.h"
 
@@ -125,34 +126,6 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
 }
 
 
-static void collisionHandling(Pipe *pipe, Bird *bird)
-{
-    const bool offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
-    if (offScreen)
-    {
-        // move back to end of screen
-        releasePipe(pipe);
-    }
-
-    const bool birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
-    CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
-
-    if (birdHitPipe)
-    {
-       gameOver();
-    }
-
-    const bool scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
-
-    // Each pipe stores if a score has been incremented.
-    if (scoreCollided && !pipe->scored)
-    {
-
-        incrementScore();
-        pipe->scored = true;
-    }
-}
-
 //----------------------------------------------------------------------------------
 // Handle Functions
 //----------------------------------------------------------------------------------
@@ -181,7 +154,7 @@ void releasePipe(Pipe *pipe)
     }
 }
 
-void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
+void handlePipes(const float deltaTime, Pipe *pipePool)
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {
@@ -191,7 +164,6 @@ void handlePipes(const float deltaTime, Pipe *pipePool, Bird *bird)
             handleTopHitbox(&pipePool[i]);
             handleMiddleHitbox(&pipePool[i]);
             handleBottomHitbox(&pipePool[i]);
-            collisionHandling(&pipePool[i], bird);
         }
     }
 }

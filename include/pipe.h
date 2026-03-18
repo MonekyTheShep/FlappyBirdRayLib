@@ -4,8 +4,6 @@
 
 #include <raylib.h>
 
-#include "bird.h"
-
 //----------------------------------------------------------------------------------
 // Typedefs
 //----------------------------------------------------------------------------------
@@ -40,7 +38,7 @@ void cleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool);
 //----------------------------------------------------------------------------------
 Pipe *acquirePipe(Pipe *pipePool);
 void releasePipe(Pipe *pipe);
-void handlePipes(float deltaTime, Pipe *pipe, Bird *bird);
+void handlePipes(float deltaTime, Pipe *pipe);
 
 //----------------------------------------------------------------------------------
 // Draw Functions

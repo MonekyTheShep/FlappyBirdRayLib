@@ -1,8 +1,6 @@
 #include "states/gamestate.h"
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdbool.h>
 
 #include <raygui.h>
@@ -10,6 +8,7 @@
 #include "constants.h"
 #include "pipe.h"
 #include "bird.h"
+#include "collisionhandling.h"
 
 #include "states.h"
 
@@ -94,7 +93,10 @@ void updateGameState(const float deltaTime)
     {
         spawnPipe();
         handleBird(deltaTime, &gameState.bird);
-        handlePipes(deltaTime, gameState.pipePool, &gameState.bird);
+        handlePipes(deltaTime, gameState.pipePool);
+        for (int i = 0; i < POOL_SIZE; i++) {
+            collisionHandling(&gameState.pipePool[i], &gameState.bird);
+        }
     }
 }
 

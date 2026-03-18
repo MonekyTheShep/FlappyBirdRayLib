@@ -1,6 +1,7 @@
 #include "bird.h"
 
 #include "constants.h"
+#include "states/gamestate.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -116,6 +117,7 @@ static void collisionHandling(Bird *bird)
         bird->position.y = (float) GetScreenHeight() - bird->hitBox.height + bird->dest.height / 2.0f;
         // if the bird is going downwards then set velocity to 0
         if (bird->velocity.y > 0.0f) bird->velocity.y = 0.0f;
+        gameOver();
     }
 
     if (isTouchingCeiling(bird))
