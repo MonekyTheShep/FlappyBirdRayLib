@@ -62,6 +62,9 @@ bool finishGameState(void)
 //----------------------------------------------------------------------------------
 // Logic Functions
 //----------------------------------------------------------------------------------
+
+#define PIPE_SPAWN_PADDING (5)
+
 static void spawnPipe(const float deltaTime)
 {
     pipeAccumulatedTime += deltaTime;
@@ -70,7 +73,7 @@ static void spawnPipe(const float deltaTime)
         Pipe *pipe = acquirePipe(gameState.pipePool);
         if (pipe != NULL)
         {
-            pipe->position.y = (float) GetRandomValue(0 - pipe->pipeTop->height, GetScreenHeight() - (int) pipe->pipeTop->height - (int) pipe->pipeGap);
+            pipe->position.y = (float) GetRandomValue(0 - pipe->pipeTop->height + PIPE_SPAWN_PADDING, GetScreenHeight() - (int) pipe->pipeTop->height - (int) pipe->pipeGap - PIPE_SPAWN_PADDING);
         }
         pipeAccumulatedTime = 0.0f;
     }
@@ -142,7 +145,7 @@ void drawGameState(const float deltaTime)
     if (deltaTime != 0)
     {
         DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
-        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / (1.0f/deltaTime))), 0, 50, 20, GREEN);
+        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / deltaTime)), 0, 50, 20, GREEN);
     }
 
     if (gameState.gameOver)
