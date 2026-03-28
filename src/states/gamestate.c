@@ -64,6 +64,8 @@ bool finishGameState(void)
 //----------------------------------------------------------------------------------
 
 #define PIPE_SPAWN_PADDING (5)
+#define MIN_PIPE_Y (0 - pipe->pipeTop->height)
+#define MAX_PIPE_Y (GetScreenHeight() - (int) pipe->pipeTop->height - (int) pipe->pipeGap)
 
 static void spawnPipe(const float deltaTime)
 {
@@ -73,7 +75,7 @@ static void spawnPipe(const float deltaTime)
         Pipe *pipe = acquirePipe(gameState.pipePool);
         if (pipe != NULL)
         {
-            pipe->position.y = (float) GetRandomValue(0 - pipe->pipeTop->height + PIPE_SPAWN_PADDING, GetScreenHeight() - (int) pipe->pipeTop->height - (int) pipe->pipeGap - PIPE_SPAWN_PADDING);
+            pipe->position.y = (float) GetRandomValue( MIN_PIPE_Y + PIPE_SPAWN_PADDING,MAX_PIPE_Y - PIPE_SPAWN_PADDING);
         }
         pipeAccumulatedTime = 0.0f;
     }
