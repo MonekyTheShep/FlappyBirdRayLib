@@ -75,7 +75,7 @@ static void spawnPipe(const float deltaTime)
         Pipe *pipe = acquirePipe(gameState.pipePool);
         if (pipe != NULL)
         {
-            pipe->position.y = (float) GetRandomValue( MIN_PIPE_Y + PIPE_SPAWN_PADDING,MAX_PIPE_Y - PIPE_SPAWN_PADDING);
+            pipe->position.y = (float) GetRandomValue( MIN_PIPE_Y + PIPE_SPAWN_PADDING, MAX_PIPE_Y - PIPE_SPAWN_PADDING);
         }
         pipeAccumulatedTime = 0.0f;
     }
