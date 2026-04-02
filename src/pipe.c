@@ -38,6 +38,9 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
         .height = (float) pipe->pipeChunkTop->height
     };
 
+    Rectangle dst = (Rectangle) {0};
+    pipe->dstPipeChunkBottom = pipe->dstPipeChunkTop = dst;
+
     pipe->pipeChunkSize = (Vector2) {
         .x = (float) pipe->pipeBottom->width,
         .y = (float) pipe->pipeBottom->height
@@ -70,18 +73,12 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
     }
 }
 
-void cleanUpPipes(PipeTexture *pipeTexture, Pipe *pipePool)
+void cleanUpPipes(PipeTexture *pipeTexture)
 {
     UnloadTexture(pipeTexture->pipeBottom);
     UnloadTexture(pipeTexture->pipeTop);
     UnloadTexture(pipeTexture->pipeChunkTop);
     UnloadTexture(pipeTexture->pipeChunkBottom);
-
-    // Reset pipes
-    for (int i = 0; i < NUM_OF_PIPES; i++)
-    {
-        releasePipe(&pipePool[i]);
-    }
 }
 
 //----------------------------------------------------------------------------------
