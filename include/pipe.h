@@ -22,8 +22,7 @@ typedef struct Pipe
     Vector2 pipeChunkSize;
     float pipeGap;
 
-    bool active;
-    bool scored;
+    bool active, scored;
 } Pipe;
 
 //----------------------------------------------------------------------------------
