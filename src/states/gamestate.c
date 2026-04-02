@@ -41,10 +41,8 @@ void initializeGameState(void)
 
     pipeAccumulatedTime = PIPE_SPAWN_RATE;
 
-    // Pipe declaring
     initializePipePool(gameState.pipePool, &gameState.pipeTexture);
 
-    // Bird declaring
     initializeBird(&gameState.bird);
 }
 
