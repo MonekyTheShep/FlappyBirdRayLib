@@ -18,10 +18,7 @@ void initializeBird(Bird *bird)
         .y = (float) GetScreenHeight() / 2.0f
     };
 
-    bird->velocity = (Vector2) {
-        .x = 0.0f,
-        .y = 0.0f
-    };
+    bird->velocity = (Vector2) {0};
 
     bird->rotation = 0.0f;
 
