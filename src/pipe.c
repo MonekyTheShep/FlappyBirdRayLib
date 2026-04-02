@@ -91,7 +91,8 @@ static void handleTopHitbox(Pipe *pipe)
     // Calculate scale of hitbox
     pipe->topHitBox.width = pipe->pipeChunkSize.x;
     // 0 - pipe->position.y + pipe->pipeTop.height. This covers the chunks and the pipe top itself
-    pipe->topHitBox.height = pipe->position.y + (float) pipe->pipeTop->height;
+    const float topHitBoxHeight = pipe->position.y + (float) pipe->pipeTop->height;
+    pipe->topHitBox.height = (topHitBoxHeight > 0.0f) ? topHitBoxHeight : 0.0f;
 }
 
 static void handleMiddleHitbox(Pipe *pipe)
@@ -109,11 +110,17 @@ static void handleBottomHitbox(Pipe *pipe)
 {
     pipe->bottomHitBox.x = pipe->position.x;
     // Position the hitbox at bottom pipe
-    pipe->bottomHitBox.y =  pipe->position.y + (float) pipe->pipeTop->height + pipe->pipeGap;
+    pipe->bottomHitBox.y = pipe->position.y + (float) pipe->pipeTop->height + pipe->pipeGap;
 
     pipe->bottomHitBox.width = (float) pipe->pipeBottom->width;
+
+    const float bottomHitBoxHeight = (float) GetScreenHeight()
+            - pipe->position.y
+            - (float) pipe->pipeTop->height
+            - pipe->pipeGap;
+
     // Stretch hitbox to end of screen
-    pipe->bottomHitBox.height = (float) GetScreenHeight();
+    pipe->bottomHitBox.height = (bottomHitBoxHeight > 0.0f) ? bottomHitBoxHeight : 0.0f;
 }
 
 static void applyVelocity(Pipe *pipe, float deltaTime)
@@ -178,34 +185,33 @@ static void drawHitBoxDebug(Pipe *pipe)
 
 void drawPipe(Pipe *pipe)
 {
-    // Find the number of chunks from top of screen to top pipe
-    const float numberOfTopChunks = (pipe->position.y) / pipe->pipeChunkSize.y;
+    const float pipeChunkTopHeight = (pipe->position.y);
 
-    if (numberOfTopChunks > 0.0f)
+    if (pipeChunkTopHeight > 0.0f)
     {
         pipe->dstPipeChunkTop.x = pipe->position.x;
         pipe->dstPipeChunkTop.y = 0.0f;
         pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop->width;
-        pipe->dstPipeChunkTop.height = (float) pipe->pipeChunkTop->height * numberOfTopChunks;
+        pipe->dstPipeChunkTop.height = pipeChunkTopHeight;
         DrawTexturePro(*pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
     }
 
     // Find difference between position and screen height.
-    // Then remove the top pipe, middle, and bottom pipe to get the chunks.
-    const float numberOfBottomChunks = ((float) GetScreenHeight()
+    // Then remove the top pipe, middle, and bottom pipe to get the height.
+    const float pipeChunkBottomHeight = ((float) GetScreenHeight()
     - pipe->position.y
     - (float) pipe->pipeTop->height
     - pipe->pipeGap
-    - (float) pipe->pipeBottom->height) / pipe->pipeChunkSize.y;
+    - (float) pipe->pipeBottom->height);
 
-    if (numberOfBottomChunks > 0.0f)
+    if (pipeChunkBottomHeight > 0.0f)
     {
         pipe->dstPipeChunkBottom.x = pipe->position.x;
         const float pipeBottomChunkOffsetY = (float) pipe->pipeTop->height + pipe->pipeGap + (float) pipe->pipeBottom->height;
         pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffsetY;
 
         pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom->width;
-        pipe->dstPipeChunkBottom.height = (float) pipe->pipeChunkTop->height * numberOfBottomChunks;
+        pipe->dstPipeChunkBottom.height = pipeChunkBottomHeight;
 
         DrawTexturePro(*pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
     }
