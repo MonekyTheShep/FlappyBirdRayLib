@@ -62,8 +62,7 @@ bool finishGameState(void)
 //----------------------------------------------------------------------------------
 // Logic Functions
 //----------------------------------------------------------------------------------
-
-#define PIPE_SPAWN_PADDING (5)
+#define PIPE_SPAWN_PADDING (20)
 #define MIN_PIPE_Y (0 - pipe->pipeTop->height)
 #define MAX_PIPE_Y (GetScreenHeight() - (int) pipe->pipeTop->height - (int) pipe->pipeGap)
 
