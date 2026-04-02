@@ -14,10 +14,7 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
         .y = ((float) GetScreenHeight())
     };
 
-    pipe->velocity = (Vector2) {
-        .x = 0.0f,
-        .y = 0.0f
-    };
+    pipe->velocity = (Vector2) {0};
 
     pipe->scored = false;
 
@@ -47,6 +44,15 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
     };
 
     pipe->pipeGap = pipe->pipeChunkSize.y + 50.0f;
+
+    Rectangle hitbox = (Rectangle) {
+            .x = pipe->position.x,
+            .y = pipe->position.y,
+            .height = 0.0f,
+            .width = 0.0f
+    };
+
+    pipe->topHitBox = pipe->middleHitBox = pipe->bottomHitBox = hitbox;
 }
 
 
@@ -151,10 +157,25 @@ void releasePipe(Pipe *pipe)
     {
         pipe->active = false;
         pipe->scored = false;
+
         pipe->position = (Vector2) {
             .x = (float) GetScreenWidth(),
             .y = ((float) GetScreenHeight())
         };
+
+        pipe->velocity = (Vector2) {0};
+
+        Rectangle hitbox = (Rectangle) {
+                .x = pipe->position.x,
+                .y = pipe->position.y,
+                .height = 0.0f,
+                .width = 0.0f
+        };
+
+        pipe->topHitBox = pipe->middleHitBox = pipe->bottomHitBox = hitbox;
+
+        Rectangle dst = (Rectangle) {0};
+        pipe->dstPipeChunkBottom = pipe->dstPipeChunkTop = dst;
     }
 }
 
