@@ -224,7 +224,7 @@ void drawPipe(Pipe *pipe)
         pipe->dstPipeChunkTop.y = 0.0f;
         pipe->dstPipeChunkTop.width = (float) pipe->pipeChunkTop->width;
         pipe->dstPipeChunkTop.height = pipeChunkTopHeight;
-        DrawTexturePro(*pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
+        DrawTexturePro(*pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, Vector2Zero(), 0.0f, WHITE);
     }
 
     // Find difference between position and screen height.
@@ -244,7 +244,7 @@ void drawPipe(Pipe *pipe)
         pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom->width;
         pipe->dstPipeChunkBottom.height = pipeChunkBottomHeight;
 
-        DrawTexturePro(*pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, (Vector2) {0.0f,0.0f}, 0.0f, WHITE);
+        DrawTexturePro(*pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, Vector2Zero(), 0.0f, WHITE);
     }
 
     // Draw top pipe
