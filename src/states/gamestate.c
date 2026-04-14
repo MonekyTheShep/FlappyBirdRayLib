@@ -6,7 +6,7 @@
 
 #include <raygui.h>
 
-#include "collisionhandling.h"
+#include "collision_handling.h"
 
 #include "events.h"
 
