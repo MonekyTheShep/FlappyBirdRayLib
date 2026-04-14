@@ -172,7 +172,7 @@ void releasePipe(Pipe *pipe)
             .y = ((float) GetScreenHeight())
         };
 
-        pipe->velocity = (Vector2) {0};
+        pipe->velocity = Vector2Zero();
 
         Rectangle hitbox = (Rectangle) {
                 .x = pipe->position.x,
