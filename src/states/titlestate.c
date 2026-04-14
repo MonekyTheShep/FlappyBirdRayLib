@@ -101,8 +101,8 @@ static void drawMenu(const char *buttonLabels[], const int numButtons, void (*bu
 
         const Rectangle button = {
                 .x = currentButtonX,
-                .y = currentButtonY ,
-                .width = buttonWidth ,
+                .y = currentButtonY,
+                .width = buttonWidth,
                 .height = buttonHeight
         };
 

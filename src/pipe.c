@@ -4,6 +4,8 @@
 
 #include "constants.h"
 
+#include <raymath.h>
+
 //----------------------------------------------------------------------------------
 // Initialise Functions
 //----------------------------------------------------------------------------------
@@ -14,7 +16,7 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
         .y = ((float) GetScreenHeight())
     };
 
-    pipe->velocity = (Vector2) {0};
+    pipe->velocity = Vector2Zero();
 
     pipe->scored = false;
 
@@ -132,6 +134,16 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
     pipe->position.x += pipe->velocity.x * deltaTime;
 }
 
+static void handleCollision(Pipe *pipe)
+{
+    const bool offScreen = pipe->position.x + pipe->pipeChunkSize.x < 0.0f;
+    if (offScreen)
+    {
+        // move back to end of screen
+        releasePipe(pipe);
+    }
+}
+
 
 //----------------------------------------------------------------------------------
 // Handle Functions
@@ -186,6 +198,7 @@ void handlePipes(const float deltaTime, Pipe *pipePool)
             handleTopHitbox(&pipePool[i]);
             handleMiddleHitbox(&pipePool[i]);
             handleBottomHitbox(&pipePool[i]);
+            handleCollision(&pipePool[i]);
         }
     }
 }
