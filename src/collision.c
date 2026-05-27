@@ -1,23 +1,20 @@
-#include "collision_handling.h"
+#include "collision.h"
 
 #include <stdbool.h>
 
 #include "events.h"
 
-void collisionHandling(Pipe *pipe, Bird *bird)
+void resolveBirdPipeCollisions(Pipe *pipe, Bird *bird)
 {
     const bool birdHitPipe = CheckCollisionRecs(bird->hitBox, pipe->topHitBox) ||
                              CheckCollisionRecs(bird->hitBox, pipe->bottomHitBox);
 
-    if (birdHitPipe)
-    {
-        gameOver();
-    }
+    if (birdHitPipe) gameOver();
 
-    const bool scoreCollided = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
+    const bool birdScored = CheckCollisionRecs(bird->hitBox, pipe->middleHitBox);
 
     // Each pipe stores if a score has been incremented.
-    if (scoreCollided && !pipe->scored)
+    if (birdScored && !pipe->scored)
     {
 
         incrementScore();

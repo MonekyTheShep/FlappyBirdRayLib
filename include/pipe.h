@@ -19,7 +19,6 @@ typedef struct Pipe
     Rectangle dstPipeChunkBottom, dstPipeChunkTop;
     Rectangle topHitBox, middleHitBox, bottomHitBox;
     Vector2 position, velocity;
-    Vector2 pipeChunkSize;
     float pipeGap;
 
     bool active, scored;
@@ -29,6 +28,8 @@ typedef struct Pipe
 // Initialise Functions
 //----------------------------------------------------------------------------------
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture);
+void resetPipe(Pipe *pipe);
+void scalePipe(Pipe *pipe);
 void cleanUpPipes(PipeTexture *pipeTexture);
 
 //----------------------------------------------------------------------------------

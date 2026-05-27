@@ -41,8 +41,8 @@ void initializeBird(Bird *bird)
 
     // Should I handle hitbox size here?
     bird->hitBox = (Rectangle) {
-        .x = bird->position.x,
-        .y = bird->position.y,
+        .x = 0.0f,
+        .y = 0.0f,
         .width = bird->dest.width,
         .height = bird->dest.height
     };

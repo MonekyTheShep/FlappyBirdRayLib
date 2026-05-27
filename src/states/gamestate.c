@@ -6,7 +6,7 @@
 
 #include <raygui.h>
 
-#include "collision_handling.h"
+#include "collision.h"
 
 #include "events.h"
 
@@ -73,6 +73,7 @@ static void spawnPipe(const float deltaTime)
         if (pipe != NULL)
         {
             pipe->position.y = (float) GetRandomValue(MIN_PIPE_Y + PIPE_SPAWN_PADDING, MAX_PIPE_Y - PIPE_SPAWN_PADDING);
+            scalePipe(pipe);
         }
         pipeAccumulatedTime = 0.0f;
     }
@@ -94,7 +95,7 @@ static void handleCollisions(void)
     {
         if (gameState.pipePool[i].active)
         {
-            collisionHandling(&gameState.pipePool[i], &gameState.bird);
+            resolveBirdPipeCollisions(&gameState.pipePool[i], &gameState.bird);
         }
     }
 }
