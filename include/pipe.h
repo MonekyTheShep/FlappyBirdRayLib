@@ -8,15 +8,19 @@
 //----------------------------------------------------------------------------------
 typedef struct PipeTexture
 {
-    Texture pipeChunkBottom, pipeChunkTop, pipeBottom, pipeTop;
+    Texture pipeChunk, pipeCap;
 } PipeTexture;
 
 typedef struct Pipe
 {
-    Texture *pipeChunkBottom, *pipeChunkTop, *pipeBottom, *pipeTop;
+    Texture *pipeChunk, *pipeCap;
 
     Rectangle srcPipeChunkBottom, srcPipeChunkTop;
     Rectangle dstPipeChunkBottom, dstPipeChunkTop;
+
+    Rectangle srcPipeCapBottom, srcPipeCapTop;
+    Rectangle dstPipeCapBottom, dstPipeCapTop;
+
     Rectangle topHitBox, middleHitBox, bottomHitBox;
     Vector2 position, velocity;
     float pipeGap;

@@ -6,40 +6,52 @@
 
 #include <raymath.h>
 
+#define debug
+
 //----------------------------------------------------------------------------------
 // Initialise Functions
 //----------------------------------------------------------------------------------
 static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
 {
-    pipe->pipeBottom = &pipeTexture->pipeBottom;
-    pipe->pipeTop = &pipeTexture->pipeTop;
-    pipe->pipeChunkTop = &pipeTexture->pipeChunkTop;
-    pipe->pipeChunkBottom = &pipeTexture->pipeChunkBottom;
+    pipe->pipeChunk = &pipeTexture->pipeChunk;
+    pipe->pipeCap = &pipeTexture->pipeCap;
 
     pipe->srcPipeChunkBottom = (Rectangle) {
         .x = 0.0f,
         .y = 0.0f,
-        .width = (float) pipe->pipeChunkBottom->width,
-        .height = (float) pipe->pipeChunkBottom->height
+        .width = (float) pipe->pipeChunk->width,
+        .height = (float) pipe->pipeChunk->height,
     };
 
     pipe->srcPipeChunkTop = (Rectangle) {
         .x = 0.0f,
         .y = 0.0f,
-        .width = (float) pipe->pipeChunkTop->width,
-        .height = (float) pipe->pipeChunkTop->height
+        .width = (float) pipe->pipeChunk->width,
+        .height = (float) -pipe->pipeChunk->height // flip the texture
     };
 
-    pipe->pipeGap = pipe->srcPipeChunkTop.height + 50.0f;
+    pipe->srcPipeCapBottom = (Rectangle) {
+        .x = 0.0f,
+        .y = 0.0f,
+        .width = (float) pipe->pipeCap->width,
+        .height = (float) pipe->pipeChunk->height
+    };
+
+    pipe->srcPipeCapTop = (Rectangle) {
+            .x = 0.0f,
+            .y = 0.0f,
+            .width = (float) pipe->pipeCap->width,
+            .height = (float) -pipe->pipeChunk->height // flip the texture
+    };
+
+    pipe->pipeGap = (float) pipe->pipeCap->height + 50.0f;
     resetPipe(pipe);
 }
 
 void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
 {
-    pipeTexture->pipeBottom = LoadTexture(ASSETS_PATH"/pipe_bottom.png");
-    pipeTexture->pipeTop = LoadTexture(ASSETS_PATH"/pipe_top.png");
-    pipeTexture->pipeChunkBottom = LoadTexture(ASSETS_PATH"/pipe_chunk_bottom.png");
-    pipeTexture->pipeChunkTop = LoadTexture(ASSETS_PATH"/pipe_chunk_top.png");
+    pipeTexture->pipeCap = LoadTexture(ASSETS_PATH"/pipe_cap.png");
+    pipeTexture->pipeChunk = LoadTexture(ASSETS_PATH"/pipe_chunk.png");
 
     for (int i = 0; i < NUM_OF_PIPES; i++)
     {
@@ -58,94 +70,105 @@ void resetPipe(Pipe *pipe)
             .y = ((float) GetScreenHeight())
     };
 
-    Rectangle hitbox = (Rectangle) {
-            .x = pipe->position.x,
-            .y = pipe->position.y,
-            .height = 0.0f,
-            .width = 0.0f
-    };
-
-    Rectangle dst = (Rectangle) {0};
-    pipe->dstPipeChunkBottom = pipe->dstPipeChunkTop = dst;
-
+    Rectangle hitbox = {0};
     pipe->topHitBox = pipe->middleHitBox = pipe->bottomHitBox = hitbox;
+
+    Rectangle dst = {0};
+    pipe->dstPipeChunkBottom = pipe->dstPipeChunkTop = dst;
+    pipe->dstPipeCapTop = pipe->dstPipeCapBottom = dst;
 }
 
-void scalePipe(Pipe *pipe)
+static void scaleTopHitBox(Pipe *pipe)
+{
+    pipe->topHitBox.x = pipe->position.x;
+    pipe->topHitBox.y = 0.0f;
+
+    pipe->topHitBox.width = (float) pipe->pipeCap->width;
+    const float topHitBoxHeight = pipe->position.y + (float) pipe->pipeCap->height;
+    pipe->topHitBox.height = fmaxf(0.0f, topHitBoxHeight);
+}
+
+static void scaleMiddleHitBox(Pipe *pipe)
+{
+    pipe->middleHitBox.x = pipe->position.x;
+    pipe->middleHitBox.y = pipe->position.y + (float) pipe->pipeCap->height;
+
+    pipe->middleHitBox.width = (float) pipe->pipeCap->width;
+    pipe->middleHitBox.height = pipe->pipeGap;
+}
+
+static void scaleBottomHitbox(Pipe *pipe)
+{
+    pipe->bottomHitBox.x = pipe->position.x;
+    const float pipeBottomHitboxOffset = (float) pipe->pipeCap->height + pipe->pipeGap;
+    pipe->bottomHitBox.y = pipe->position.y + pipeBottomHitboxOffset;
+
+    pipe->bottomHitBox.width = (float) pipe->pipeCap->width;
+
+    const float bottomHitBoxHeight = (float) GetScreenHeight()
+                                     - pipe->position.y
+                                     - pipeBottomHitboxOffset;
+
+    pipe->bottomHitBox.height = fmaxf(0.0f, bottomHitBoxHeight);
+}
+
+static void scaleHitBox(Pipe *pipe)
+{
+    scaleTopHitBox(pipe);
+    scaleMiddleHitBox(pipe);
+    scaleBottomHitbox(pipe);
+}
+
+static void scalePipeTexture(Pipe *pipe)
 {
     const float pipeChunkTopHeight = pipe->position.y;
 
     pipe->dstPipeChunkTop.x = pipe->position.x;
     pipe->dstPipeChunkTop.y = 0.0f;
-    pipe->dstPipeChunkTop.width = (float) pipe->pipeTop->width;
+    pipe->dstPipeChunkTop.width = (float) pipe->pipeChunk->width;
     pipe->dstPipeChunkTop.height = fmaxf(0.0f, pipeChunkTopHeight);
 
+    const float pipeBottomChunkOffset = ((float) pipe->pipeCap->height
+                                         + pipe->pipeGap
+                                         + (float) pipe->pipeCap->height);
+
     const float pipeChunkBottomHeight = ((float) GetScreenHeight()
-            - pipe->position.y
-            - (float) pipe->pipeTop->height
-            - pipe->pipeGap
-            - (float) pipe->pipeBottom->height);
+                                         - pipe->position.y
+                                         - pipeBottomChunkOffset);
 
     pipe->dstPipeChunkBottom.x = pipe->position.x;
-    const float pipeBottomChunkOffsetY = (float) pipe->pipeTop->height + pipe->pipeGap + (float) pipe->pipeBottom->height;
-    pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffsetY;
-    pipe->dstPipeChunkBottom.width = (float) pipe->pipeBottom->width;
+    pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffset;
+    pipe->dstPipeChunkBottom.width = (float) pipe->pipeChunk->width;
     pipe->dstPipeChunkBottom.height = fmaxf(0.0f, pipeChunkBottomHeight);
+
+    pipe->dstPipeCapTop.x = pipe->position.x;
+    pipe->dstPipeCapTop.y = pipe->position.y;
+    pipe->dstPipeCapTop.width = (float) pipe->pipeCap->width;
+    pipe->dstPipeCapTop.height = (float) pipe->pipeCap->height;
+
+    pipe->dstPipeCapBottom.x = pipe->position.x;
+    pipe->dstPipeCapBottom.y = pipe->position.y + (float) pipe->pipeCap->height + pipe->pipeGap;
+    pipe->dstPipeCapBottom.width = (float) pipe->pipeCap->width;
+    pipe->dstPipeCapBottom.height = (float) pipe->pipeCap->height;
+
+
+}
+
+void scalePipe(Pipe *pipe)
+{
+    scalePipeTexture(pipe);
+    scaleHitBox(pipe);
 }
 
 void cleanUpPipes(PipeTexture *pipeTexture)
 {
-    UnloadTexture(pipeTexture->pipeBottom);
-    UnloadTexture(pipeTexture->pipeTop);
-    UnloadTexture(pipeTexture->pipeChunkTop);
-    UnloadTexture(pipeTexture->pipeChunkBottom);
+    UnloadTexture(pipeTexture->pipeCap);
+    UnloadTexture(pipeTexture->pipeChunk);
 }
 
 //----------------------------------------------------------------------------------
 // Logic Functions
 //----------------------------------------------------------------------------------
-static void handleTopHitbox(Pipe *pipe) // TODO scaling based on destination
-{
-    // Calculate position of hitbox
-    pipe->topHitBox.x = pipe->position.x;
-    // Position hitbox at top of pipe chunks
-    pipe->topHitBox.y = 0.0f;
-
-    // Calculate scale of hitbox
-    pipe->topHitBox.width = (float) pipe->pipeTop->width;
-    // 0 - pipe->position.y + pipe->pipeTop.height. This covers the chunks and the pipe top itself
-    const float topHitBoxHeight = pipe->position.y + (float) pipe->pipeTop->height;
-    pipe->topHitBox.height = fmaxf(0.0f, topHitBoxHeight);
-}
-
-static void handleMiddleHitbox(Pipe *pipe)
-{
-    pipe->middleHitBox.x = pipe->position.x;
-    // Position middle hitbox after the pipeTop
-    pipe->middleHitBox.y = pipe->position.y + (float) pipe->pipeTop->height;
-
-    // Make it the width of pipeTop
-    pipe->middleHitBox.width = (float) pipe->pipeTop->width;
-    pipe->middleHitBox.height = pipe->pipeGap;
-}
-
-static void handleBottomHitbox(Pipe *pipe)
-{
-    pipe->bottomHitBox.x = pipe->position.x;
-    // Position the hitbox at bottom pipe
-    pipe->bottomHitBox.y = pipe->position.y + (float) pipe->pipeTop->height + pipe->pipeGap;
-
-    pipe->bottomHitBox.width = (float) pipe->pipeBottom->width;
-
-    const float bottomHitBoxHeight = (float) GetScreenHeight()
-            - pipe->position.y
-            - (float) pipe->pipeTop->height
-            - pipe->pipeGap;
-
-    // Stretch hitbox to end of screen
-    pipe->bottomHitBox.height = fmaxf(0.0f, bottomHitBoxHeight);
-}
-
 static void applyVelocity(Pipe *pipe, float deltaTime)
 {
     pipe->velocity.x = PIPE_SPEED;
@@ -162,10 +185,25 @@ static void handleCollision(Pipe *pipe)
     }
 }
 
-static void movePipe(Pipe *pipe)
+static void movePipeHitbox(Pipe *pipe)
+{
+    pipe->topHitBox.x = pipe->position.x;
+    pipe->middleHitBox.x = pipe->position.x;
+    pipe->bottomHitBox.x = pipe->position.x;
+}
+
+static void movePipeTexture(Pipe *pipe)
 {
     pipe->dstPipeChunkTop.x = pipe->position.x;
     pipe->dstPipeChunkBottom.x = pipe->position.x;
+    pipe->dstPipeCapTop.x = pipe->position.x;
+    pipe->dstPipeCapBottom.x = pipe->position.x;
+}
+
+static void movePipe(Pipe *pipe)
+{
+    movePipeTexture(pipe);
+    movePipeHitbox(pipe);
 }
 
 //----------------------------------------------------------------------------------
@@ -200,9 +238,6 @@ void handlePipes(const float deltaTime, Pipe *pipePool)
         {
             applyVelocity(&pipePool[i], deltaTime);
             movePipe(&pipePool[i]);
-            handleTopHitbox(&pipePool[i]);
-            handleMiddleHitbox(&pipePool[i]);
-            handleBottomHitbox(&pipePool[i]);
             handleCollision(&pipePool[i]);
         }
     }
@@ -221,15 +256,11 @@ static void drawHitBoxDebug(Pipe *pipe)
 
 void drawPipe(Pipe *pipe)
 {
-    DrawTexturePro(*pipe->pipeChunkTop, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, Vector2Zero(), 0.0f, WHITE);
-    DrawTexturePro(*pipe->pipeChunkBottom, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, Vector2Zero(), 0.0f, WHITE);
+    DrawTexturePro(*pipe->pipeChunk, pipe->srcPipeChunkTop, pipe->dstPipeChunkTop, Vector2Zero(), 0.0f, WHITE);
+    DrawTexturePro(*pipe->pipeChunk, pipe->srcPipeChunkBottom, pipe->dstPipeChunkBottom, Vector2Zero(), 0.0f, WHITE);
 
-    // Draw top pipe
-    DrawTextureEx(*pipe->pipeTop, (Vector2) {.x = pipe->position.x, .y = pipe->position.y}, 0.0f, 1.0f, WHITE);
-
-    // Draw bottom pipe
-    const float pipeBottomYOffset = pipe->pipeGap + (float) pipe->pipeTop->height;
-    DrawTextureEx(*pipe->pipeBottom, (Vector2) {.x = pipe->position.x, .y = pipe->position.y + pipeBottomYOffset}, 0.0f, 1.0f,  WHITE);
+    DrawTexturePro(*pipe->pipeCap, pipe->srcPipeCapTop, pipe->dstPipeCapTop, Vector2Zero(), 0.0f, WHITE);
+    DrawTexturePro(*pipe->pipeCap, pipe->srcPipeCapBottom, pipe->dstPipeCapBottom, Vector2Zero(), 0.0f, WHITE);
 
     #ifdef debug
     drawHitBoxDebug(pipe);

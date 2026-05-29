@@ -61,8 +61,8 @@ bool finishGameState(void)
 // Logic Functions
 //----------------------------------------------------------------------------------
 #define PIPE_SPAWN_PADDING (20)
-#define MIN_PIPE_Y (0 - (int) pipe->pipeTop->height)
-#define MAX_PIPE_Y (GetScreenHeight() - (int) pipe->pipeTop->height - (int) pipe->pipeGap)
+#define MIN_PIPE_Y (0 - (int) pipe->pipeCap->height)
+#define MAX_PIPE_Y (GetScreenHeight() - (int) pipe->pipeCap->height - (int) pipe->pipeGap)
 
 static void spawnPipe(const float deltaTime)
 {
