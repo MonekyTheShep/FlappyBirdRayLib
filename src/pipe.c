@@ -133,8 +133,6 @@ static void scalePipeTexture(Pipe *pipe)
 
     pipe->dstPipeCapTop.x = pipe->position.x;
     pipe->dstPipeCapTop.y = pipe->position.y;
-    pipe->dstPipeCapTop.width = (float) pipe->pipeCap->width;
-    pipe->dstPipeCapTop.height = (float) pipe->pipeCap->height;
 
     const float pipeChunkBottomY = (pipe->position.y + (float) pipe->pipeCap->height
                                          + pipe->pipeGap
@@ -147,8 +145,6 @@ static void scalePipeTexture(Pipe *pipe)
 
     pipe->dstPipeCapBottom.x = pipe->position.x;
     pipe->dstPipeCapBottom.y = pipe->position.y + (float) pipe->pipeCap->height + pipe->pipeGap;
-    pipe->dstPipeCapBottom.width = (float) pipe->pipeCap->width;
-    pipe->dstPipeCapBottom.height = (float) pipe->pipeCap->height;
 }
 
 void scalePipe(Pipe *pipe)
