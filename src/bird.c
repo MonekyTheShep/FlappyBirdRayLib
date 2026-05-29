@@ -164,7 +164,7 @@ static void drawHitBoxDebug(Bird *bird)
 
 void drawBird(Bird *bird)
 {
-    #ifdef debug
+    #ifdef DEBUG
     drawHitBoxDebug(bird);
     #endif
     DrawTexturePro(bird->sprite, bird->src, bird->dest, (Vector2) {bird->dest.width / 2.0f,bird->dest.height / 2.0f}, bird->rotation, WHITE);

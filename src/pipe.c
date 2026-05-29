@@ -6,8 +6,6 @@
 
 #include <raymath.h>
 
-#define debug
-
 //----------------------------------------------------------------------------------
 // Initialise Functions
 //----------------------------------------------------------------------------------
@@ -255,7 +253,7 @@ void drawPipe(Pipe *pipe)
     DrawTexturePro(*pipe->pipeCap, pipe->srcPipeCapTop, pipe->dstPipeCapTop, Vector2Zero(), 0.0f, WHITE);
     DrawTexturePro(*pipe->pipeCap, pipe->srcPipeCapBottom, pipe->dstPipeCapBottom, Vector2Zero(), 0.0f, WHITE);
 
-    #ifdef debug
+    #ifdef DEBUG
     drawHitBoxDebug(pipe);
     #endif
 }
