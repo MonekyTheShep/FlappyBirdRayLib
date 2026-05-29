@@ -75,7 +75,15 @@ void resetPipe(Pipe *pipe)
 
     Rectangle dst = {0};
     pipe->dstPipeChunkBottom = pipe->dstPipeChunkTop = dst;
-    pipe->dstPipeCapTop = pipe->dstPipeCapBottom = dst;
+
+    Rectangle capDst = {
+            .x = 0.0f,
+            .y = 0.0f,
+            .width = (float) pipe->pipeCap->width,
+            .height = (float) pipe->pipeCap->height
+    };
+
+    pipe->dstPipeCapTop = pipe->dstPipeCapBottom = capDst;
 }
 
 static void scaleTopHitBox(Pipe *pipe)
@@ -83,31 +91,28 @@ static void scaleTopHitBox(Pipe *pipe)
     pipe->topHitBox.x = pipe->position.x;
     pipe->topHitBox.y = 0.0f;
 
-    pipe->topHitBox.width = (float) pipe->pipeCap->width;
-    const float topHitBoxHeight = pipe->position.y + (float) pipe->pipeCap->height;
+    pipe->topHitBox.width = pipe->dstPipeChunkTop.width;
+    const float topHitBoxHeight = pipe->position.y + pipe->dstPipeCapTop.height;
     pipe->topHitBox.height = fmaxf(0.0f, topHitBoxHeight);
 }
 
 static void scaleMiddleHitBox(Pipe *pipe)
 {
     pipe->middleHitBox.x = pipe->position.x;
-    pipe->middleHitBox.y = pipe->position.y + (float) pipe->pipeCap->height;
+    pipe->middleHitBox.y = pipe->position.y + pipe->dstPipeCapTop.height;
 
-    pipe->middleHitBox.width = (float) pipe->pipeCap->width;
+    pipe->middleHitBox.width = pipe->dstPipeCapTop.width;
     pipe->middleHitBox.height = pipe->pipeGap;
 }
 
 static void scaleBottomHitbox(Pipe *pipe)
 {
     pipe->bottomHitBox.x = pipe->position.x;
-    const float pipeBottomHitboxOffset = (float) pipe->pipeCap->height + pipe->pipeGap;
-    pipe->bottomHitBox.y = pipe->position.y + pipeBottomHitboxOffset;
+    pipe->bottomHitBox.y = pipe->dstPipeCapBottom.y;
 
-    pipe->bottomHitBox.width = (float) pipe->pipeCap->width;
-
+    pipe->bottomHitBox.width = pipe->dstPipeCapBottom.width;
     const float bottomHitBoxHeight = (float) GetScreenHeight()
-                                     - pipe->position.y
-                                     - pipeBottomHitboxOffset;
+    - pipe->dstPipeCapBottom.y;
 
     pipe->bottomHitBox.height = fmaxf(0.0f, bottomHitBoxHeight);
 }
@@ -121,37 +126,29 @@ static void scaleHitBox(Pipe *pipe)
 
 static void scalePipeTexture(Pipe *pipe)
 {
-    const float pipeChunkTopHeight = pipe->position.y;
-
     pipe->dstPipeChunkTop.x = pipe->position.x;
     pipe->dstPipeChunkTop.y = 0.0f;
     pipe->dstPipeChunkTop.width = (float) pipe->pipeChunk->width;
-    pipe->dstPipeChunkTop.height = fmaxf(0.0f, pipeChunkTopHeight);
-
-    const float pipeBottomChunkOffset = ((float) pipe->pipeCap->height
-                                         + pipe->pipeGap
-                                         + (float) pipe->pipeCap->height);
-
-    const float pipeChunkBottomHeight = ((float) GetScreenHeight()
-                                         - pipe->position.y
-                                         - pipeBottomChunkOffset);
-
-    pipe->dstPipeChunkBottom.x = pipe->position.x;
-    pipe->dstPipeChunkBottom.y = pipe->position.y + pipeBottomChunkOffset;
-    pipe->dstPipeChunkBottom.width = (float) pipe->pipeChunk->width;
-    pipe->dstPipeChunkBottom.height = fmaxf(0.0f, pipeChunkBottomHeight);
+    pipe->dstPipeChunkTop.height = fmaxf(0.0f, pipe->position.y);
 
     pipe->dstPipeCapTop.x = pipe->position.x;
     pipe->dstPipeCapTop.y = pipe->position.y;
     pipe->dstPipeCapTop.width = (float) pipe->pipeCap->width;
     pipe->dstPipeCapTop.height = (float) pipe->pipeCap->height;
 
+    const float pipeChunkBottomY = (pipe->position.y + (float) pipe->pipeCap->height
+                                         + pipe->pipeGap
+                                         + (float) pipe->pipeCap->height);
+
+    pipe->dstPipeChunkBottom.x = pipe->position.x;
+    pipe->dstPipeChunkBottom.y = pipeChunkBottomY;
+    pipe->dstPipeChunkBottom.width = (float) pipe->pipeChunk->width;
+    pipe->dstPipeChunkBottom.height = fmaxf(0.0f, (float) GetScreenHeight() - pipeChunkBottomY);
+
     pipe->dstPipeCapBottom.x = pipe->position.x;
     pipe->dstPipeCapBottom.y = pipe->position.y + (float) pipe->pipeCap->height + pipe->pipeGap;
     pipe->dstPipeCapBottom.width = (float) pipe->pipeCap->width;
     pipe->dstPipeCapBottom.height = (float) pipe->pipeCap->height;
-
-
 }
 
 void scalePipe(Pipe *pipe)
@@ -251,7 +248,7 @@ static void drawHitBoxDebug(Pipe *pipe)
 {
     DrawRectangleRec(pipe->topHitBox, Fade(RED, 0.5f));
     DrawRectangleRec(pipe->middleHitBox, Fade(GREEN, 0.5f));
-    DrawRectangleRec(pipe-> bottomHitBox, Fade(RED, 0.5f));
+    DrawRectangleRec(pipe->bottomHitBox, Fade(RED, 0.5f));
 }
 
 void drawPipe(Pipe *pipe)

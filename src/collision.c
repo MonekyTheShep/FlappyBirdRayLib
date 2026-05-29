@@ -16,7 +16,6 @@ void resolveBirdPipeCollisions(Pipe *pipe, Bird *bird)
     // Each pipe stores if a score has been incremented.
     if (birdScored && !pipe->scored)
     {
-
         incrementScore();
         pipe->scored = true;
     }

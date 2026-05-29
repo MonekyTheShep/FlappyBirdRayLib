@@ -70,7 +70,6 @@ static void applyVelocity(Bird *bird, const float deltaTime)
     const float targetRotation = bird->velocity.y * 0.3f;
     bird->rotation = Lerp(bird->rotation, targetRotation, deltaTime * 10.0f);
     bird->rotation = Clamp(bird->rotation, -35.0f, 30.0f);
-
 }
 
 static void handleHitbox(Bird *bird)
