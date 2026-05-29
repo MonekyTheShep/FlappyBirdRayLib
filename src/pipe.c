@@ -34,14 +34,14 @@ static void initializePipe(Pipe *pipe, PipeTexture *pipeTexture)
         .x = 0.0f,
         .y = 0.0f,
         .width = (float) pipe->pipeCap->width,
-        .height = (float) pipe->pipeChunk->height
+        .height = (float) pipe->pipeCap->height
     };
 
     pipe->srcPipeCapTop = (Rectangle) {
             .x = 0.0f,
             .y = 0.0f,
             .width = (float) pipe->pipeCap->width,
-            .height = (float) -pipe->pipeChunk->height // flip the texture
+            .height = (float) -pipe->pipeCap->height // flip the texture
     };
 
     pipe->pipeGap = (float) pipe->pipeCap->height + 50.0f;
@@ -144,7 +144,7 @@ static void scalePipeTexture(Pipe *pipe)
     pipe->dstPipeChunkBottom.height = fmaxf(0.0f, (float) GetScreenHeight() - pipeChunkBottomY);
 
     pipe->dstPipeCapBottom.x = pipe->position.x;
-    pipe->dstPipeCapBottom.y = pipe->position.y + (float) pipe->pipeCap->height + pipe->pipeGap;
+    pipe->dstPipeCapBottom.y = pipeChunkBottomY - (float) pipe->pipeCap->height;
 }
 
 void scalePipe(Pipe *pipe)
