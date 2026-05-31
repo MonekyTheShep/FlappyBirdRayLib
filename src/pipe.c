@@ -90,8 +90,7 @@ static void scaleTopHitBox(Pipe *pipe)
     pipe->topHitBox.y = 0.0f;
 
     pipe->topHitBox.width = pipe->dstPipeChunkTop.width;
-    const float topHitBoxHeight = pipe->position.y + pipe->dstPipeCapTop.height;
-    pipe->topHitBox.height = fmaxf(0.0f, topHitBoxHeight);
+    pipe->topHitBox.height = fmaxf(0.0f, pipe->position.y + pipe->dstPipeCapTop.height);
 }
 
 static void scaleMiddleHitBox(Pipe *pipe)
@@ -109,10 +108,7 @@ static void scaleBottomHitbox(Pipe *pipe)
     pipe->bottomHitBox.y = pipe->dstPipeCapBottom.y;
 
     pipe->bottomHitBox.width = pipe->dstPipeCapBottom.width;
-    const float bottomHitBoxHeight = (float) GetScreenHeight()
-    - pipe->dstPipeCapBottom.y;
-
-    pipe->bottomHitBox.height = fmaxf(0.0f, bottomHitBoxHeight);
+    pipe->bottomHitBox.height = fmaxf(0.0f, (float) GetScreenHeight() - pipe->dstPipeCapBottom.y);
 }
 
 static void scaleHitBox(Pipe *pipe)
