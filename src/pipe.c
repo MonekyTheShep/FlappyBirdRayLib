@@ -200,7 +200,8 @@ Pipe *acquirePipe(Pipe *pipePool)
 {
     for (int i = 0; i < NUM_OF_PIPES; i++)
     {
-        if (!pipePool[i].active) {
+        if (!pipePool[i].active) 
+        {
             pipePool[i].active = true;
             return &pipePool[i];
         }
