@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <math.h>
 #include <raymath.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "constants.h"
 
@@ -23,6 +25,11 @@ void initializeBird(Bird *bird)
     bird->rotation = 0.0f;
 
     bird->sprite = LoadTexture(ASSETS_PATH"/flappy_bird.png");
+    if (bird->sprite.id == 0)
+    {
+        fprintf(stderr, "Error loading resources!");
+        abort();
+    }
 
     bird->src = (Rectangle) {
         .x = 0.0f,

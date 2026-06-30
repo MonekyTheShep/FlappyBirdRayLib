@@ -12,6 +12,9 @@
 
 #include "constants.h"
 
+#include "bird.h"
+#include "pipe.h"
+
 //----------------------------------------------------------------------------------
 // Module Local Variables
 //----------------------------------------------------------------------------------
@@ -145,7 +148,7 @@ void drawGameState(const float deltaTime)
     if (deltaTime != 0)
     {
         DrawText(TextFormat("CURRENT FPS: %i", (int)(1.0f/deltaTime)),  0, 0, 20, GREEN);
-        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / deltaTime)), 0, 50, 20, GREEN);
+        DrawText(TextFormat("ACCELERATION M/2^2: %i", (int)(gameState.bird.velocity.y * deltaTime - 0 / deltaTime) * -1), 0, 50, 20, GREEN);
     }
 
     if (gameState.gameOver)

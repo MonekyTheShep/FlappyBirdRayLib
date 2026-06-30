@@ -5,6 +5,7 @@
 #include "constants.h"
 
 #include <raymath.h>
+#include <stdlib.h>
 
 //----------------------------------------------------------------------------------
 // Initialise Functions
@@ -50,6 +51,12 @@ void initializePipePool(Pipe *pipePool, PipeTexture *pipeTexture)
 {
     pipeTexture->pipeCap = LoadTexture(ASSETS_PATH"/pipe_cap.png");
     pipeTexture->pipeChunk = LoadTexture(ASSETS_PATH"/pipe_chunk.png");
+
+    if (pipeTexture->pipeCap.id == 0 || pipeTexture->pipeChunk.id == 0)
+    {
+        fprintf(stderr, "Error loading resources!");
+        abort();
+    }
 
     for (int i = 0; i < NUM_OF_PIPES; i++)
     {
