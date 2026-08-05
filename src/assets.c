@@ -3,5 +3,5 @@
 //----------------------------------------------------------------------------------
 // Global Asset Variables
 //----------------------------------------------------------------------------------
-Sound sounds[NUM_OF_SOUND];
-Music musics[NUM_OF_MUSIC];
+Sound sounds[NUM_OF_SOUNDS];
+Music musics[NUM_OF_MUSICS];
