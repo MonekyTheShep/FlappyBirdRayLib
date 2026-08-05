@@ -1,5 +1,6 @@
 #include "bird.h"
 
+#include <_abort.h>
 #include <stdbool.h>
 #include <math.h>
 #include <stdlib.h>
@@ -11,8 +12,7 @@
 #include "constants.h"
 #include "events.h"
 
-
-//----------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 // Initialise Functions
 //----------------------------------------------------------------------------------
 void initializeBird(Bird *bird)
