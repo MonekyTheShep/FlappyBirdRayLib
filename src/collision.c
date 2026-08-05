@@ -2,7 +2,11 @@
 
 #include <stdbool.h>
 
+#include <raylib.h>
+
+#include "bird.h"
 #include "events.h"
+#include "pipe.h"
 
 void resolveBirdPipeCollisions(Pipe *pipe, Bird *bird)
 {

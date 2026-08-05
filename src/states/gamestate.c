@@ -1,10 +1,13 @@
 #include "states/gamestate.h"
+
 #include "states.h"
 
+#include <_stdio.h>
 #include <stdio.h>
 #include <stdbool.h>
 
 #include <raygui.h>
+#include <raylib.h>
 
 #include "collision.h"
 

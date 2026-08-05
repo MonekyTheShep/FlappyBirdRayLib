@@ -2,13 +2,15 @@
 
 #include <stdbool.h>
 #include <math.h>
-#include <raymath.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "constants.h"
+#include <raymath.h>
+#include <raylib.h>
 
+#include "constants.h"
 #include "events.h"
+
 
 //----------------------------------------------------------------------------------
 // Initialise Functions

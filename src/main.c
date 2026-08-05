@@ -4,7 +4,6 @@
 #include <raylib.h>
 
 #include "utility/gameutil.h"
-#include "utility/soundutil.h"
 
 #include "states.h"
 
