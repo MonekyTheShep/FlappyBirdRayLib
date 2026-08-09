@@ -7,7 +7,7 @@
 //----------------------------------------------------------------------------------
 enum Sounds
 {
-    PLACEHOLDER_MUSIC_SOUND,
+    PLACEHOLDER_SOUND,
     NUM_OF_SOUNDS
 };
 
