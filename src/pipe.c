@@ -231,23 +231,21 @@ Pipe *acquirePipe(Pipe *pipePool)
 
 void releasePipe(Pipe *pipe)
 {
-    if (pipe != NULL)
-    {
-        pipe->active = false;
-        resetPipe(pipe);
-    }
+    if (pipe == NULL) return;
+    
+    pipe->active = false;
+    resetPipe(pipe);
 }
 
 void handlePipes(const float deltaTime, Pipe *pipePool)
 {
     for (int i = 0; i < NUM_OF_PIPES; i++)
     {
-        if (pipePool[i].active)
-        {
-            applyVelocity(&pipePool[i], deltaTime);
-            movePipe(&pipePool[i]);
-            handleOffScreen(&pipePool[i]);
-        }
+        if (!pipePool[i].active) continue;
+
+        applyVelocity(&pipePool[i], deltaTime);
+        movePipe(&pipePool[i]);
+        handleOffScreen(&pipePool[i]);
     }
 }
 
