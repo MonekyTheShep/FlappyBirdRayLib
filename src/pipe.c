@@ -182,7 +182,7 @@ static void applyVelocity(Pipe *pipe, float deltaTime)
     pipe->position.x += pipe->velocity.x * deltaTime;
 }
 
-static void handleCollision(Pipe *pipe)
+static void handleOffScreen(Pipe *pipe)
 {
     const bool offScreen = pipe->position.x + pipe->dstPipeChunkTop.width < 0.0f;
     if (offScreen)
@@ -246,7 +246,7 @@ void handlePipes(const float deltaTime, Pipe *pipePool)
         {
             applyVelocity(&pipePool[i], deltaTime);
             movePipe(&pipePool[i]);
-            handleCollision(&pipePool[i]);
+            handleOffscreen(&pipePool[i]);
         }
     }
 }
