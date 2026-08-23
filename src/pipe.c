@@ -246,7 +246,7 @@ void handlePipes(const float deltaTime, Pipe *pipePool)
         {
             applyVelocity(&pipePool[i], deltaTime);
             movePipe(&pipePool[i]);
-            handleOffscreen(&pipePool[i]);
+            handleOffScreen(&pipePool[i]);
         }
     }
 }
