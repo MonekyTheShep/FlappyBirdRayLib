@@ -129,7 +129,7 @@ static void scaleHitBox(Pipe *pipe)
     scaleBottomHitbox(pipe);
 }
 
-static void scalePipeTexture(Pipe *pipe)
+static void scaleTopPipeTexture(Pipe *pipe)
 {
     pipe->dstPipeChunkTop.x = pipe->position.x;
     pipe->dstPipeChunkTop.y = 0.0f;
@@ -138,7 +138,10 @@ static void scalePipeTexture(Pipe *pipe)
 
     pipe->dstPipeCapTop.x = pipe->position.x;
     pipe->dstPipeCapTop.y = pipe->position.y;
+}
 
+static void scaleBottomPipeTexture(Pipe *pipe)
+{
     const float pipeChunkBottomY = (pipe->position.y + (float) pipe->pipeCap->height
                                          + pipe->pipeGap
                                          + (float) pipe->pipeCap->height);
@@ -150,6 +153,12 @@ static void scalePipeTexture(Pipe *pipe)
 
     pipe->dstPipeCapBottom.x = pipe->position.x;
     pipe->dstPipeCapBottom.y = pipeChunkBottomY - (float) pipe->pipeCap->height;
+}
+
+static void scalePipeTexture(Pipe *pipe)
+{
+    scaleTopPipeTexture(pipe);
+    scaleBottomPipeTexture(pipe);
 }
 
 void scalePipe(Pipe *pipe)
